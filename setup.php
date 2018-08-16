@@ -2,6 +2,8 @@
 // Konfiguration einbinden
 require_once('config.php');
 
+session_start();
+
 // Array Eingabe
 $dataSetup = array(
     'step' => $_GET['step'],
@@ -12,10 +14,11 @@ $dataSetup = array(
 );
 
 // Prüfen ob Benutzer ohne UserID
-$sqlquery = "SELECT `userID` FROM `users` WHERE `userID` = ''";
+$sqlquery = "SELECT * FROM `users` WHERE `activation` = 0 AND `status` = 1";
 if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
     exit();
 }
+
 // HTML Header
 ?>
 <!DOCTYPE html>
@@ -44,11 +47,32 @@ switch ($dataSetup['step']) {
     <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
     <form method="POST" action="setup.php?step=1">
         <div class="form-group">
+                <?php
+                if ($_GET['msg'] = 'unknownUser') {
+                ?>
+                
+                <?php
+                } else {
+                ?>
             <input type="text" class="form-control" id="inputUsername">
+                <?php
+                }
+                ?>
         </div>
         <button type="submit" class="btn btn-primary">Bestätigen</button>
     </form>
     <?php
+        break;
+    case (1): // Benutzername überprüfen, Kontoinformationen und Passwort festlegen
+        if (!isset($_POST['submit'])) {
+            header("Location: setup.php?step=0&msg=unknownUser");
+            exit();
+        }
+
+        $dataSetup['input'] = array(
+            'username' => mysqli_real_escape_string($config['link'], $_POST['inputUsername'])
+        );
+
 }
 
 ?>

@@ -13,7 +13,7 @@ $dataSetup = array(
     )
 );
 
-// Prüfen ob Benutzer ohne UserID
+// Prüfen ob Benutzer ohne aktivierung in Datenbank vorhanden
 $sqlquery = "SELECT * FROM `users` WHERE `activation` = 0 AND `status` = 1";
 if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
     exit();
@@ -47,25 +47,30 @@ switch ($dataSetup['step']) {
     <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
     <form method="POST" action="setup.php?step=1">
         <div class="form-group">
-                <?php
-                if ($_GET['msg'] = 'unknownUser') {
-                ?>
-                
-                <?php
-                } else {
-                ?>
-            <input type="text" class="form-control" id="inputUsername">
-                <?php
-                }
-                ?>
+            <?php
+            if ($_GET['msg'] == 'unknownUser') {
+            ?>
+            <input type="text" class="form-control is-invalid" name="inputUsername">
+            <div class="invalid-feedback">
+                Der eingegebene Benutzername ist unbekannt.
+            </div>
+            <?php
+            } else {
+            ?>
+            <input type="text" class="form-control" name="inputUsername">
+            <?php
+            }
+            ?>
         </div>
-        <button type="submit" class="btn btn-primary">Bestätigen</button>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
+        </div>
     </form>
     <?php
         break;
-    case (1): // Benutzername überprüfen, Kontoinformationen und Passwort festlegen
+    case (1): // Benutzername überprüfen
         if (!isset($_POST['submit'])) {
-            header("Location: setup.php?step=0&msg=unknownUser");
+            header("Location: setup.php?step=0");
             exit();
         }
 
@@ -73,8 +78,45 @@ switch ($dataSetup['step']) {
             'username' => mysqli_real_escape_string($config['link'], $_POST['inputUsername'])
         );
 
+        // Benutzername überprüfen
+        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 0 AND `username` = '" . $dataSetup['input']['username'] . "'";
+        $result = mysqli_query($config['link'], $sqlquery);
+        if (mysqli_num_rows($result) != 1) {
+            header("Location: setup.php?step=0&msg=unknownUser");
+            exit();
+        }
+
+        // Datensatz in Sessioncookie schreiben
+        $_SESSION['setup'] = mysqli_fetch_assoc($result);
+
+    case (2): // Kontoinformationen und Passwort festlegen
+        if (!isset($_SESSION['setup'])) {
+            header("Location: setup.php?step=0");
+            exit();
+        }
+        ?>
+        <form method="POST" action="setup.php?step=3">
+            <div class="form-group">
+                <label for="inputEmail">Email Addresse (optional)</label>
+                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword1">Passwort</label>
+                <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" placeholder="Passwort">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword2">Passwort wiederholen</label>
+                <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
+            </div>
+        </form>
+        <?php
+        break;
 }
 
+// HTML Footer
 ?>
 </body>
 </html>

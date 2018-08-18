@@ -114,6 +114,24 @@ switch ($dataSetup['step']) {
         </form>
         <?php
         break;
+    case (3): // Kontoinformationen und Passwort in DB speichern
+        $dataSetup['input'] = array(
+            'email' => mysqli_real_escape_string($config['link'], $_POST['inputEmail']),
+            'password1' => $_POST['inputPassword1'],
+            'password2' => $_POST['inputPassword2']
+        );
+
+        // Emailaddresse validieren
+        if (!filter_var($dataSetup['input']['email'], FILTER_VALIDATE_EMAIL)) {
+            header("Location: setup.php?step=2&msg=invalidEmail");
+            exit();
+        }
+
+        // Passwortübereinstimmung prüfen
+        if ($dataSetup['input']['password1'] !== $dataSetup['input']['password2']) {
+            header("Location: setup.php?step=2&msg=noPasswordwMatch");
+            exit();
+        }
 }
 
 // HTML Footer

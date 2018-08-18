@@ -152,7 +152,7 @@ switch ($dataSetup['step']) {
         break;
     case (3): // Kontoinformationen und Passwort in DB speichern
         $dataSetup['input'] = array(
-            'email' => mysqli_real_escape_string($config['link'], $_POST['inputEmail']),
+            'email' => mysqli_real_escape_string($config['link'], strtolower($_POST['inputEmail'])),
             'password1' => $_POST['inputPassword1'],
             'password2' => $_POST['inputPassword2']
         );
@@ -168,7 +168,18 @@ switch ($dataSetup['step']) {
             header("Location: setup.php?step=2&msg=noPasswordMatch&email=" . $dataSetup['input']['email']);
             exit();
         }
-        echo 'korrekt';
+
+        // Passwort Hash
+        $dataSetup['input']['password'] = password_hash($dataSetup['input']['password'], PASSWORD_DEFAULT);
+
+        unset($dataSetup['input']['password1']);
+        unset($dataSetup['input']['password2']);
+
+        // SQL-Query bereitstellen
+        $set = [];
+        foreach ($dataSetup['input'] as $column => $value) {
+            $set[] = "`" . $column . "` = '" . $value . "'";
+        }
 }
 
 // HTML Footer

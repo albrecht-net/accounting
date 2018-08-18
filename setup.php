@@ -43,30 +43,30 @@ if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
 
 switch ($dataSetup['step']) {
     case (0): // Willkommensseite
-    ?>
-    <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
-    <form method="POST" action="setup.php?step=1">
-        <div class="form-group">
-            <?php
-            if ($_GET['msg'] == 'unknownUser') {
-            ?>
-            <input type="text" class="form-control is-invalid" name="inputUsername">
-            <div class="invalid-feedback">
-                Der eingegebene Benutzername ist unbekannt.
+        ?>
+        <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
+        <form method="POST" action="setup.php?step=1">
+            <div class="form-group">
+                <?php
+                if ($_GET['msg'] == 'unknownUser') {
+                ?>
+                <input type="text" class="form-control is-invalid" name="inputUsername">
+                <div class="invalid-feedback">
+                    Der eingegebene Benutzername ist unbekannt.
+                </div>
+                <?php
+                } else {
+                ?>
+                <input type="text" class="form-control" name="inputUsername">
+                <?php
+                }
+                ?>
             </div>
-            <?php
-            } else {
-            ?>
-            <input type="text" class="form-control" name="inputUsername">
-            <?php
-            }
-            ?>
-        </div>
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
-        </div>
-    </form>
-    <?php
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
+            </div>
+        </form>
+        <?php
         break;
     case (1): // Benutzername überprüfen
         if (!isset($_POST['submit'])) {

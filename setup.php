@@ -49,16 +49,16 @@ switch ($dataSetup['step']) {
             <div class="form-group">
                 <?php
                 if ($_GET['msg'] == 'unknownUser') {
-                ?>
-                <input type="text" class="form-control is-invalid" name="inputUsername">
-                <div class="invalid-feedback">
-                    Der eingegebene Benutzername ist unbekannt.
-                </div>
-                <?php
+                    ?>
+                    <input type="text" class="form-control is-invalid" name="inputUsername" required>
+                    <div class="invalid-feedback">
+                        Der eingegebene Benutzername ist unbekannt.
+                    </div>
+                    <?php
                 } else {
-                ?>
-                <input type="text" class="form-control" name="inputUsername">
-                <?php
+                    ?>
+                    <input type="text" class="form-control" name="inputUsername" required>
+                    <?php
                 }
                 ?>
             </div>
@@ -98,15 +98,51 @@ switch ($dataSetup['step']) {
         <form method="POST" action="setup.php?step=3">
             <div class="form-group">
                 <label for="inputEmail">Email Addresse (optional)</label>
-                <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email">
+                <?php
+                if ($_GET['msg'] == 'invalidEmail') {
+                    ?>
+                    <input type="email" class="form-control is-invalid" name="inputEmail" id="inputEmail" placeholder="Email">
+                    <div class="invalid-feedback">
+                        Die eingegebene Emailaddresse hat ein ungültiges Format.
+                    </div>
+                    <?php
+                } else {
+                    ?>
+                    <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email" value="<?php echo $_GET['email']; ?>">
+                    <?php
+                }
+                ?>
             </div>
             <div class="form-group">
-                <label for="inputPassword1">Passwort</label>
-                <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" placeholder="Passwort">
+                <label for="inputPassword1">Passwort eingeben</label>
+                <?php
+                if ($_GET['msg'] == 'noPasswordMatch') {
+                    ?>
+                    <input type="password" class="form-control is-invalid" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
+                    <?php
+                } else {
+                    ?>
+                    <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
+                    <?php
+                }
+                ?>
             </div>
             <div class="form-group">
                 <label for="inputPassword2">Passwort wiederholen</label>
-                <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen">
+                <?php
+                if ($_GET['msg'] == 'noPasswordMatch') {
+                    ?>
+                    <input type="password" class="form-control is-invalid" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
+                    <div class="invalid-feedback">
+                        Passwörter stimmen nicht überein.
+                    </div>
+                    <?php
+                } else {
+                    ?>
+                    <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
+                    <?php
+                }
+                ?>
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
@@ -122,16 +158,17 @@ switch ($dataSetup['step']) {
         );
 
         // Emailaddresse validieren
-        if (!filter_var($dataSetup['input']['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!empty($dataSetup['input']['email']) && !filter_var($dataSetup['input']['email'], FILTER_VALIDATE_EMAIL)) {
             header("Location: setup.php?step=2&msg=invalidEmail");
             exit();
         }
 
         // Passwortübereinstimmung prüfen
         if ($dataSetup['input']['password1'] !== $dataSetup['input']['password2']) {
-            header("Location: setup.php?step=2&msg=noPasswordwMatch");
+            header("Location: setup.php?step=2&msg=noPasswordMatch&email=" . $dataSetup['input']['email']);
             exit();
         }
+        echo 'korrekt';
 }
 
 // HTML Footer

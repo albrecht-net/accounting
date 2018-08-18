@@ -151,6 +151,11 @@ switch ($dataSetup['step']) {
         <?php
         break;
     case (3): // Kontoinformationen und Passwort in DB speichern
+        if (!isset($_SESSION['setup'])) {
+            header("Location: setup.php?step=0");
+            exit();
+        }
+        
         $dataSetup['input'] = array(
             'email' => mysqli_real_escape_string($config['link'], strtolower($_POST['inputEmail'])),
             'password1' => $_POST['inputPassword1'],
@@ -175,13 +180,26 @@ switch ($dataSetup['step']) {
         unset($dataSetup['input']['password1']);
         unset($dataSetup['input']['password2']);
 
+        $dataSetup['input']['activation'] = 1;
+
         // SQL-Query bereitstellen
         $set = [];
         foreach ($dataSetup['input'] as $column => $value) {
             $set[] = "`" . $column . "` = '" . $value . "'";
         }
-}
+        $sqlquery = "UPDATE `users` SET " . implode(", ", $set) . " WHERE `users`.`userID` = '" . $_SESSION['setup']['userID'] . "'";
 
+        // SQL-Query ausführen und überprüfen
+        if (!mysqli_query($config['link'], $sqlquery)) {
+            echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
+            exit();
+        }
+
+        // Setup Session schliessen
+        session_destroy();
+
+        break;
+}
 // HTML Footer
 ?>
 </body>

@@ -1,8 +1,8 @@
 <?php
+session_start();
+
 // Konfiguration einbinden
 require_once('config.php');
-
-session_start();
 
 // Array Eingabe
 $dataSetup = array(

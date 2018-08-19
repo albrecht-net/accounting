@@ -40,7 +40,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
             <label for="inputPassword">Passwort</label>
             <input type="password" class="form-control" name="password" id="inputPassword">
         </div>
-        <button type="submit" class="btn btn-primary" name="submit">Senden</button>
+        <button type="submit" class="btn btn-primary" name="submit">Anmelden</button>
     </form>
 </body>
 </html>

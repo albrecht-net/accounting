@@ -22,7 +22,7 @@ if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
 // HTML Header
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -62,9 +62,7 @@ switch ($dataSetup['step']) {
                 }
                 ?>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
-            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
         </form>
         <?php
         break;
@@ -144,9 +142,7 @@ switch ($dataSetup['step']) {
                 }
                 ?>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" name="submit" value="Bestätigen">
-            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
         </form>
         <?php
         break;

@@ -36,6 +36,10 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
             <div class="alert alert-danger" role="alert">
                 Falsches Kennwort oder Benutzername
             </div>
+        <?php elseif ($_GET['loggedout']): ?>
+            <div class="alert alert-primary" role="alert">
+                Benutzer erfolgreich abgemeldet
+            </div>
         <?php endif ?>
         <div class="form-group">
             <label for="inputUsername">Benutzername</label>

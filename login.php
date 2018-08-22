@@ -32,13 +32,18 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
 </head>
 <body>
     <form action="login.php" method="POST">
+        <?php if ($dataInput['invalid']): ?>
+            <div class="alert alert-danger" role="alert">
+                Falsches Kennwort oder Benutzername
+            </div>
+        <?php endif ?>
         <div class="form-group">
             <label for="inputUsername">Benutzername</label>
-            <input type="text" class="form-control" name="inputUsername" id="inputUsername">
+            <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>">
         </div>
         <div class="form-group">
             <label for="inputPassword">Passwort</label>
-            <input type="password" class="form-control" name="password" id="inputPassword">
+            <input type="password" class="form-control" name="inputPassword" id="inputPassword">
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Anmelden</button>
     </form>

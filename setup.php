@@ -47,20 +47,14 @@ switch ($dataSetup['step']) {
         <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
         <form method="POST" action="setup.php?step=1">
             <div class="form-group">
-                <?php
-                if ($_GET['msg'] == 'unknownUser') {
-                    ?>
+                <?php if ($_GET['msg'] == 'unknownUser'): ?>
                     <input type="text" class="form-control is-invalid" name="inputUsername" required>
                     <div class="invalid-feedback">
                         Der eingegebene Benutzername ist unbekannt.
                     </div>
-                    <?php
-                } else {
-                    ?>
+                <?php else: ?>
                     <input type="text" class="form-control" name="inputUsername" required>
-                    <?php
-                }
-                ?>
+                <?php endif; ?>
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
         </form>
@@ -96,51 +90,33 @@ switch ($dataSetup['step']) {
         <form method="POST" action="setup.php?step=3">
             <div class="form-group">
                 <label for="inputEmail">Email Addresse (optional)</label>
-                <?php
-                if ($_GET['msg'] == 'invalidEmail') {
-                    ?>
+                <?php if ($_GET['msg'] == 'invalidEmail'): ?>
                     <input type="email" class="form-control is-invalid" name="inputEmail" id="inputEmail" placeholder="Email">
                     <div class="invalid-feedback">
                         Die eingegebene Emailaddresse hat ein ungültiges Format.
                     </div>
-                    <?php
-                } else {
-                    ?>
+                <?php else: ?>
                     <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email" value="<?php echo $_GET['email']; ?>">
-                    <?php
-                }
-                ?>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <label for="inputPassword1">Passwort eingeben</label>
-                <?php
-                if ($_GET['msg'] == 'noPasswordMatch') {
-                    ?>
+                <?php if ($_GET['msg'] == 'noPasswordMatch'): ?>
                     <input type="password" class="form-control is-invalid" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
-                    <?php
-                } else {
-                    ?>
+                <?php else: ?>
                     <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
-                    <?php
-                }
-                ?>
+                <?php endif; ?>
             </div>
             <div class="form-group">
                 <label for="inputPassword2">Passwort wiederholen</label>
-                <?php
-                if ($_GET['msg'] == 'noPasswordMatch') {
-                    ?>
+                <?php if ($_GET['msg'] == 'noPasswordMatch'): ?>
                     <input type="password" class="form-control is-invalid" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
                     <div class="invalid-feedback">
                         Passwörter stimmen nicht überein.
                     </div>
-                    <?php
-                } else {
-                    ?>
+                <?php else: ?>
                     <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
-                    <?php
-                }
-                ?>
+                <?php endif; ?>
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
         </form>

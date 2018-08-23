@@ -44,7 +44,9 @@ if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
 switch ($dataSetup['step']) {
     case (0): // Willkommensseite
         ?>
-        <p>Willkommen bei der Datenbank basierten Buchhaltung. Um mit dem Einrichten zu beginnen, benötigen wir den Benutzernamen:</p>
+        <h2>Willkommen bei der Datenbank basierten Buchhaltung</h2>
+        <p>Der Setup-Assistent ist in zwei Schritte unterteilt: <b>Benutzer</b>- und <b>Datenbank</b>-Konfiguration</p>
+        <p>Um mit der Benutzereinrichtung zu beginnen, benötigen wir den Benutzernamen:</p>
         <form method="POST" action="setup.php?step=1">
             <div class="form-group">
                 <?php if ($_GET['msg'] == 'unknownUser'): ?>
@@ -170,7 +172,17 @@ switch ($dataSetup['step']) {
         // Setup Session schliessen
         session_destroy();
 
+    case (4): // Aufforderung zum Anmelden
+        ?>
+        <h2>Datenbankverbindung einrichten</h2>
+        <p>Bitte melden Sie sich mit Ihrem Benutzerkonto an</p>
+        <a href="login.php?rd=setup.php?step=5" class="btn btn-primary btn-lg btn-block" role="button">Anmelden</a>
+        <?php
         break;
+    case (5): // Formular für Datenbankangaben
+        break;
+    default: // Definiert Aktion bei einem undefiniertem Schritt
+        header("Location: setup.php?step=0");
 }
 // HTML Footer
 ?>

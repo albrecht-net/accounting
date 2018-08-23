@@ -23,7 +23,13 @@ if (mysqli_num_rows($result) != 1) {
         // Benutzerdaten in Session schreiben
         $_SESSION['uid'] = $dataDb['uid'];
         $_SESSION['username'] = $dataDb['username'];
-        header("Location: index.php");
+
+        // Weiterleitung
+        if (empty($_GET['rd'])) {
+            header("Location: index.php");
+        } else {
+            header("Location: " . $_GET['rd']);
+        }
         exit();
     }
 }

@@ -180,6 +180,35 @@ switch ($dataSetup['step']) {
         <?php
         break;
     case (5): // Formular für Datenbankangaben
+        // Prüfen ob Benutzer angemeldet
+        require('includes/loginSessionCheck.inc.php');
+
+        ?>
+        <form method="POST" action="setup.php?step=6">
+            <div class="form-group">
+                <label for="dbHost">Server IP oder Hostname</label>
+                <input type="text" class="form-control" name="dbHost" id="dbHost" placeholder="IP / Hostname" required>
+            </div>
+            <div class="form-group">
+                <label for="dbPort">Port</label>
+                <input type="number" class="form-control" name="dbPort" id="dbPort" placeholder="Port" required>
+            </div>
+            <div class="form-group">
+                <label for="dbUsername">Benutzername</label>
+                <input type="text" class="form-control" name="dbUsername" id="dbUsername" placeholder="Benutzername" required>
+            </div>
+            <div class="form-group">
+                <label for="dbPassword">Passwort</label>
+                <input type="password" class="form-control" name="dbPassword" id="dbPassword" placeholder="Passwort" required>
+                <small id="dbPassword" class="form-text text-muted">Hinweis: Das Passwort wird in Klartext in der Datenbank gespeichert! Verwenden Sie einen Datenbank-Benutzer mit eingeschränkten Rechten.</small>
+            </div>
+            <div class="form-group">
+                <label for="dbName">Datenbankname</label>
+                <input type="text" class="form-control" name="dbName" id="dbName" placeholder="Datenbankname" required>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
+        </form>
+        <?php
         break;
     default: // Definiert Aktion bei einem undefiniertem Schritt
         header("Location: setup.php?step=0");

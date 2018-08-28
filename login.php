@@ -2,7 +2,7 @@
 session_start();
 
 // Konfiguration einbinden
-require_once('config.php');
+require_once 'config.php';
 
 // Überprüfen ob Submit geklickt wurde
 if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {

@@ -2,7 +2,7 @@
 session_start();
 
 // Konfiguration einbinden
-require_once('config.php');
+require_once 'config.php';
 
 // Array Eingabe
 $dataSetup = array(
@@ -181,7 +181,7 @@ switch ($dataSetup['step']) {
         break;
     case (5): // Formular für Datenbankangaben
         // Prüfen ob Benutzer angemeldet
-        require('includes/loginSessionCheck.inc.php');
+        require 'includes/loginSessionCheck.inc.php';
 
         ?>
         <form method="POST" action="setup.php?step=6">

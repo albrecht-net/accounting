@@ -34,7 +34,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
     <?php if (empty($_GET['rd'])): ?>
     <form action="login.php" method="POST">
     <?php else: ?>
-    <form action="login.php?rd=<?php echo $_GET['rd']; ?>" method="POST">
+    <form action="login.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
     <?php endif; ?>
         <?php if ($dataInput['invalid']): ?>
             <div class="alert alert-danger" role="alert">

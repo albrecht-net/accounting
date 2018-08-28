@@ -28,7 +28,8 @@ if (mysqli_num_rows($result) != 1) {
         if (empty($_GET['rd'])) {
             header("Location: index.php");
         } else {
-            header("Location: " . $_GET['rd']);
+            $rd = $_GET['rd'];
+            header("Location: $rd");
         }
         exit();
     }

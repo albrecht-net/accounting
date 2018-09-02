@@ -26,10 +26,10 @@ if (mysqli_num_rows($result) != 1) {
 
         // Weiterleitung
         if (empty($_GET['rd'])) {
-            header("Location: index.php");
+            header('Location: index.php');
         } else {
             $rd = $_GET['rd'];
-            header("Location: $rd");
+            header('Location: ' . $rd);
         }
         exit();
     }

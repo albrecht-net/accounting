@@ -176,7 +176,7 @@ switch ($dataSetup['step']) {
         ?>
         <h2>Datenbankverbindung einrichten</h2>
         <p>Bitte melden Sie sich mit Ihrem Benutzerkonto an</p>
-        <a href="<?php echo 'login.php?rd=' . urlencode('setup.php/step=5'); ?>" class="btn btn-primary btn-lg btn-block" role="button">Anmelden</a>
+        <a href="<?php echo 'login.php?rd=' . urlencode('setup.php?step=5'); ?>" class="btn btn-primary btn-lg btn-block" role="button">Anmelden</a>
         <?php
         break;
     case (5): // Formular für Datenbankangaben

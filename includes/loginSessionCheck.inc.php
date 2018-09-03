@@ -9,7 +9,7 @@ $dataSession = array(
 
 // Überprüft ob User-ID oder Benutzername in der Session leer sind (leer entspricht: kein Benutzer angemeldet)
 if (empty($dataSession['uid']) || empty($dataSession['username'])) {
-    return FALSE;
+    $lsc = FALSE;
 } elseif (isset($dataSession['uid']) && isset($dataSession['username'])) {
 	// SQL-Query bereitstellen
     $sqlquery = "SELECT * FROM `users` WHERE `uid` = '" . $dataSession['uid'] . "' AND `username` = '" . $dataSession['username'] . "'";
@@ -18,11 +18,14 @@ if (empty($dataSession['uid']) || empty($dataSession['username'])) {
 	if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) != 1) {
 		unset($_SESSION['uid']);
 		unset($_SESSION['username']);
-		return FALSE;
+		$lsc = FALSE;
 	} else {
-		return TRUE;
+		$lsc = TRUE;
 	}
 } else {
-	return FALSE;
+	$lsc = FALSE;
 }
+
+// Status weitergeben
+return $lsc;
 ?>

@@ -21,15 +21,15 @@ if (mysqli_num_rows($result) != 1) {
         $dataInput['invalid'] = 1;
     } else {
         // Benutzerdaten in Session schreiben
-        $_SESSION['uid'] = $dataDb['uid'];
+        $_SESSION['uid'] = $dataDb['userID'];
         $_SESSION['username'] = $dataDb['username'];
 
         // Weiterleitung
         if (empty($_GET['rd'])) {
-            header("Location: index.php");
+            header('Location: index.php');
         } else {
             $rd = $_GET['rd'];
-            header("Location: $rd");
+            header('Location: ' . $rd);
         }
         exit();
     }

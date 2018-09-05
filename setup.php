@@ -182,6 +182,9 @@ switch ($dataSetup['step']) {
     case (5): // Formular für Datenbankangaben
         // Prüfen ob Benutzer angemeldet
         require 'includes/loginSessionCheck.inc.php';
+        if ($lsc == FALSE) {
+            header('Location: login.php?rd=' . urlencode('setup.php?step=5'));
+        }
 
         ?>
         <form method="POST" action="setup.php?step=6">

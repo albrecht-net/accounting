@@ -213,6 +213,36 @@ switch ($dataSetup['step']) {
         </form>
         <?php
         break;
+    case (6): // Datenbankangaben in DB speichern
+        // Prüfen ob Benutzer angemeldet
+        require 'includes/loginSessionCheck.inc.php';
+        if ($lsc == FALSE) {
+            header('Location: login.php?rd=' . urlencode('setup.php?step=5'));
+        }
+
+        $dataSetup['input'] = array(
+            'dbHost' => mysqli_real_escape_string($config['link'], strtolower($_POST['dbHost'])),
+            'dbPort' => $_POST['dbPort'],
+            'dbUsername' => mysqli_real_escape_string($config['link'], strtolower($_POST['dbUsername'])),
+            'dbPassword' => $_POST['dbPassword'],
+            'dbName' => mysqli_real_escape_string($config['link'], $_POST['dbName'])
+        );
+
+        // Port Datentyp auf int festlegen
+        settype($dataSetup['input']['dbPort'], 'int');
+
+        // SQL-Query bereitstellen
+        $columns = "`userID`, `" . implode("`, `", array_keys($dataSetup['input'])) . "`";
+        $values = "'" . $_SESSION['userID'] . "', '" . implode("', '", $dataSetup['input']) . "'";
+        $sqlquery = "INSERT INTO `databases` (" . $columns . ") VALUES (" . $values . ")";
+
+        // SQL-Query ausführen und überprüfen
+        if (!mysqli_query($config['link'], $sqlquery)) {
+            echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
+            exit();
+        }
+        break;
+
     default: // Definiert Aktion bei einem undefiniertem Schritt
         header("Location: setup.php?step=0");
 }

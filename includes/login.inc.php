@@ -21,7 +21,7 @@ if (mysqli_num_rows($result) != 1) {
         $dataInput['invalid'] = 1;
     } else {
         // Benutzerdaten in Session schreiben
-        $_SESSION['uid'] = $dataDb['userID'];
+        $_SESSION['userID'] = $dataDb['userID'];
         $_SESSION['username'] = $dataDb['username'];
 
         // Weiterleitung

@@ -186,19 +186,28 @@ switch ($dataSetup['step']) {
             header('Location: login.php?rd=' . urlencode('setup.php?step=5'));
         }
 
-        ?>
+        if ($_GET['msg'] == 'mysqlError'): ?>
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Verbindung fehlgeschlagen!</h4>
+                <p>Es wurde vergeblich versucht eine Temporäre Verbindung zur angegebenen Datenbank aufzubauen. Bitte überprüfen Sie die Angaben.</p>
+                <hr>
+                <p class="mb-0">Folgender Fehler wurde von MySQL ausgegeben: <i><?php echo $_GET['mysqliError']; ?></i></p>
+            </div>
+        <?php endif; ?>
+
+
         <form method="POST" action="setup.php?step=6">
             <div class="form-group">
                 <label for="dbHost">Server IP oder Hostname</label>
-                <input type="text" class="form-control" name="dbHost" id="dbHost" placeholder="IP / Hostname" required>
+                <input type="text" class="form-control" name="dbHost" id="dbHost" placeholder="IP / Hostname" value="<?php echo $_GET['dbHost']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="dbPort">Port</label>
-                <input type="number" class="form-control" name="dbPort" id="dbPort" placeholder="Port" required>
+                <input type="number" class="form-control" name="dbPort" id="dbPort" placeholder="Port" value="<?php echo $_GET['dbPort']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="dbUsername">Benutzername</label>
-                <input type="text" class="form-control" name="dbUsername" id="dbUsername" placeholder="Benutzername" required>
+                <input type="text" class="form-control" name="dbUsername" id="dbUsername" placeholder="Benutzername" value="<?php echo $_GET['dbUsername']; ?>" required>
             </div>
             <div class="form-group">
                 <label for="dbPassword">Passwort</label>
@@ -207,7 +216,7 @@ switch ($dataSetup['step']) {
             </div>
             <div class="form-group">
                 <label for="dbName">Datenbankname</label>
-                <input type="text" class="form-control" name="dbName" id="dbName" placeholder="Datenbankname" required>
+                <input type="text" class="form-control" name="dbName" id="dbName" placeholder="Datenbankname" value="<?php echo $_GET['dbName']; ?>" required>
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
         </form>
@@ -230,6 +239,14 @@ switch ($dataSetup['step']) {
 
         // Port Datentyp auf int festlegen
         settype($dataSetup['input']['dbPort'], 'int');
+
+        // Mit der Datenbank verbinden
+        $tempLink = mysqli_connect($dataSetup['input']['dbHost'] . ':' . $dataSetup['input']['dbPort'], $dataSetup['input']['dbUsername'], $dataSetup['input']['dbPassword'], $dataSetup['input']['dbName']);
+
+        // Verbindung überprüfen
+        if (!$tempLink) {
+            header("Location: setup.php?step=5&msg=mysqlError&mysqliError=" . mysqli_connect_error() . "&dbHost=" . $dataSetup['input']['dbHost'] . "&dbPort=" . $dataSetup['input']['dbPort'] . "&dbUsername=" . $dataSetup['input']['dbUsername'] . "&dbName=" . $dataSetup['input']['dbName']);
+        }
 
         // SQL-Query bereitstellen
         $columns = "`userID`, `" . implode("`, `", array_keys($dataSetup['input'])) . "`";

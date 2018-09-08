@@ -143,7 +143,7 @@ switch ($dataSetup['step']) {
         }
 
         // Passwort Hash
-        $dataSetup['input']['password'] = password_hash($dataSetup['input']['password'], PASSWORD_DEFAULT);
+        $dataSetup['input']['password'] = password_hash($dataSetup['input']['password1'], PASSWORD_DEFAULT);
 
         unset($dataSetup['input']['password1']);
         unset($dataSetup['input']['password2']);

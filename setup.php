@@ -13,12 +13,6 @@ $dataSetup = array(
     )
 );
 
-// Prüfen ob Benutzer ohne aktivierung in Datenbank vorhanden
-$sqlquery = "SELECT * FROM `users` WHERE `activation` = 0 AND `status` = 1";
-if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) < 1) {
-    exit();
-}
-
 // HTML Header
 ?>
 <!DOCTYPE html>
@@ -246,17 +240,40 @@ switch ($dataSetup['step']) {
         // Verbindung überprüfen
         if (!$tempLink) {
             header("Location: setup.php?step=5&msg=mysqlError&mysqliError=" . mysqli_connect_error() . "&dbHost=" . $dataSetup['input']['dbHost'] . "&dbPort=" . $dataSetup['input']['dbPort'] . "&dbUsername=" . $dataSetup['input']['dbUsername'] . "&dbName=" . $dataSetup['input']['dbName']);
-        }
-
-        // SQL-Query bereitstellen
-        $columns = "`userID`, `" . implode("`, `", array_keys($dataSetup['input'])) . "`";
-        $values = "'" . $_SESSION['userID'] . "', '" . implode("', '", $dataSetup['input']) . "'";
-        $sqlquery = "INSERT INTO `databases` (" . $columns . ") VALUES (" . $values . ")";
-
-        // SQL-Query ausführen und überprüfen
-        if (!mysqli_query($config['link'], $sqlquery)) {
-            echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
             exit();
+        } else {
+            // Datenbankangaben speichern
+            $columns = "`userID`, `" . implode("`, `", array_keys($dataSetup['input'])) . "`";
+            $values = "'" . $_SESSION['userID'] . "', '" . implode("', '", $dataSetup['input']) . "'";
+            $sqlquery = "INSERT INTO `databases` (" . $columns . ") VALUES (" . $values . ")";
+
+            // SQL-Query ausführen und überprüfen
+            if (!mysqli_query($config['link'], $sqlquery)) {
+                echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
+                exit();
+            }
+            // Bestätigung
+            ?>
+
+            <h2>Einrichtung abgeschlossen</h2>
+            <p>Es wurde erfolgreich eine Temporäre Verbindung zur angegebenen Datenbank aufgebaut. Es werden noch bereits vorhandene Tabellen aufgelistet:</p>
+            
+            <?php
+            // Auf vorhandene Tabellen abfragen
+            $sqlquery = "SHOW TABLES";
+            $result = mysqli_query($tempLink, $sqlquery);
+            ?>
+
+            <ul class="list-group"></ul>
+            <?php if (mysqli_num_rows($result) >= 1): ?>
+                <?php while ($row = mysqli_fetch_row($result)): ?>
+                    <li class="list-group-item"><?php echo $row[0]; ?></li>
+                <?php endwhile; ?>
+            <?php else: ?>
+                <li class="list-group-item"><i>Keine Tabellen erkannt</i></li>
+            <?php endif; ?>
+            </ul>
+            <?php
         }
         break;
 

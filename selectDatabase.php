@@ -13,7 +13,7 @@ if (!$lsc) {
 
 // Überprüfen ob Submit geklickt wurde
 if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
-    if (!include 'includes/.php') {
+    if (!include 'includes/selectDatabase.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }

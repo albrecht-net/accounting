@@ -67,7 +67,7 @@ switch ($dataSetup['step']) {
         );
 
         // Benutzername überprüfen
-        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 0 AND `username` = '" . $dataSetup['input']['username'] . "'";
+        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 'N' AND `username` = '" . $dataSetup['input']['username'] . "'";
         $result = mysqli_query($config['link'], $sqlquery);
         if (mysqli_num_rows($result) != 1) {
             header("Location: setup.php?step=0&msg=unknownUser");
@@ -148,7 +148,7 @@ switch ($dataSetup['step']) {
         unset($dataSetup['input']['password1']);
         unset($dataSetup['input']['password2']);
 
-        $dataSetup['input']['activation'] = 1;
+        $dataSetup['input']['activation'] = 'Y';
 
         // SQL-Query bereitstellen
         $set = [];

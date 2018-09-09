@@ -6,7 +6,7 @@ $dataInput = array(
 );
 
 // SQL-Query bereitstellen
-$sqlquery = "SELECT `username`, `password`, `userID` FROM `users` WHERE `username` = '" . $dataInput['username'] . "' AND `activation` = 1 AND `status` = 1";
+$sqlquery = "SELECT `username`, `password`, `userID` FROM `users` WHERE `username` = '" . $dataInput['username'] . "' AND `activation` = 'Y' AND `status` = 'Y'";
 $result = mysqli_query($config['link'], $sqlquery);
 
 // Benutzer abfragen

@@ -1,6 +1,15 @@
 <?php
+// Konfiguration einbinden
+require_once 'config.php';
 
+// Prüfen ob Benutzer angemeldet
+require 'includes/loginSessionCheck.inc.php';
+if (!$lsc) {
+    header('Location: login.php?rd=' . urlencode('buchung.php'));
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>

@@ -26,10 +26,10 @@ if (mysqli_num_rows($result) != 1) {
 
         // Weiterleitung
         if (empty($_GET['rd'])) {
-            header('Location: index.php');
+            header('Location: selectDatabase.php');
         } else {
             $rd = $_GET['rd'];
-            header('Location: ' . $rd);
+            header('Location: selectDatabase.php?rd=' . urlencode($rd));
         }
         exit();
     }

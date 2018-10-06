@@ -8,6 +8,14 @@ if (!$lsc) {
     header('Location: ../login.php?rd=' . urlencode('settings/account.php'));
     exit();
 }
+
+// Überprüfen ob Submit geklickt wurde
+if (isset($_POST['submitChangePassword']) && !empty($_POST['oldPassword'])) {
+    if (!include '../includes/changePassword.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -74,14 +82,14 @@ if (!$lsc) {
             <input class="form-control" type="password" id="oldPassword" name="oldPassword" required>
         </div>
         <div class="form-group">
-            <label for="newPassword">Neues Passwort</label>
-            <input class="form-control" type="password" id="newPassword" name="newPassword" required>
+            <label for="password1">Neues Passwort</label>
+            <input class="form-control" type="password" id="password1" name="password1" required>
         </div>
         <div class="form-group">
-            <label for="newPasswordConfirmation">Neues Passwort bestätigen</label>
-            <input class="form-control" type="password" id="newPasswordConfirmation" name="newPasswordConfirmation" required>
+            <label for="password2">Neues Passwort bestätigen</label>
+            <input class="form-control" type="password" id="password2" name="password2" required>
         </div>
-        <button type="submit" class="btn btn-primary" name="submit">Passwort ändern</button>
+        <button type="submit" class="btn btn-primary" name="submitChangePassword">Passwort ändern</button>
     </form>
 </body>
 </html>

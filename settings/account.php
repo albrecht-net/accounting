@@ -1,11 +1,11 @@
 <?php
 // Konfiguration einbinden
-require_once 'config.php';
+require_once '../config.php';
 
 // Prüfen ob Benutzer angemeldet
-require 'includes/loginSessionCheck.inc.php';
+require '../includes/loginSessionCheck.inc.php';
 if (!$lsc) {
-    header('Location: login.php?rd=' . urlencode('settings.php'));
+    header('Location: ../login.php?rd=' . urlencode('settings/account.php'));
     exit();
 }
 ?>
@@ -36,10 +36,10 @@ if (!$lsc) {
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
+                    <a class="nav-link" href="../index.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="buchung.php">Neue Buchung</a>
+                    <a class="nav-link" href="../buchung.php">Neue Buchung</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -59,16 +59,16 @@ if (!$lsc) {
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
-                        <a class="dropdown-item disabled" href="settings.php">Einstellungen</a>
+                        <a class="dropdown-item" href="account.php">Einstellungen</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php">Abmelden</a>
+                        <a class="dropdown-item" href="./logout.php">Abmelden</a>
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
     <h3>Passwort ändern</h3>
-    <form method="POST" action="settings.php">
+    <form method="POST" action="account.php">
         <div class="form-group">
             <label for="oldPassword">Bisheriges Passwort</label>
             <input class="form-control" type="password" id="oldPassword" name="oldPassword" required>

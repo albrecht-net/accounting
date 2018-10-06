@@ -31,20 +31,23 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
     <title>Login</title>
 </head>
 <body>
+    <!-- Statusmeldungen -->
+    <?php if ($msg == 'invalid'): ?>
+    <div class="alert alert-danger" role="alert">
+        Falsches Kennwort oder Benutzername
+    </div>
+    <?php elseif ($_GET['loggedout']): ?>
+    <div class="alert alert-primary" role="alert">
+        Benutzer erfolgreich abgemeldet
+    </div>
+    <?php endif ?>
+
+    <!-- Login Formular -->
     <?php if (empty($_GET['rd'])): ?>
     <form action="login.php" method="POST">
     <?php else: ?>
     <form action="login.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
     <?php endif; ?>
-        <?php if ($dataInput['invalid']): ?>
-            <div class="alert alert-danger" role="alert">
-                Falsches Kennwort oder Benutzername
-            </div>
-        <?php elseif ($_GET['loggedout']): ?>
-            <div class="alert alert-primary" role="alert">
-                Benutzer erfolgreich abgemeldet
-            </div>
-        <?php endif ?>
         <div class="form-group">
             <label for="inputUsername">Benutzername</label>
             <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>">

@@ -10,7 +10,7 @@ if (!$lsc) {
 }
 
 // Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submitChangePassword']) && !empty($_POST['oldPassword'])) {
+if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword'])) {
     if (!include '../includes/changePassword.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -78,18 +78,38 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['oldPassword'])) {
     <h3>Passwort ändern</h3>
     <form method="POST" action="account.php">
         <div class="form-group">
-            <label for="oldPassword">Bisheriges Passwort</label>
-            <input class="form-control" type="password" id="oldPassword" name="oldPassword" required>
+            <label for="inputOldPassword">Bisheriges Passwort</label>
+            <?php if ($msg['oldPasswordInvalid']): ?>
+                <input type="password" class="form-control is-invalid" name="inputOldPassword" id="inputOldPassword" placeholder="Passwort wiederholen" required>
+                <div class="invalid-feedback">
+                    Falsches Kennwort
+                </div>
+            <?php else: ?>
+                <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" placeholder="Passwort wiederholen" required>
+            <?php endif; ?>
         </div>
         <div class="form-group">
-            <label for="password1">Neues Passwort</label>
-            <input class="form-control" type="password" id="password1" name="password1" required>
+            <label for="inputPassword1">Neues Passwort</label>
+            <?php if ($msg['noPasswordMatch']): ?>
+                <input type="password" class="form-control is-invalid" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
+            <?php else: ?>
+                <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" placeholder="Passwort" required>
+            <?php endif; ?>
         </div>
         <div class="form-group">
-            <label for="password2">Neues Passwort bestätigen</label>
-            <input class="form-control" type="password" id="password2" name="password2" required>
+            <label for="inputPassword2">Neues Passwort bestätigen</label>
+            <?php if ($msg['noPasswordMatch']): ?>
+                <input type="password" class="form-control is-invalid" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
+                <div class="invalid-feedback">
+                    Passwörter stimmen nicht überein.
+                </div>
+            <?php else: ?>
+                <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" placeholder="Passwort wiederholen" required>
+            <?php endif; ?>
         </div>
         <button type="submit" class="btn btn-primary" name="submitChangePassword">Passwort ändern</button>
     </form>
 </body>
 </html>
+
+                

@@ -1,14 +1,14 @@
 <?php
 // Array Eingabe
 $dataInput = array(
-    'oldPassword' => $_POST['oldPassword'],
-    'password1' => $_POST['password1'],
-    'password2' => $_POST['password2']
+    'oldPassword' => $_POST['inputOldPassword'],
+    'password1' => $_POST['inputPassword1'],
+    'password2' => $_POST['inputPassword2']
 );
 
 // Passwortübereinstimmung prüfen
 if ($dataInput['password1'] != $dataInput['password2']) {
-    $dataInput['msg'] = 'noPasswordMatch';
+    $msg['noPasswordMatch'] = 1;
 } else {
     // SQL-Query bereitstellen
     $sqlquery = "SELECT `password` FROM `users` WHERE `userID` = '" . $_SESSION['userID'] . "'";
@@ -23,7 +23,7 @@ if ($dataInput['password1'] != $dataInput['password2']) {
 
         // Passwort validieren
         if (!password_verify($dataInput['oldPassword'], $dataDb['password'])) {
-            $dataInput['msg'] = 'oldPasswordInvalid';
+            $msg['oldPasswordInvalid'] = 1;
         } else {
             // Passwort Hash
             $dataInput['password'] = password_hash($dataInput['password1'], PASSWORD_DEFAULT);
@@ -44,6 +44,11 @@ if ($dataInput['password1'] != $dataInput['password2']) {
                 echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
                 exit();
             }
+
+            // Benutzer abmelden
+            session_start();
+            session_destroy();
+            header("Location: ../login.php?passwordchanged=1");
         }
     }
 }

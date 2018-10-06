@@ -40,6 +40,10 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
     <div class="alert alert-primary" role="alert">
         Benutzer erfolgreich abgemeldet
     </div>
+    <?php elseif ($_GET['passwordchanged']): ?>
+    <div class="alert alert-primary" role="alert">
+        Das Passwort wurde erfolgreich geändert. Bitte erneut Anmelden.
+    </div>
     <?php endif ?>
 
     <!-- Login Formular -->

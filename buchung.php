@@ -8,6 +8,9 @@ if (!$lsc) {
     header('Location: login.php?rd=' . urlencode('buchung.php'));
     exit();
 }
+
+// Mit Ziel Datenbank verbinden
+require_once 'includes/userDbConnect.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -74,8 +77,21 @@ if (!$lsc) {
         </div>
         <div class="form-group">
             <label for="empfänger">Empfänger</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `empfängerID`, `bezeichnung` FROM `empfänger` WHERE `aktiv` = 'Y' ORDER BY `bezeichnung` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="empfänger" name="empfänger" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="empfänger" name="empfänger">
-                <option>1</option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">
@@ -92,14 +108,40 @@ if (!$lsc) {
         </div>
         <div class="form-group">
             <label for="kontoSoll">Konto Soll</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="kontoSoll" name="kontoSoll" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="kontoSoll" name="kontoSoll">
-                <option>1</option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="kontoHaben">Konto Haben</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="kontoHaben" name="kontoHaben" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="kontoHaben" name="kontoHaben">
-                <option>1</option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">
@@ -110,8 +152,21 @@ if (!$lsc) {
         </div>
         <div class="form-group">
             <label for="klassifikation1">Klassifikation 1</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="klassifikation1" name="klassifikation1" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="klassifikation1" name="klassifikation1">
-                <option>1</option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">

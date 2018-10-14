@@ -88,8 +88,9 @@ require_once 'includes/userDbConnect.inc.php';
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="empfänger" name="empfänger">
+                <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['empfängerID']; ?>"><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
@@ -119,8 +120,9 @@ require_once 'includes/userDbConnect.inc.php';
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="kontoSoll" name="kontoSoll">
+                <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
@@ -138,16 +140,31 @@ require_once 'includes/userDbConnect.inc.php';
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="kontoHaben" name="kontoHaben">
+                <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="periode">Periode</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `periodeID`, `wert` FROM `periode` ORDER BY `wert` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="periode" name="periode" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="periode" name="periode">
-                <option>1</option>
+                <option></option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option value="<?php echo $row['periodeID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">
@@ -163,27 +180,56 @@ require_once 'includes/userDbConnect.inc.php';
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="klassifikation1" name="klassifikation1">
+                <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="klassifikation2">Klassifikation 2</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="klassifikation2" name="klassifikation2" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="klassifikation2" name="klassifikation2">
-                <option>1</option>
+                <option></option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-group">
             <label for="klassifikation3">Klassifikation 3</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="klassifikation3" name="klassifikation3" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
             <select class="form-control" id="klassifikation3" name="klassifikation3">
-                <option>1</option>
+                <option></option>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
             </select>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1">
-            <label class="form-check-label" for="abstimmung">Absstimmung</label>
+            <label class="form-check-label" for="abstimmung">Abstimmung</label>
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Anmelden</button>
     </form>

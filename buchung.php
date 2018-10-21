@@ -11,6 +11,14 @@ if (!$lsc) {
 
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
+
+// Überprüfen ob Submit geklickt wurde
+if (isset($_POST['submit'])) {
+    if (!include 'includes/saveBuchung.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -64,12 +72,12 @@ require_once 'includes/userDbConnect.inc.php';
             </ul>
         </div>
     </nav>
-    <form>
-        <div class="form-group">
+    <form action="buchung.php" method="POST">
+        <div class="form-group"> <!-- Buchungsdatum -->
             <label for="datum">Buchunsdatum</label>
             <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>">
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Empfänger -->
             <label for="empfänger">Empfänger</label>
             <?php
             // SQL-Query bereitstellen
@@ -89,19 +97,19 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Rechnungsummer -->
             <label for="reNummer">Rechnungsnummer</label>
             <input class="form-control" type="text" id="reNummer" name="reNummer">
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Beschreibung -->
             <label for="buchungstext">Beschreibung</label>
             <input class="form-control" type="text" id="buchungstext" name="buchungstext">
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Betrag -->
             <label for="totalbetrag">Betrag</label>
-            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01">
+            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en">
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Konto Soll -->
             <label for="kontoSoll">Konto Soll</label>
             <?php
             // SQL-Query bereitstellen
@@ -121,7 +129,7 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group">  <!-- Konto Haben -->
             <label for="kontoHaben">Konto Haben</label>
             <?php
             // SQL-Query bereitstellen
@@ -141,7 +149,7 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group">  <!-- Periode -->
             <label for="periode">Periode</label>
             <?php
             // SQL-Query bereitstellen
@@ -161,7 +169,7 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group">  <!-- Klassifikation 1 -->
             <label for="klassifikation1">Klassifikation 1</label>
             <?php
             // SQL-Query bereitstellen
@@ -181,7 +189,7 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Klassifikation 2 -->
             <label for="klassifikation2">Klassifikation 2</label>
             <?php
             // SQL-Query bereitstellen
@@ -201,7 +209,7 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-group">
+        <div class="form-group"> <!-- Klassifikation 3 -->
             <label for="klassifikation3">Klassifikation 3</label>
             <?php
             // SQL-Query bereitstellen
@@ -221,11 +229,11 @@ require_once 'includes/userDbConnect.inc.php';
             endif; ?>
             </select>
         </div>
-        <div class="form-check">
+        <div class="form-check"> <!-- Abstimmung -->
             <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1">
             <label class="form-check-label" for="abstimmung">Abstimmung</label>
         </div>
-        <button type="submit" class="btn btn-primary" name="submit">Anmelden</button>
+        <button type="submit" class="btn btn-primary" name="submit">Speichern</button>
     </form>
 
     <!-- jQuery -->

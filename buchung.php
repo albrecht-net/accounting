@@ -22,12 +22,6 @@ require_once 'includes/userDbConnect.inc.php';
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" async></script>
-
     <title>Buchung erfassen</title>
 </head>
 <body>
@@ -105,7 +99,7 @@ require_once 'includes/userDbConnect.inc.php';
         </div>
         <div class="form-group">
             <label for="totalbetrag">Betrag</label>
-            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag">
+            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01">
         </div>
         <div class="form-group">
             <label for="kontoSoll">Konto Soll</label>
@@ -233,5 +227,10 @@ require_once 'includes/userDbConnect.inc.php';
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Anmelden</button>
     </form>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

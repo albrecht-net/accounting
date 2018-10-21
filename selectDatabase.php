@@ -29,12 +29,6 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" async></script>
-
     <title>Datenbank auswählen</title>
 </head>
 <body>
@@ -71,5 +65,10 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
         <p>Es wurde keine Datenbank welche mit Ihrem Account verknüpft ist gefunden!</p>
         <a href="<?php echo $_GET['rd']; ?>" class="btn btn-primary" role="button">OK</a>
     <?php endif; ?>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

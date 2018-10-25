@@ -98,8 +98,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="empfänger" name="empfänger" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="empfänger" name="empfänger">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="empfänger" name="empfänger">
                 <option></option>
@@ -130,8 +130,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="kontoSoll" name="kontoSoll" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="kontoSoll" name="kontoSoll">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="kontoSoll" name="kontoSoll" required>
                 <option></option>
@@ -150,8 +150,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="kontoHaben" name="kontoHaben" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="kontoHaben" name="kontoHaben">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="kontoHaben" name="kontoHaben" required>
                 <option></option>
@@ -170,8 +170,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="periode" name="periode" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="periode" name="periode">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="periode" name="periode">
                 <option></option>
@@ -190,8 +190,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="klassifikation1" name="klassifikation1" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="klassifikation1" name="klassifikation1">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="klassifikation1" name="klassifikation1">
                 <option></option>
@@ -210,8 +210,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="klassifikation2" name="klassifikation2" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="klassifikation2" name="klassifikation2">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="klassifikation2" name="klassifikation2">
                 <option></option>
@@ -230,8 +230,8 @@ if (isset($_POST['submit'])) {
 
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="klassifikation3" name="klassifikation3" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            <select class="form-control" id="klassifikation3" name="klassifikation3">
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="klassifikation3" name="klassifikation3">
                 <option></option>
@@ -249,9 +249,9 @@ if (isset($_POST['submit'])) {
             $result = mysqli_query($userLink, $sqlquery);
 
             // Prüfen ob Datensätze vorhanden
-            if (mysqli_num_rows($result) < 1): ?>
-            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" disabled>
-                <option>Keine Datensätze vorhanden</option>
+            if (mysqli_num_rows($result) > 1): ?>
+            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
+                <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
             <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
@@ -261,7 +261,7 @@ if (isset($_POST['submit'])) {
             </select>
         </div>
         <div class="form-check"> <!-- Abstimmung -->
-            <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1">
+            <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1" disabled>
             <label class="form-check-label" for="abstimmung">Abstimmung</label>
         </div>
         <button type="submit" class="btn btn-primary" name="submit">Speichern</button>

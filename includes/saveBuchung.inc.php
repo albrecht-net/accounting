@@ -13,7 +13,7 @@ $dataInput = array(
     'klassifikation2' => intval($_POST['klassifikation2']),
     'klassifikation3' => intval($_POST['klassifikation3']),
     'buchunsreferenz' => intval($_POST['buchungsreferenz']),
-    'abstimmung' => boolval($_POST['abstimmung'])
+    'abstimmung' => ($_POST['abstimmung'] == 1 ? 'Y' : 0)
 );
 
 // Leere Felder aus Array entfernen

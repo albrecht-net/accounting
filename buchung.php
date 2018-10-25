@@ -249,7 +249,7 @@ if (isset($_POST['submit'])) {
             $result = mysqli_query($userLink, $sqlquery);
 
             // Prüfen ob Datensätze vorhanden
-            if (mysqli_num_rows($result) > 1): ?>
+            if (mysqli_num_rows($result) < 1): ?>
             <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
                 <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>

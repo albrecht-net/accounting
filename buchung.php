@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="empfänger" name="empfänger">
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['empfängerID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['empfängerID']; ?>"<?php echo ($_GET['empfänger'] == $row['empfängerID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
@@ -115,11 +115,11 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="form-group"> <!-- Beschreibung -->
             <label for="buchungstext">Beschreibung</label>
-            <input class="form-control" type="text" id="buchungstext" name="buchungstext">
+            <input class="form-control" type="text" id="buchungstext" name="buchungstext" value="<?php echo $_GET['buchungstext']; ?>">
         </div>
         <div class="form-group"> <!-- Betrag -->
             <label for="totalbetrag">Betrag</label>
-            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" required>
+            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['betrag']; ?>" required>
         </div>
         <div class="form-group"> <!-- Konto Soll -->
             <label for="kontoSoll">Konto Soll</label>
@@ -136,12 +136,12 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="kontoSoll" name="kontoSoll" required>
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
         </div>
-        <div class="form-group">  <!-- Konto Haben -->
+        <div class="form-group"> <!-- Konto Haben -->
             <label for="kontoHaben">Konto Haben</label>
             <?php
             // SQL-Query bereitstellen
@@ -156,12 +156,12 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="kontoHaben" name="kontoHaben" required>
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['kontoID']; ?><?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
         </div>
-        <div class="form-group">  <!-- Periode -->
+        <div class="form-group"> <!-- Periode -->
             <label for="periode">Periode</label>
             <?php
             // SQL-Query bereitstellen
@@ -176,12 +176,12 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="periode" name="periode">
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['periodeID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['periodeID']; ?>"<?php echo ($_GET['periode'] == $row['periodeID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
         </div>
-        <div class="form-group">  <!-- Klassifikation 1 -->
+        <div class="form-group"> <!-- Klassifikation 1 -->
             <label for="klassifikation1">Klassifikation 1</label>
             <?php
             // SQL-Query bereitstellen
@@ -196,7 +196,7 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="klassifikation1" name="klassifikation1">
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation1'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="klassifikation2" name="klassifikation2">
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation2'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>
@@ -236,7 +236,26 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="klassifikation3" name="klassifikation3">
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['klassifikationID']; ?>"><?php echo $row['bezeichnung']; ?></option>
+                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation3'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                <?php endwhile;
+            endif; ?>
+            </select>
+        </div>
+        <div class="form-group"> <!-- Buchungsreferenz -->
+            <label for="buchungsreferenz">Buchungsreferenz</label>
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT `buchungen`.`buchungID`, `buchungen`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `buchungen`.`totalbetrag` FROM (`buchungen` LEFT JOIN `empfänger` ON(`buchungen`.`empfänger` = `empfänger`.`empfängerID`)) WHERE `buchungen`.`abstimmung` = 'N' ORDER BY `buchungen`.`datumErstellt` ASC";
+            $result = mysqli_query($userLink, $sqlquery);
+
+            // Prüfen ob Datensätze vorhanden
+            if (mysqli_num_rows($result) < 1): ?>
+            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" disabled>
+                <option>Keine Datensätze vorhanden</option>
+            <?php else: ?>
+            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
+                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                <option value="<?php echo $row['buchungsID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>

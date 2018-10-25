@@ -32,9 +32,7 @@ if (count($dataInput) > 0) {
 
     // SQL-Query ausführen und überprüfen
     if (!mysqli_query($userLink, $sqlquery)) {
-        echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($userLink);
         $msg['sqlError'] = 1;
-        exit();
     } else {
         $msg['success'] = 1;
     }

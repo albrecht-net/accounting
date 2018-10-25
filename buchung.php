@@ -72,10 +72,22 @@ if (isset($_POST['submit'])) {
             </ul>
         </div>
     </nav>
+
+    <!-- Statusmeldungen -->
+    <?php if ($msg['success']): ?>
+    <div class="alert alert-primary" role="alert">
+        Eintrag erfolgreich gespeichert
+    </div>
+    <?php elseif ($msg['sqlError']): ?>
+    <div class="alert alert-danger" role="alert">
+        <?php echo ' MySQL Error: ' . mysqli_error($userLink); ?>
+    </div>
+    <?php endif ?>
+
     <form action="buchung.php" method="POST">
         <div class="form-group"> <!-- Buchungsdatum -->
             <label for="datum">Buchunsdatum</label>
-            <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>">
+            <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
         </div>
         <div class="form-group"> <!-- Empfänger -->
             <label for="empfänger">Empfänger</label>
@@ -107,7 +119,7 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="form-group"> <!-- Betrag -->
             <label for="totalbetrag">Betrag</label>
-            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en">
+            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" required>
         </div>
         <div class="form-group"> <!-- Konto Soll -->
             <label for="kontoSoll">Konto Soll</label>
@@ -121,7 +133,7 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="kontoSoll" name="kontoSoll" disabled>
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
-            <select class="form-control" id="kontoSoll" name="kontoSoll">
+            <select class="form-control" id="kontoSoll" name="kontoSoll" required>
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
@@ -141,7 +153,7 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="kontoHaben" name="kontoHaben" disabled>
                 <option>Keine Datensätze vorhanden</option>
             <?php else: ?>
-            <select class="form-control" id="kontoHaben" name="kontoHaben">
+            <select class="form-control" id="kontoHaben" name="kontoHaben" required>
                 <option></option>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                 <option value="<?php echo $row['kontoID']; ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>

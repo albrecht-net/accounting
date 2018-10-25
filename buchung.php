@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
             <label for="periode">Periode</label>
             <?php
             // SQL-Query bereitstellen
-            $sqlquery = "SELECT `periodeID`, `wert` FROM `periode` ORDER BY `wert` ASC";
+            $sqlquery = "SELECT `periodeID`, `bezeichnung` FROM `periode` ORDER BY `bezeichnung` ASC";
             $result = mysqli_query($userLink, $sqlquery);
 
             // Prüfen ob Datensätze vorhanden

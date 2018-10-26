@@ -12,8 +12,11 @@ $dataInput = array(
     'klassifikation1' => intval($_POST['klassifikation1']),
     'klassifikation2' => intval($_POST['klassifikation2']),
     'klassifikation3' => intval($_POST['klassifikation3']),
-    'buchunsreferenz' => intval($_POST['buchungsreferenz']),
     'abstimmung' => ($_POST['abstimmung'] == 1 ? 'Y' : 0)
+);
+
+$dataUpdateAbst = array(
+    'buchungsreferenz' => (isset($_POST['buchungsreferenz']) ? array_map(intval, $_POST['buchungsreferenz']) : NULL)
 );
 
 // Leere Felder aus Array entfernen

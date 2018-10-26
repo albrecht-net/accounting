@@ -19,7 +19,7 @@ $dataUpdateAbst = array(
     'buchungsreferenz' => (isset($_POST['buchungsreferenz']) ? array_map(intval, $_POST['buchungsreferenz']) : NULL)
 );
 
-// Leere Felder aus Array entfernen
+// Leere Felder aus Eingabe Array entfernen
 $dataInput = array_diff($dataInput, array(NULL, '', 0));
 
 // Prüfen ob Eingabe vorhanden
@@ -36,6 +36,21 @@ if (count($dataInput) > 0) {
     // SQL-Query ausführen und überprüfen
     if (!mysqli_query($userLink, $sqlquery)) {
         $msg['sqlError'] = 1;
+
+    // Prüfen ob Abstimmung gewählt
+    } elseif (count($dataUpdateAbst['buchungsreferenz']) > 0) {
+        // ID der erstellten Buchung abrufen
+        $refID = mysqli_insert_id($userLink);
+
+        // SQL-Query bereitstellen
+        $sqlquery = "UPDATE `buchungen` SET `buchungen`.`buchungsreferenz` = ". $refID .", `buchungen`.`abstimmung` = 'Y' WHERE `buchungen`.`buchungID` IN (" . implode(',', $dataUpdateAbst['buchungsreferenz']) . ") AND `buchungen`.`abstimmung` = 'N'";
+
+        // SQL-Query ausführen und überprüfen
+        if (!mysqli_query($userLink, $sqlquery)) {
+            $msg['sqlError'] = 1;
+        } else {
+            $msg['success'] = 1;
+        }
     } else {
         $msg['success'] = 1;
     }

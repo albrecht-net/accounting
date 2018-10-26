@@ -253,9 +253,9 @@ if (isset($_POST['submit'])) {
             <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
                 <option disabled>Keine Datensätze vorhanden</option>
             <?php else: ?>
-            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
+            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                <option value="<?php echo $row['buchungsID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
+                <option value="<?php echo $row['buchungID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
                 <?php endwhile;
             endif; ?>
             </select>

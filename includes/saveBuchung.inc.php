@@ -35,7 +35,7 @@ if (count($dataInput) > 0) {
 
     // SQL-Query ausführen und überprüfen
     if (!mysqli_query($userLink, $sqlquery)) {
-        $msg['sqlError'] = 1;
+        $msg['sqlInsertError'] = 1;
 
     // Prüfen ob Abstimmung gewählt
     } elseif (count($dataUpdateAbst['buchungsreferenz']) > 0) {
@@ -47,7 +47,7 @@ if (count($dataInput) > 0) {
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
-            $msg['sqlError'] = 1;
+            $msg['sqlUpdateError'] = 1;
         } else {
             $msg['success'] = 1;
         }

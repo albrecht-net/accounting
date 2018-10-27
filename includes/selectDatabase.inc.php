@@ -17,7 +17,9 @@ if (mysqli_num_rows($result) != 1) {
     $dataDb = mysqli_fetch_assoc($result);
 
     // Datenbank ID in Session schreiben
-    $_SESSION['dbID'] = $dataDb['dbID'];
+    $_SESSION['userDb']['dbID'] = $dataDb['dbID'];
+
+    $_SESSION['userDb']['userDbSet'] = 1;
 
     // Weiterleitung
     if (empty($_GET['rd'])) {

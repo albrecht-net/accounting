@@ -24,6 +24,9 @@ if (mysqli_num_rows($result) != 1) {
         $_SESSION['userID'] = $dataDb['userID'];
         $_SESSION['username'] = $dataDb['username'];
 
+        // Benutzerdatenbank
+        $_SESSION['userDb']['userDbSet'] = 0;
+
         // Weiterleitung
         if (empty($_GET['rd'])) {
             header('Location: selectDatabase.php');

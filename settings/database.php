@@ -69,20 +69,20 @@ if (isset($_POST['submitAddDb'])) {
             </ul>
         </div>
     </nav>
-    
+
     <h3>Datenbank hinzufügen</h3>
 
     <!-- Statusmeldungen -->
-    <?php if ($msg['success']): ?>
+    <?php if ($msg['successAddDb']): ?>
     <div class="alert alert-primary" role="alert">
         Neue Datenbank erfolgreich gespeichert
     </div>
-    <?php elseif ($msg['sqlError']): ?>
+    <?php elseif ($msg['tempLinkError']): ?>
     <div class="alert alert-danger" role="alert">
         <h4 class="alert-heading">Verbindung fehlgeschlagen!</h4>
         <p>Es wurde vergeblich versucht eine temporäre Verbindung zur angegebenen Datenbank aufzubauen. Bitte überprüfen Sie die Angaben.</p>
         <hr>
-        <p class="mb-0">Folgender Fehler wurde von MySQL ausgegeben: <i><?php echo mysqli_error($config['link']); ?></i></p>
+        <p class="mb-0">Folgender Fehler wurde von MySQL ausgegeben: <i><?php echo mysqli_connect_error($tempLink); ?></i></p>
     </div>
     <?php endif; ?>
 

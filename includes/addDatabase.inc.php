@@ -31,6 +31,10 @@ if (!$tempLink) {
         exit();
     }
 
+    // Auf vorhandene Tabellen abfragen
+    $sqlquery = "SHOW TABLES";
+    $result = mysqli_query($tempLink, $sqlquery);
+
     // Temporäre Datenbankverbindung schliessen
     mysqli_close($tempLink);
 

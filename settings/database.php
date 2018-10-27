@@ -75,7 +75,20 @@ if (isset($_POST['submitAddDb'])) {
     <!-- Statusmeldungen -->
     <?php if ($msg['successAddDb']): ?>
     <div class="alert alert-primary" role="alert">
-        Neue Datenbank erfolgreich gespeichert
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>        
+        <h4>Neue Datenbank erfolgreich gespeichert</h4>
+        <?php if (mysqli_num_rows($result) >= 1): ?>
+        <p>Es wurden folgende Tabellen in der Datenbank gefunden:<p>
+        <ul class="list-unstyled">
+            <?php while ($row = mysqli_fetch_row($result)): ?>
+            <li><?php echo $row[0]; ?></li>
+            <?php endwhile; ?>
+        </ul>
+        <?php else: ?>
+        <p><i>In dieser Datenbank wurden keine Tabellen erkannt</i></p>
+        <?php endif; ?>
     </div>
     <?php elseif ($msg['tempLinkError']): ?>
     <div class="alert alert-danger" role="alert">

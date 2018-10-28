@@ -3,18 +3,8 @@ session_start();
 
 // Konfiguration einbinden
 require_once 'config.php';
-
-// Array Eingabe
-$dataSetup = array(
-    'step' => $_GET['step'],
-    'tables' => array(
-        'users',
-        'databases'
-    )
-);
-
-// HTML Header
 ?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -28,7 +18,7 @@ $dataSetup = array(
 </head>
 <body>
 <?php
-switch ($dataSetup['step']) {
+switch (intval($_GET['step'])) {
     case (0): // Willkommensseite
         ?>
         <h2>Willkommen bei der Datenbank basierten Buchhaltung</h2>
@@ -56,11 +46,11 @@ switch ($dataSetup['step']) {
         }
 
         $dataSetup['input'] = array(
-            'username' => mysqli_real_escape_string($config['link'], $_POST['inputUsername'])
+            'username' => mysqli_real_escape_string($config['link'], trim($_POST['inputUsername']))
         );
 
         // Benutzername überprüfen
-        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 'N' AND `username` = '" . $dataSetup['input']['username'] . "'";
+        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 'N' AND `status` = 'Y' AND `username` = '" . $dataSetup['input']['username'] . "'";
         $result = mysqli_query($config['link'], $sqlquery);
         if (mysqli_num_rows($result) != 1) {
             header("Location: setup.php?step=0&msg=unknownUser");
@@ -118,7 +108,7 @@ switch ($dataSetup['step']) {
         }
         
         $dataSetup['input'] = array(
-            'email' => mysqli_real_escape_string($config['link'], strtolower($_POST['inputEmail'])),
+            'email' => mysqli_real_escape_string($config['link'], trim(strtolower($_POST['inputEmail']))),
             'password1' => $_POST['inputPassword1'],
             'password2' => $_POST['inputPassword2']
         );
@@ -159,118 +149,15 @@ switch ($dataSetup['step']) {
         // Setup Session schliessen
         session_destroy();
 
-    case (4): // Aufforderung zum Anmelden
+        // Aufforderung zum Anmelden
         ?>
         <h2>Datenbankverbindung einrichten</h2>
-        <p>Bitte melden Sie sich mit Ihrem Benutzerkonto an</p>
-        <a href="<?php echo 'login.php?rd=' . urlencode('setup.php?step=5'); ?>" class="btn btn-primary btn-lg btn-block" role="button">Anmelden</a>
+        <p>Bitte melden Sie sich mit Ihrem Benutzerkonto an. Um die Einrichtung abzuschliessen, können Sie anschliessend noch Ihre Datenbank hinterlegen.</p>
+        <a href="<?php echo 'login.php?rd=' . urlencode('settings/database.php'); ?>" class="btn btn-primary btn-lg btn-block" role="button">Anmelden</a>
         <?php
         break;
-    case (5): // Formular für Datenbankangaben
-        // Prüfen ob Benutzer angemeldet
-        require 'includes/loginSessionCheck.inc.php';
-        if ($lsc == FALSE) {
-            header('Location: login.php?rd=' . urlencode('setup.php?step=5'));
-        }
 
-        if ($_GET['msg'] == 'mysqlError'): ?>
-            <div class="alert alert-danger" role="alert">
-                <h4 class="alert-heading">Verbindung fehlgeschlagen!</h4>
-                <p>Es wurde vergeblich versucht eine Temporäre Verbindung zur angegebenen Datenbank aufzubauen. Bitte überprüfen Sie die Angaben.</p>
-                <hr>
-                <p class="mb-0">Folgender Fehler wurde von MySQL ausgegeben: <i><?php echo $_GET['mysqliError']; ?></i></p>
-            </div>
-        <?php endif; ?>
-
-
-        <form method="POST" action="setup.php?step=6">
-            <div class="form-group">
-                <label for="dbHost">Server IP oder Hostname</label>
-                <input type="text" class="form-control" name="dbHost" id="dbHost" placeholder="IP / Hostname" value="<?php echo $_GET['dbHost']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="dbPort">Port</label>
-                <input type="number" class="form-control" name="dbPort" id="dbPort" placeholder="Port" value="<?php echo $_GET['dbPort']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="dbUsername">Benutzername</label>
-                <input type="text" class="form-control" name="dbUsername" id="dbUsername" placeholder="Benutzername" value="<?php echo $_GET['dbUsername']; ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="dbPassword">Passwort</label>
-                <input type="password" class="form-control" name="dbPassword" id="dbPassword" placeholder="Passwort" required>
-                <small id="dbPassword" class="form-text text-muted">Hinweis: Das Passwort wird in Klartext in der Datenbank gespeichert! Verwenden Sie einen Datenbank-Benutzer mit eingeschränkten Rechten.</small>
-            </div>
-            <div class="form-group">
-                <label for="dbName">Datenbankname</label>
-                <input type="text" class="form-control" name="dbName" id="dbName" placeholder="Datenbankname" value="<?php echo $_GET['dbName']; ?>" required>
-            </div>
-            <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
-        </form>
-        <?php
-        break;
-    case (6): // Datenbankangaben in DB speichern
-        // Prüfen ob Benutzer angemeldet
-        require 'includes/loginSessionCheck.inc.php';
-        if ($lsc == FALSE) {
-            header('Location: login.php?rd=' . urlencode('setup.php?step=5'));
-        }
-
-        $dataSetup['input'] = array(
-            'dbHost' => mysqli_real_escape_string($config['link'], strtolower($_POST['dbHost'])),
-            'dbPort' => $_POST['dbPort'],
-            'dbUsername' => mysqli_real_escape_string($config['link'], strtolower($_POST['dbUsername'])),
-            'dbPassword' => $_POST['dbPassword'],
-            'dbName' => mysqli_real_escape_string($config['link'], $_POST['dbName'])
-        );
-
-        // Port Datentyp auf int festlegen
-        settype($dataSetup['input']['dbPort'], 'int');
-
-        // Mit der Datenbank verbinden
-        $tempLink = mysqli_connect($dataSetup['input']['dbHost'] . ':' . $dataSetup['input']['dbPort'], $dataSetup['input']['dbUsername'], $dataSetup['input']['dbPassword'], $dataSetup['input']['dbName']);
-
-        // Verbindung überprüfen
-        if (!$tempLink) {
-            header("Location: setup.php?step=5&msg=mysqlError&mysqliError=" . mysqli_connect_error() . "&dbHost=" . $dataSetup['input']['dbHost'] . "&dbPort=" . $dataSetup['input']['dbPort'] . "&dbUsername=" . $dataSetup['input']['dbUsername'] . "&dbName=" . $dataSetup['input']['dbName']);
-            exit();
-        } else {
-            // Datenbankangaben speichern
-            $columns = "`userID`, `" . implode("`, `", array_keys($dataSetup['input'])) . "`";
-            $values = "'" . $_SESSION['userID'] . "', '" . implode("', '", $dataSetup['input']) . "'";
-            $sqlquery = "INSERT INTO `databases` (" . $columns . ") VALUES (" . $values . ")";
-
-            // SQL-Query ausführen und überprüfen
-            if (!mysqli_query($config['link'], $sqlquery)) {
-                echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
-                exit();
-            }
-            // Bestätigung
-            ?>
-
-            <h2>Einrichtung abgeschlossen</h2>
-            <p>Es wurde erfolgreich eine Temporäre Verbindung zur angegebenen Datenbank aufgebaut. Es werden noch bereits vorhandene Tabellen aufgelistet:</p>
-            
-            <?php
-            // Auf vorhandene Tabellen abfragen
-            $sqlquery = "SHOW TABLES";
-            $result = mysqli_query($tempLink, $sqlquery);
-            ?>
-
-            <ul class="list-group"></ul>
-            <?php if (mysqli_num_rows($result) >= 1): ?>
-                <?php while ($row = mysqli_fetch_row($result)): ?>
-                    <li class="list-group-item"><?php echo $row[0]; ?></li>
-                <?php endwhile; ?>
-            <?php else: ?>
-                <li class="list-group-item"><i>Keine Tabellen erkannt</i></li>
-            <?php endif; ?>
-            </ul>
-            <?php
-        }
-        break;
-
-    default: // Definiert Aktion bei einem undefiniertem Schritt
+    default: // Aktion bei einem undefiniertem Schritt
         header("Location: setup.php?step=0");
 }
 // HTML Footer

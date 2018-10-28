@@ -59,11 +59,21 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
                 <label class="form-check-label" for="saveDbSelection">Auswahl speichern</label>
             </div>
             <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
+
+            <?php if (empty($_GET['rd'])): ?>
+            <a href="index.php" class="btn btn-secondary" role="button">Überspringen</a>
+            <?php else: ?>
+            <a href="<?php echo $_GET['rd']; ?>" class="btn btn-secondary" role="button">Überspringen</a>
+            <?php endif ?>
         </form>
 
     <?php else: ?>
         <p>Es wurde keine Datenbank welche mit Ihrem Account verknüpft ist gefunden!</p>
+        <?php if (empty($_GET['rd'])): ?>
+        <a href="index.php" class="btn btn-primary" role="button">OK</a>
+        <?php else: ?>
         <a href="<?php echo $_GET['rd']; ?>" class="btn btn-primary" role="button">OK</a>
+        <?php endif ?>
     <?php endif; ?>
 
     <!-- jQuery -->

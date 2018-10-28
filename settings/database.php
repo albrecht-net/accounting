@@ -70,6 +70,16 @@ if (isset($_POST['submitAddDb'])) {
         </div>
     </nav>
 
+    <!-- Settings Navigation -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="account.php">Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="database.php">Datenbank</a>
+        </li>
+    </ul>
+
     <h3>Datenbank hinzufügen</h3>
 
     <!-- Statusmeldungen -->

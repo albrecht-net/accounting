@@ -69,7 +69,19 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
             </ul>
         </div>
     </nav>
+
+    <!-- Settings Navigation -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="account.php">Account</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="database.php">Datenbank</a>
+        </li>
+    </ul>
+
     <h3>Passwort ändern</h3>
+    
     <form method="POST" action="account.php">
         <div class="form-group">
             <label for="inputOldPassword">Bisheriges Passwort</label>

@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Neue Buchung <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
-                        <a class="dropdown-item disabled" href="#">Einstellungen</a>
+                        <a class="dropdown-item" href="settings/account.php">Einstellungen</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="logout.php">Abmelden</a>
                     </div>

@@ -63,7 +63,7 @@ if (isset($_POST['submitAddDb'])) {
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
                         <a class="dropdown-item" href="account.php">Einstellungen</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="./logout.php">Abmelden</a>
+                        <a class="dropdown-item" href="../logout.php">Abmelden</a>
                     </div>
                 </li>
             </ul>

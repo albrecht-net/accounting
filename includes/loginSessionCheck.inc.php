@@ -12,7 +12,7 @@ if (empty($dataSession['userID']) || empty($dataSession['username'])) {
     $lsc = FALSE;
 } elseif (isset($dataSession['userID']) && isset($dataSession['username'])) {
 	// SQL-Query bereitstellen
-	$sqlquery = "SELECT * FROM `users` WHERE `userID` = '" . $dataSession['userID'] . "' AND `username` = '" . $dataSession['username'] . "'";
+	$sqlquery = "SELECT * FROM `users` WHERE `userID` = '" . $dataSession['userID'] . "' AND `username` = '" . $dataSession['username'] . "' AND `activation` = 'Y' AND `status` = 'Y'";
     
 	// Prüft ob Sessionangaben mit Datenbank übereinstimmt
 	if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) != 1) {

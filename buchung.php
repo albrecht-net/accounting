@@ -73,10 +73,9 @@ if (isset($_POST['submit'])) {
         </div>
     </nav>
 
-    
+    <div class="container">
     <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
 
-        <!-- Statusmeldungen -->
         <?php if ($msg['success']): ?>
         <div class="alert alert-primary" role="alert">
             Eintrag erfolgreich gespeichert
@@ -91,194 +90,212 @@ if (isset($_POST['submit'])) {
         </div>
         <?php endif ?>
 
-        <form action="buchung.php" method="POST">
-            <div class="form-group"> <!-- Buchungsdatum -->
-                <label for="datum">Buchunsdatum</label>
-                <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
-            </div>
-            <div class="form-group"> <!-- Empfänger -->
-                <label for="empfänger">Empfänger</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `empfängerID`, `bezeichnung` FROM `empfänger` WHERE `aktiv` = 'Y' ORDER BY `bezeichnung` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
+        <div class="row">
+            <div class="col-12">
+                <h3 class="py-3">Neue Buchung erfassen</h3>
+                <form action="buchung.php" method="POST">
+                    <div class="row">
+                        <div class="form-group col-md-3"> <!-- Buchungsdatum -->
+                            <label for="datum">Buchunsdatum</label>
+                            <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
+                        </div>
+                        <div class="form-group col-md-2"> <!-- Periode -->
+                            <label for="periode">Periode</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `periodeID`, `bezeichnung` FROM `periode` ORDER BY `bezeichnung` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
+        
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="periode" name="periode">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="periode" name="periode">
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['periodeID']; ?>"<?php echo ($_GET['periode'] == $row['periodeID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-7"> <!-- Empfänger -->
+                            <label for="empfänger">Empfänger</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `empfängerID`, `bezeichnung` FROM `empfänger` WHERE `aktiv` = 'Y' ORDER BY `bezeichnung` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="empfänger" name="empfänger">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="empfänger" name="empfänger">
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['empfängerID']; ?>"<?php echo ($_GET['empfänger'] == $row['empfängerID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Rechnungsummer -->
-                <label for="reNummer">Rechnungsnummer</label>
-                <input class="form-control" type="text" id="reNummer" name="reNummer">
-            </div>
-            <div class="form-group"> <!-- Beschreibung -->
-                <label for="buchungstext">Beschreibung</label>
-                <input class="form-control" type="text" id="buchungstext" name="buchungstext" value="<?php echo $_GET['buchungstext']; ?>">
-            </div>
-            <div class="form-group"> <!-- Betrag -->
-                <label for="totalbetrag">Betrag</label>
-                <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['betrag']; ?>" required>
-            </div>
-            <div class="form-group"> <!-- Konto Soll -->
-                <label for="kontoSoll">Konto Soll</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
-                $result = mysqli_query($userLink, $sqlquery);
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="empfänger" name="empfänger">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="empfänger" name="empfänger">
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['empfängerID']; ?>"<?php echo ($_GET['empfänger'] == $row['empfängerID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5"> <!-- Rechnungsummer -->
+                            <label for="reNummer">Rechnungsnummer</label>
+                            <input class="form-control" type="text" id="reNummer" name="reNummer">
+                        </div>
+                        <div class="form-group col-md-7"> <!-- Beschreibung -->
+                            <label for="buchungstext">Beschreibung</label>
+                            <input class="form-control" type="text" id="buchungstext" name="buchungstext" value="<?php echo $_GET['buchungstext']; ?>">
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5"> <!-- Konto Soll -->
+                            <label for="kontoSoll">Konto Soll</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+                            $result = mysqli_query($userLink, $sqlquery);
+        
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="kontoSoll" name="kontoSoll">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="kontoSoll" name="kontoSoll" required>
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-5"> <!-- Konto Haben -->
+                            <label for="kontoHaben">Konto Haben</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="kontoSoll" name="kontoSoll">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="kontoSoll" name="kontoSoll" required>
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Konto Haben -->
-                <label for="kontoHaben">Konto Haben</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
-                $result = mysqli_query($userLink, $sqlquery);
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="kontoHaben" name="kontoHaben">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="kontoHaben" name="kontoHaben" required>
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['kontoID']; ?><?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2"> <!-- Betrag -->
+                            <label for="totalbetrag">Betrag</label>
+                            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['betrag']; ?>" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4"> <!-- Klassifikation 1 -->
+                            <label for="klassifikation1">Klassifikation 1</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="kontoHaben" name="kontoHaben">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="kontoHaben" name="kontoHaben" required>
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['kontoID']; ?><?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Periode -->
-                <label for="periode">Periode</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `periodeID`, `bezeichnung` FROM `periode` ORDER BY `bezeichnung` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="klassifikation1" name="klassifikation1">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="klassifikation1" name="klassifikation1">
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation1'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4"> <!-- Klassifikation 2 -->
+                            <label for="klassifikation2">Klassifikation 2</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="periode" name="periode">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="periode" name="periode">
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['periodeID']; ?>"<?php echo ($_GET['periode'] == $row['periodeID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Klassifikation 1 -->
-                <label for="klassifikation1">Klassifikation 1</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="klassifikation2" name="klassifikation2">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="klassifikation2" name="klassifikation2">
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation2'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4"> <!-- Klassifikation 3 -->
+                            <label for="klassifikation3">Klassifikation 3</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="klassifikation1" name="klassifikation1">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="klassifikation1" name="klassifikation1">
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation1'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Klassifikation 2 -->
-                <label for="klassifikation2">Klassifikation 2</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="klassifikation3" name="klassifikation3">
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="klassifikation3" name="klassifikation3">
+                                <option></option>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation3'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12"> <!-- Buchungsreferenz -->
+                            <label for="buchungsreferenz">Buchungsreferenz</label>
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `buchungen`.`buchungID`, `buchungen`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `buchungen`.`totalbetrag` FROM (`buchungen` LEFT JOIN `empfänger` ON(`buchungen`.`empfänger` = `empfänger`.`empfängerID`)) WHERE `buchungen`.`abstimmung` = 'N' ORDER BY `buchungen`.`datumErstellt` ASC";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="klassifikation2" name="klassifikation2">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="klassifikation2" name="klassifikation2">
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation2'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) < 1): ?>
+                            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
+                                <option disabled>Keine Datensätze vorhanden</option>
+                            <?php else: ?>
+                            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                <option value="<?php echo $row['buchungID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
+                                <?php endwhile;
+                            endif; ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-check"> <!-- Abstimmung -->
+                        <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1" disabled>
+                        <label class="form-check-label" for="abstimmung">Abstimmung</label>
+                    </div>
+                    <hr class="mb-4">
+                    <button type="submit" class="btn btn-primary" name="submit">Speichern</button>
+                </form>
             </div>
-            <div class="form-group"> <!-- Klassifikation 3 -->
-                <label for="klassifikation3">Klassifikation 3</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
-
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="klassifikation3" name="klassifikation3">
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="klassifikation3" name="klassifikation3">
-                    <option></option>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation3'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-group"> <!-- Buchungsreferenz -->
-                <label for="buchungsreferenz">Buchungsreferenz</label>
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `buchungen`.`buchungID`, `buchungen`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `buchungen`.`totalbetrag` FROM (`buchungen` LEFT JOIN `empfänger` ON(`buchungen`.`empfänger` = `empfänger`.`empfängerID`)) WHERE `buchungen`.`abstimmung` = 'N' ORDER BY `buchungen`.`datumErstellt` ASC";
-                $result = mysqli_query($userLink, $sqlquery);
-
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) < 1): ?>
-                <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
-                    <option disabled>Keine Datensätze vorhanden</option>
-                <?php else: ?>
-                <select class="form-control" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <option value="<?php echo $row['buchungID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
-                    <?php endwhile;
-                endif; ?>
-                </select>
-            </div>
-            <div class="form-check"> <!-- Abstimmung -->
-                <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1" disabled>
-                <label class="form-check-label" for="abstimmung">Abstimmung</label>
-            </div>
-            <button type="submit" class="btn btn-primary" name="submit">Speichern</button>
-        </form>
+        </div>
 
     <?php else: ?>
         <p>Für die aktuelle Sitzung wurde keine Datenbank ausgewählt.</p>
         <p>Sie können eine <a>neue Datenbank hinzufügen</a> oder sich <a>abmelden</a></p>
     <?php endif ?>
 
+    <!-- /container -->
+    </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->

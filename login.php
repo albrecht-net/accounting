@@ -30,7 +30,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
 <body class="text-center">
     <div class="form-group-login">
         <h3>Bitte Anmelden</h3>
-        
+
         <!-- Statusmeldungen -->
         <?php if ($msg == 'invalid'): ?>
         <div class="alert alert-danger" role="alert">
@@ -53,7 +53,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
         <form action="login.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
         <?php endif; ?>
             <div class="form-group">
-                <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>" placeholder="Benutzername" required autofocus>
+                <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>" placeholder="Benutzername" required>
                 <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Passwort" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block" name="submit">Anmelden</button>

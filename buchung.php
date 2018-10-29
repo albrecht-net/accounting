@@ -75,24 +75,22 @@ if (isset($_POST['submit'])) {
 
     <div class="container">
     <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
-
-        <?php if ($msg['success']): ?>
-        <div class="alert alert-primary" role="alert">
-            Eintrag erfolgreich gespeichert
-        </div>
-        <?php elseif ($msg['sqlInsertError']): ?>
-        <div class="alert alert-danger" role="alert">
-            <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
-        </div>
-        <?php elseif ($msg['sqlUpdateError']): ?>
-        <div class="alert alert-danger" role="alert">
-            Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
-        </div>
-        <?php endif ?>
-
+        <h3 class="py-3">Neue Buchung erfassen</h3>
         <div class="row">
             <div class="col-12">
-                <h3 class="py-3">Neue Buchung erfassen</h3>
+                <?php if ($msg['success']): ?>
+                <div class="alert alert-primary" role="alert">
+                    Eintrag erfolgreich gespeichert
+                </div>
+                <?php elseif ($msg['sqlInsertError']): ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
+                </div>
+                <?php elseif ($msg['sqlUpdateError']): ?>
+                <div class="alert alert-danger" role="alert">
+                    Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
+                </div>
+                <?php endif ?>         
                 <form action="buchung.php" method="POST">
                     <div class="row">
                         <div class="form-group col-md-3"> <!-- Buchungsdatum -->

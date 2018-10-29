@@ -74,8 +74,8 @@ if (isset($_POST['submit'])) {
     </nav>
 
     <div class="container">
-    <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
         <h3 class="py-3">Neue Buchung erfassen</h3>
+        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">
             <div class="col-12">
                 <?php if ($msg['success']): ?>
@@ -287,10 +287,9 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-    <?php else: ?>
-        <p>Für die aktuelle Sitzung wurde keine Datenbank ausgewählt.</p>
-        <p>Sie können eine <a>neue Datenbank hinzufügen</a> oder sich <a>abmelden</a></p>
-    <?php endif ?>
+        <?php else: ?>
+        <p class="lead">Für die aktuelle Sitzung wurde keine Datenbank ausgewählt. Sie können eine <a href="settings/database.php">neue Datenbank hinzufügen</a> oder sich <a href="logout.php">abmelden</a></p>
+        <?php endif ?>
 
     <!-- /container -->
     </div>

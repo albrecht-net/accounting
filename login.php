@@ -30,8 +30,6 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
 <body class="text-center">
     <div class="form-group-login">
         <h3>Bitte Anmelden</h3>
-
-        <!-- Statusmeldungen -->
         <?php if ($msg == 'invalid'): ?>
         <div class="alert alert-danger" role="alert">
             Falsches Kennwort oder Benutzername
@@ -45,7 +43,6 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
             Das Passwort wurde erfolgreich geändert. Bitte erneut Anmelden.
         </div>
         <?php endif ?>
-
         <!-- Login Formular -->
         <?php if (empty($_GET['rd'])): ?>
         <form action="login.php" method="POST">

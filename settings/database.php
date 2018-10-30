@@ -85,7 +85,6 @@ if (isset($_POST['submitAddDb'])) {
 
         <div class="row">
             <div class="col-12 mb-5">
-                <!-- Statusmeldungen -->
                 <?php if ($msg['successAddDb']): ?>
                 <div class="alert alert-primary" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

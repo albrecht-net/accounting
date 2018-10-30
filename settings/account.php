@@ -84,7 +84,7 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
         <h3 class="py-3">Passwort ändern</h3>
         
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mb-5">
                 <form method="POST" action="account.php">
                     <div class="form-group">
                         <label for="inputOldPassword">Bisheriges Passwort</label>

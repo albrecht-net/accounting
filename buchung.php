@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
         <h3 class="py-3">Neue Buchung erfassen</h3>
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mb-5">
                 <?php if ($msg['success']): ?>
                 <div class="alert alert-primary" role="alert">
                     Eintrag erfolgreich gespeichert

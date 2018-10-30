@@ -11,14 +11,14 @@ $result = mysqli_query($config['link'], $sqlquery);
 
 // Benutzer abfragen
 if (mysqli_num_rows($result) != 1) {
-    $msg = 'invalid';
+    $msg['invalid'] = 1;
 } else {
     // Abfrage in Array schreiben
     $dataDb = mysqli_fetch_assoc($result);
 
     // Passwort validieren
     if (!password_verify($dataInput['password'], $dataDb['password'])) {
-        $msg = 'invalid';
+        $msg['invalid'] = 1;
     } else {
         // Benutzerdaten in Session schreiben
         $_SESSION['userID'] = $dataDb['userID'];

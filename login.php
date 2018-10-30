@@ -30,7 +30,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
 <body class="text-center">
     <div class="form-group-login">
         <h3>Bitte Anmelden</h3>
-        <?php if ($msg == 'invalid'): ?>
+        <?php if ($msg['invalid']): ?>
         <div class="alert alert-danger" role="alert">
             Falsches Kennwort oder Benutzername
         </div>

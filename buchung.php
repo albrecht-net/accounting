@@ -79,15 +79,24 @@ if (isset($_POST['submit'])) {
         <div class="row">
             <div class="col-12 mb-5">
                 <?php if ($msg['success']): ?>
-                <div class="alert alert-primary" role="alert">
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>    
                     Eintrag erfolgreich gespeichert
                 </div>
                 <?php elseif ($msg['sqlInsertError']): ?>
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>    
                     <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
                 </div>
                 <?php elseif ($msg['sqlUpdateError']): ?>
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>    
                     Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
                 </div>
                 <?php endif ?>         

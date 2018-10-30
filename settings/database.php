@@ -86,7 +86,7 @@ if (isset($_POST['submitAddDb'])) {
         <div class="row">
             <div class="col-12 mb-5">
                 <?php if ($msg['successAddDb']): ?>
-                <div class="alert alert-primary" role="alert">
+                <div class="alert alert-primary alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>        
@@ -103,7 +103,10 @@ if (isset($_POST['submitAddDb'])) {
                     <?php endif; ?>
                 </div>
                 <?php elseif ($msg['tempLinkError']): ?>
-                <div class="alert alert-danger" role="alert">
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> 
                     <h4 class="alert-heading">Verbindung fehlgeschlagen!</h4>
                     <p>Es wurde vergeblich versucht eine temporäre Verbindung zur angegebenen Datenbank aufzubauen. Bitte überprüfen Sie die Angaben.</p>
                     <hr>

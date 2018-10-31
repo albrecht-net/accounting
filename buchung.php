@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
                 <form action="buchung.php" method="POST">
                     <div class="row">
                         <div class="form-group col-md-3"> <!-- Buchungsdatum -->
-                            <label for="datum">Buchunsdatum</label>
+                            <label for="datum">Buchungsdatum</label>
                             <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="form-group col-md-2"> <!-- Periode -->

@@ -162,7 +162,7 @@ if (isset($_POST['submit'])) {
                             <label for="kontoSoll">Konto Soll</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konto`";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
                             <label for="kontoHaben">Konto Haben</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konten`";
+                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konto`";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden

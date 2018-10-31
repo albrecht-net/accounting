@@ -270,7 +270,7 @@ if (isset($_POST['submit'])) {
                             <label for="buchungsreferenz">Buchungsreferenz</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `buchungen`.`buchungID`, `buchungen`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `buchungen`.`totalbetrag` FROM (`buchungen` LEFT JOIN `empfänger` ON(`buchungen`.`empfänger` = `empfänger`.`empfängerID`)) WHERE `buchungen`.`abstimmung` = 'N' ORDER BY `buchungen`.`datumErstellt` ASC";
+                            $sqlquery = "SELECT `journal`.`buchungID`, `journal`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `journal`.`totalbetrag` FROM (`journal` LEFT JOIN `empfänger` ON(`journal`.`empfänger` = `empfänger`.`empfängerID`)) WHERE `journal`.`abstimmung` = 'N' ORDER BY `journal`.`datumErstellt` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden

@@ -31,7 +31,7 @@ if (count($dataInput) > 0) {
     // SQL-Query bereitstellen
     $columns = "`" . implode("`, `", array_keys($dataInput)) . "`, `" . implode("`, `", array_keys($dataFunctions)) . "`";
     $values = "'" . implode("', '", $dataInput) . "', " . implode(", ", $dataFunctions);
-    $sqlquery = "INSERT INTO `buchungen` (" . $columns . ") VALUES (" . $values . ")";
+    $sqlquery = "INSERT INTO `journal` (" . $columns . ") VALUES (" . $values . ")";
 
     // SQL-Query ausführen und überprüfen
     if (!mysqli_query($userLink, $sqlquery)) {
@@ -43,7 +43,7 @@ if (count($dataInput) > 0) {
         $refID = mysqli_insert_id($userLink);
 
         // SQL-Query bereitstellen
-        $sqlquery = "UPDATE `buchungen` SET `buchungen`.`buchungsreferenz` = ". $refID .", `buchungen`.`abstimmung` = 'Y' WHERE `buchungen`.`buchungID` IN (" . implode(',', $dataUpdateAbst['buchungsreferenz']) . ") AND `buchungen`.`abstimmung` = 'N'";
+        $sqlquery = "UPDATE `journal` SET `journal`.`buchungsreferenz` = ". $refID .", `journal`.`abstimmung` = 'Y' WHERE `journal`.`buchungID` IN (" . implode(',', $dataUpdateAbst['buchungsreferenz']) . ") AND `journal`.`abstimmung` = 'N'";
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {

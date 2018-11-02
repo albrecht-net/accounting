@@ -1,5 +1,5 @@
 -- Datenbank Tabellen Vorlage für die Benutzer-Zieldatenbank
--- Gültig ab: Accounting v0.8.0-alpha
+-- Gültig ab: Accounting v0.9.1-alpha
 -- 
 
 -- --------------------------------------------------------

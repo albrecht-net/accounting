@@ -72,7 +72,7 @@ CREATE TABLE `konto` (
   `kontoID` varchar(5) NOT NULL,
   `bezeichnung` varchar(32) NOT NULL,
   `aktiv` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `abstMoeglich` enum('Y','N') NOT NULL DEFAULT 'N',
+  `abstMöglich` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`kontoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -30,7 +30,7 @@ CREATE TABLE `databases` (
 CREATE TABLE `users` (
   `userID` int(32) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
-  `password` varchar(256) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(64) NOT NULL,
   `activation` enum('Y','N') NOT NULL DEFAULT 'N',
   `status` enum('Y','N') NOT NULL DEFAULT 'Y',

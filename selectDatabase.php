@@ -37,6 +37,7 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
 <body class="text-center">
     <div class="form-group-database">
         <h3>Datenbank auswählen</h3>
+        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
         <p>Bitte wählen Sie die Zieldatenbank aus, auf welcher die Eingaben der Aktuellen Sitzung geschrieben werden sollen.</p>
         
         <?php
@@ -86,6 +87,10 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
             <a href="<?php echo $_GET['rd']; ?>" class="btn btn-primary" role="button">OK</a>
             <?php endif ?>
         <?php endif; ?>
+
+        <?php else: ?>
+        <p class="lead">Für die aktuelle Sitzung wurde bereits eine Datenbank ausgewählt. Um Fehler zu vermeiden müssen Sie sich <a href="logout.php">abmelden</a> um die Datenbank zu wechseln</p>
+        <?php endif ?>
     </div>
 
     <!-- jQuery -->

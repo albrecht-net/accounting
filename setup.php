@@ -146,6 +146,9 @@ switch (intval($_GET['step'])) {
             exit();
         }
 
+        // Benutzer in der userconfig registrieren
+        $sqlquery = "INSERT INTO `userconfig` (`userID`) VALUES (" . $_SESSION['setup']['userID'] . ")";
+
         // Setup Session schliessen
         session_destroy();
 

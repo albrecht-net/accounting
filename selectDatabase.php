@@ -89,7 +89,8 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
         <?php endif; ?>
 
         <?php else: ?>
-        <p class="lead">Für die aktuelle Sitzung wurde bereits eine Datenbank ausgewählt. Um Fehler zu vermeiden müssen Sie sich <a href="logout.php">abmelden</a> um die Datenbank zu wechseln</p>
+        <p class="lead">Für die aktuelle Sitzung wurde bereits eine Datenbank ausgewählt.</p>
+        <p>Um Fehler zu vermeiden müssen Sie sich <a href="logout.php?forceDatabaseSelect=1">abmelden</a> um die Datenbank zu wechseln. Sie haben eine Standarddatenbank festgelegt? <a href="settings/database.php#defaultDatabase">Klicken Sie hier</a>, damit Sie diese entfernen können. </p>
         <?php endif ?>
     </div>
 

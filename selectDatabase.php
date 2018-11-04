@@ -37,7 +37,7 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
 <body class="text-center">
     <div class="form-group-database">
         <h3>Datenbank auswählen</h3>
-        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
+        <?php if (!$_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
         <p>Bitte wählen Sie die Zieldatenbank aus, auf welcher die Eingaben der Aktuellen Sitzung geschrieben werden sollen.</p>
         
         <?php
@@ -51,7 +51,7 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
             <?php else: ?>
             <form action="selectDatabase.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
             <?php endif; ?>
-                <div class="form-group">
+                <div class="form-group"> <!-- Datenbank Select -->
                     <select class="form-control" id="dbID" name="dbID">
                         <option disabled selected>Datenbank auswählen</option>
                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
@@ -59,9 +59,9 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
                         <?php endwhile; ?>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group"> <!-- Datenbank speichern -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="saveDbSelection" name="saveDbSelection" value="1" disabled>
+                        <input class="form-check-input" type="checkbox" id="saveDbSelection" name="saveDbSelection" value="1">
                         <label class="form-check-label" for="saveDbSelection">Auswahl speichern</label>
                     </div>
                 </div>

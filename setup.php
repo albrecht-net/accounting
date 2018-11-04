@@ -153,6 +153,12 @@ switch (intval($_GET['step'])) {
         // Benutzer in der userconfig registrieren
         $sqlquery = "INSERT INTO `userconfig` (`userID`) VALUES (" . $dataSetup['setup']['userID'] . ")";
 
+        // SQL-Query ausführen und überprüfen
+        if (!mysqli_query($config['link'], $sqlquery)) {
+            echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
+            exit();
+        }
+
         // Setup Session schliessen
         session_destroy();
 

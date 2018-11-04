@@ -194,8 +194,53 @@ if (isset($_POST['submitAddDb'])) {
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <form method="POST" action="account.php">
-                </form>
+                <?php
+                // SQL-Query bereitstellen
+                $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `dbID` = (SELECT `defaultDb` FROM `userconfig` WHERE `userID` = " . intval($_SESSION['userID']) . ")";
+                $result = mysqli_query($config['link'], $sqlquery);
+
+                // Prüfen ob Datensätze vorhanden
+                if (mysqli_num_rows($result) == 1):
+                $i = 1; 
+                ?>
+                <div class="table-responsive">                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">IP / Hostname</th>
+                                <th scope="col">Port</th>
+                                <th scope="col">Benutzername</th>
+                                <th scope="col">Datenbankname</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <tr>
+                                <th scope="row"><?php echo $i; ?></th>
+                                <td><?php echo $row['dbHost']; ?></td>
+                                <td><?php echo $row['dbPort']; ?></td>
+                                <td><?php echo $row['dbUsername']; ?></td>
+                                <td><?php echo $row['dbName']; ?></td>
+                                <?php $i++; ?>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <p>Sie können hier Ihre standard Datenbank entfernen oder ändern.
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="" class="btn btn-primary btn-block" name="" disabled="">Entfernen</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a class="btn btn-primary btn-block" href="../logout.php?forceDatabaseSelect=1" role="button">Ändern</a>
+                    </div>
+                </div>
+                <?php else: ?>
+                <p class="lead">Keine standard Datenbank gefunden</p>
+                <p>Wählen Sie Ihre standard Datenbank beim Anmelden aus.</p>
+                <?php endif; ?>
             </div>
         </div>
 

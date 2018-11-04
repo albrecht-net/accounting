@@ -24,7 +24,7 @@ if (mysqli_num_rows($result) != 1) {
         $_SESSION['userID'] = $dataDb['userID'];
         $_SESSION['username'] = $dataDb['username'];
 
-        // Überprüfen ob Benutzer eine Standartdatenbank hat
+        // Überprüfen ob Benutzer eine Standarddatenbank hat
         if (!$dataInputGet['forceDatabaseSelect']) {
             // SQL-Query bereitstellen
             $sqlquery = "SELECT `defaultDb` FROM `userconfig` WHERE `userID` = " . $dataDb['userID'];

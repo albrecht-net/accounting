@@ -81,7 +81,7 @@ if (isset($_POST['submitAddDb'])) {
             </li>
         </ul>
 
-        <h3 class="mt-3">Datenbank hinzufügen</h3>
+        <h3 class="mt-3" id="addDatabase">Datenbank hinzufügen</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
@@ -145,16 +145,52 @@ if (isset($_POST['submitAddDb'])) {
             </div>
         </div>
 
-        <h3>Gespeicherte Datenbanken</h3>
+        <h3 id="linkedDatabase">Gespeicherte Datenbanken</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <form method="POST" action="account.php">
-                </form>
+                <?php
+                // SQL-Query bereitstellen
+                $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `userID` = " . intval($_SESSION['userID']);
+                $result = mysqli_query($config['link'], $sqlquery);
+
+                // Prüfen ob Datensätze vorhanden
+                if (mysqli_num_rows($result) > 1):
+                $i = 1; 
+                ?>
+                <div class="table-responsive">                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">IP / Hostname</th>
+                                <th scope="col">Port</th>
+                                <th scope="col">Benutzername</th>
+                                <th scope="col">Datenbankname</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <tr>
+                                <th scope="row"><?php echo $i; ?></th>
+                                <td><?php echo $row['dbHost']; ?></td>
+                                <td><?php echo $row['dbPort']; ?></td>
+                                <td><?php echo $row['dbUsername']; ?></td>
+                                <td><?php echo $row['dbName']; ?></td>
+                                <?php $i++; ?>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <p class="lead">Keine Datenbank gefunden</p>
+                <p>Es wurde noch keine Datenbank mit Ihrem Benutzer verlinkt. Fügen Sie Ihre erste Ziel-Datenbank gleich <a href="#addDatabase">hier</a> hinzu.</p>
+                <?php endif; ?>
             </div>
         </div>
 
-        <h3>Standard Datenbank</h3>
+        <h3 id="defaultDatabase">Standard Datenbank</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">

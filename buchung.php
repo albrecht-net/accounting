@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
     </nav>
 
     <div class="container">
-        <h3 class="mt-3">Neue Buchung erfassen</h3>
+        <h3 class="mt-3" id="newEntry">Neue Buchung erfassen</h3>
         <hr class="mb-4">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">

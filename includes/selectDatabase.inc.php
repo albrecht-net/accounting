@@ -11,13 +11,15 @@ $result = mysqli_query($config['link'], $sqlquery);
 
 // Prüfen ob nur 1 Resultat
 if (mysqli_num_rows($result) != 1) {
-    $dataInput['invalid'] = TRUE;
+    $dataInput['invalid'] = 1;
 } else {
     // Abfrage in Array schreiben
     $dataDb = mysqli_fetch_assoc($result);
 
     // Datenbank ID in Session schreiben
-    $_SESSION['dbID'] = $dataDb['dbID'];
+    $_SESSION['userDb']['dbID'] = $dataDb['dbID'];
+
+    $_SESSION['userDb']['userDbSet'] = 1;
 
     // Weiterleitung
     if (empty($_GET['rd'])) {

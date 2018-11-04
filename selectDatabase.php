@@ -24,52 +24,73 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
 <html lang="de">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" async></script>
-
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" async></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/login.css">
 
     <title>Datenbank auswählen</title>
 </head>
-<body>
-    <h2>Datenbank auswählen</h2>
-    <p>Bitte wählen Sie die Zieldatenbank aus, auf welcher die Eingaben der Aktuellen Sitzung geschrieben werden sollen.</p>
-    
-    <?php
-    // Prüfen ob eine Datenbank für den angemeldeten Benutzer verfügbar ist
-    $sqlquery = "SELECT `dbID`, `dbHost`, `dbName` FROM `databases` WHERE `userID` = '" . $_SESSION['userID'] . "'";
-    $result = mysqli_query($config['link'], $sqlquery);
-    if (mysqli_num_rows($result) >= 1):
+<body class="text-center">
+    <div class="form-group-database">
+        <h3>Datenbank auswählen</h3>
+        <p>Bitte wählen Sie die Zieldatenbank aus, auf welcher die Eingaben der Aktuellen Sitzung geschrieben werden sollen.</p>
+        
+        <?php
+        // Prüfen ob eine Datenbank für den angemeldeten Benutzer verfügbar ist
+        $sqlquery = "SELECT `dbID`, `dbHost`, `dbName` FROM `databases` WHERE `userID` = '" . $_SESSION['userID'] . "'";
+        $result = mysqli_query($config['link'], $sqlquery);
+        if (mysqli_num_rows($result) >= 1):
 
-        if (empty($_GET['rd'])): ?>
-        <form action="selectDatabase.php" method="POST">
-        <?php else: ?>
-        <form action="selectDatabase.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
-        <?php endif; ?>
-            <div class="form-group">
-                <label for="dbID">Datenbank auswählen</label>
-                <select class="form-control" id="dbID" name="dbID">
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+            if (empty($_GET['rd'])): ?>
+            <form action="selectDatabase.php" method="POST">
+            <?php else: ?>
+            <form action="selectDatabase.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
+            <?php endif; ?>
+                <div class="form-group">
+                    <select class="form-control" id="dbID" name="dbID">
+                        <option disabled selected>Datenbank auswählen</option>
+                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
                         <option value="<?php echo $row['dbID']; ?>"><?php echo $row['dbName'] . ', ' . $row['dbHost']; ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="saveDbSelection" name="saveDbSelection" value="1" disabled>
-                <label class="form-check-label" for="saveDbSelection">Auswahl speichern</label>
-            </div>
-            <button type="submit" class="btn btn-primary" name="submit">Bestätigen</button>
-        </form>
+                        <?php endwhile; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="saveDbSelection" name="saveDbSelection" value="1" disabled>
+                        <label class="form-check-label" for="saveDbSelection">Auswahl speichern</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block" name="submit">Bestätigen</button>
+                    </div>
+                    <div class="col">
+                        <?php if (empty($_GET['rd'])): ?>
+                        <a href="index.php" class="btn btn-secondary btn-block" role="button">Überspringen</a>
+                        <?php else: ?>
+                        <a href="<?php echo $_GET['rd']; ?>" class="btn btn-secondary btn-block" role="button">Überspringen</a>
+                        <?php endif ?>
+                    </div>
+                </div>
+            </form>
 
-    <?php else: ?>
-        <p>Es wurde keine Datenbank welche mit Ihrem Account verknüpft ist gefunden!</p>
-        <a href="<?php echo $_GET['rd']; ?>" class="btn btn-primary" role="button">OK</a>
-    <?php endif; ?>
+        <?php else: ?>
+            <p>Es wurde keine Datenbank welche mit Ihrem Account verknüpft ist gefunden!</p>
+            <?php if (empty($_GET['rd'])): ?>
+            <a href="index.php" class="btn btn-primary" role="button">OK</a>
+            <?php else: ?>
+            <a href="<?php echo $_GET['rd']; ?>" class="btn btn-primary" role="button">OK</a>
+            <?php endif ?>
+        <?php endif; ?>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 </body>
 </html>

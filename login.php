@@ -4,6 +4,9 @@ session_start();
 // Konfiguration einbinden
 require_once 'config.php';
 
+// Array GET-Variablen
+$dataInputGet = $_GET;
+
 // Überprüfen ob Submit geklickt wurde
 if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
     if (!include 'includes/login.inc.php') {
@@ -34,20 +37,22 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
         <div class="alert alert-danger" role="alert">
             Falsches Kennwort oder Benutzername
         </div>
-        <?php elseif ($_GET['loggedout']): ?>
+        <?php elseif ($dataInputGet['loggedout']):
+        unset($dataInputGet['loggedout']); ?>
         <div class="alert alert-primary" role="alert">
             Benutzer erfolgreich abgemeldet
         </div>
-        <?php elseif ($_GET['passwordchanged']): ?>
+        <?php elseif ($dataInputGet['passwordchanged']):
+        unset($dataInputGet['passwordchanged']); ?>
         <div class="alert alert-primary" role="alert">
             Das Passwort wurde erfolgreich geändert. Bitte erneut Anmelden.
         </div>
-        <?php endif ?>
+        <?php endif; ?>
         <!-- Login Formular -->
-        <?php if (empty($_GET['rd'])): ?>
+        <?php if (empty($dataInputGet)): ?>
         <form action="login.php" method="POST">
         <?php else: ?>
-        <form action="login.php?rd=<?php echo urlencode($_GET['rd']); ?>" method="POST">
+        <form action="login.php?<?php echo http_build_query($dataInputGet); ?>" method="POST">
         <?php endif; ?>
             <div class="form-group">
                 <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>" placeholder="Benutzername" required>

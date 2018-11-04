@@ -81,8 +81,8 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
             </li>
         </ul>
 
-        <h3 class="py-3">Passwort ändern</h3>
-        
+        <h3 class="mt-3">Passwort ändern</h3>
+        <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
                 <form method="POST" action="account.php">
@@ -116,11 +116,16 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
                             <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" required>
                         <?php endif; ?>
                     </div>
-                    <hr class="mb-4">
-                    <button type="submit" class="btn btn-primary" name="submitChangePassword">Passwort ändern</button>
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                                <button type="submit" class="btn btn-primary btn-block" name="submitChangePassword">Passwort ändern</button>
+                        </div>
+                    <div>
                 </form>
             </div>
         </div>
+
+    <!-- /container -->
     </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

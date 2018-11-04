@@ -81,8 +81,8 @@ if (isset($_POST['submitAddDb'])) {
             </li>
         </ul>
 
-        <h3 class="py-3">Datenbank hinzufügen</h3>
-
+        <h3 class="mt-3">Datenbank hinzufügen</h3>
+        <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
                 <?php if ($msg['successAddDb']): ?>
@@ -136,13 +136,35 @@ if (isset($_POST['submitAddDb'])) {
                         <label for="dbName">Datenbankname</label>
                         <input type="text" class="form-control" name="dbName" id="dbName" value="<?php echo $_GET['dbName']; ?>" required>
                     </div>
-                    <hr class="mb-4">
-                    <button type="submit" class="btn btn-primary" name="submitAddDb">Hinzufügen</button>
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block" name="submitAddDb">Speichern</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
 
+        <h3>Gespeicherte Datenbanken</h3>
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <form method="POST" action="account.php">
+                </form>
+            </div>
+        </div>
+
+        <h3>Standard Datenbank</h3>
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <form method="POST" action="account.php">
+                </form>
+            </div>
+        </div>
+
+    <!-- /container -->
+    </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->

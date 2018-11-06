@@ -74,7 +74,8 @@ if (isset($_POST['submit'])) {
     </nav>
 
     <div class="container">
-        <h3 class="py-3">Neue Buchung erfassen</h3>
+        <h3 class="mt-3" id="newEntry">Neue Buchung erfassen</h3>
+        <hr class="mb-4">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">
             <div class="col-12 mb-5">
@@ -286,12 +287,15 @@ if (isset($_POST['submit'])) {
                             </select>
                         </div>
                     </div>
-                    <div class="form-check"> <!-- Abstimmung -->
+                    <div class="form-group form-check"> <!-- Abstimmung -->
                         <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1" disabled>
                         <label class="form-check-label" for="abstimmung">Abstimmung</label>
                     </div>
-                    <hr class="mb-4">
-                    <button type="submit" class="btn btn-primary" name="submit">Speichern</button>
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
+                        </div>
+                    <div>
                 </form>
             </div>
         </div>

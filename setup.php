@@ -50,7 +50,7 @@ switch (intval($_GET['step'])) {
         );
 
         // Benutzername überprüfen
-        $sqlquery = "SELECT `userID`, `username` FROM `users` WHERE `activation` = 'N' AND `status` = 'Y' AND `username` = '" . $dataSetup['input']['username'] . "'";
+        $sqlquery = "SELECT `userID` FROM `users` WHERE `activation` = 'N' AND `status` = 'Y' AND `username` = '" . $dataSetup['input']['username'] . "'";
         $result = mysqli_query($config['link'], $sqlquery);
         if (mysqli_num_rows($result) != 1) {
             header("Location: setup.php?step=0&msg=unknownUser");
@@ -113,6 +113,10 @@ switch (intval($_GET['step'])) {
             'password2' => $_POST['inputPassword2']
         );
 
+        $dataSetup['setup'] = array(
+            'userID' => intval($_SESSION['setup']['userID'])
+        );
+
         // Emailaddresse validieren
         if (!empty($dataSetup['input']['email']) && !filter_var($dataSetup['input']['email'], FILTER_VALIDATE_EMAIL)) {
             header("Location: setup.php?step=2&msg=invalidEmail");
@@ -138,7 +142,16 @@ switch (intval($_GET['step'])) {
         foreach ($dataSetup['input'] as $column => $value) {
             $set[] = "`" . $column . "` = '" . $value . "'";
         }
-        $sqlquery = "UPDATE `users` SET " . implode(", ", $set) . " WHERE `users`.`userID` = '" . $_SESSION['setup']['userID'] . "'";
+        $sqlquery = "UPDATE `users` SET " . implode(", ", $set) . " WHERE `users`.`userID` = " . $dataSetup['setup']['userID'];
+
+        // SQL-Query ausführen und überprüfen
+        if (!mysqli_query($config['link'], $sqlquery)) {
+            echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
+            exit();
+        }
+
+        // Benutzer in der userconfig registrieren
+        $sqlquery = "INSERT INTO `userconfig` (`userID`) VALUES (" . $dataSetup['setup']['userID'] . ")";
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($config['link'], $sqlquery)) {

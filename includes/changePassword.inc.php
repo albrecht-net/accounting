@@ -11,7 +11,7 @@ if ($dataInput['password1'] != $dataInput['password2']) {
     $msg['noPasswordMatch'] = 1;
 } else {
     // SQL-Query bereitstellen
-    $sqlquery = "SELECT `password` FROM `users` WHERE `userID` = '" . $_SESSION['userID'] . "'";
+    $sqlquery = "SELECT `password` FROM `users` WHERE `userID` = " . intval($_SESSION['userID']);
     $result = mysqli_query($config['link'], $sqlquery);
 
     // Benutzer abfragen
@@ -37,7 +37,7 @@ if ($dataInput['password1'] != $dataInput['password2']) {
             foreach ($dataInput as $column => $value) {
                 $set[] = "`" . $column . "` = '" . $value . "'";
             }
-            $sqlquery = "UPDATE `users` SET " . implode(", ", $set) . " WHERE `users`.`userID` = '" . $_SESSION['userID'] . "'";
+            $sqlquery = "UPDATE `users` SET " . implode(", ", $set) . " WHERE `users`.`userID` = " . intval($_SESSION['userID']);
 
             // SQL-Query ausführen und überprüfen
             if (!mysqli_query($config['link'], $sqlquery)) {

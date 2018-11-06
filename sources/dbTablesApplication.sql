@@ -58,10 +58,23 @@ CREATE TABLE `users` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `userconfig`
+--
+
+CREATE TABLE `userconfig` (
+  `userID` int(32) NOT NULL,
+  `defaultDb` int(32),
+  PRIMARY KEY (`userID`),
+  KEY `defaultDb` (`defaultDb`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Constraints der Tabelle `databases`
 --
 ALTER TABLE `databases`
-  ADD CONSTRAINT `databases_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`);
+  ADD CONSTRAINT `databases_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
 
 -- --------------------------------------------------------
 
@@ -69,5 +82,17 @@ ALTER TABLE `databases`
 -- Constraints der Tabelle `favorites`
 --
 ALTER TABLE `favorites`
-  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`),
-  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`dbD`) REFERENCES `db` (`dbD`);
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`dbD`) REFERENCES `db` (`dbD`) ON DELETE CASCADE;
+
+
+-- --------------------------------------------------------
+
+--
+-- Constraints der Tabelle `userconfig`
+--
+ALTER TABLE `userconfig`
+  ADD CONSTRAINT `userconfig_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `userconfig_ibfk_2` FOREIGN KEY (`defaultDb`) REFERENCES `databases` (`dbID`) ON DELETE SET NULL;
+
+

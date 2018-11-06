@@ -24,6 +24,23 @@ CREATE TABLE `databases` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `favorites`
+--
+
+CREATE TABLE `favorites` (
+  `favoriteID` int(32) NOT NULL AUTO_INCREMENT,
+  `userID` int(32) NOT NULL,
+  `dbID` int(32) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `value` text() NOT NULL,
+  PRIMARY KEY (`favoriteID`),
+  KEY `userID` (`userID`),
+  KEY `dbID` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `users`
 --
 
@@ -62,8 +79,20 @@ ALTER TABLE `databases`
 -- --------------------------------------------------------
 
 --
+-- Constraints der Tabelle `favorites`
+--
+ALTER TABLE `favorites`
+  ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`dbD`) REFERENCES `db` (`dbD`) ON DELETE CASCADE;
+
+
+-- --------------------------------------------------------
+
+--
 -- Constraints der Tabelle `userconfig`
 --
 ALTER TABLE `userconfig`
   ADD CONSTRAINT `userconfig_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
   ADD CONSTRAINT `userconfig_ibfk_2` FOREIGN KEY (`defaultDb`) REFERENCES `databases` (`dbID`) ON DELETE SET NULL;
+
+

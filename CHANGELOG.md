@@ -1,6 +1,17 @@
 # Changelog
 Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## v1.0.0-beta (2018.11.07)
+### Hinzugefügt
+- Standard-Datenbank kann beim Login ausgewählt werden welche bei zukünftigen Anmeldungen automatisch ausgewählt wird
+- Die Standard-Datenbank wird in den Einstellungen angezeigt und kann geändert werden
+- Alle verlinkten Ziel-Datenbanken eines Benutzers werden in den Einstellungen aufgelistet
+- In Applikations-Datenbank Tabelle "favorites" hinzugefügt
+- In Applikations-Datenbank Tabelle "userconfig" hinzugefügt
+### Geändert
+- In Applikations-Datenbank Tabelle "users" die Feldgrösse bei "passwort" von 256 zu 255 geändert
+- Die Ziel-Datenbank für eine aktuelle Sitzung kann nurnoch während dem Loginvorgang geändert werden
+
 ## v0.9.1-alpha (2018.11.02)
 ### Hinzugefügt
 - Datenbank-View-Vorlage

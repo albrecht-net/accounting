@@ -1,5 +1,5 @@
 -- Datenbank Tabellen Vorlage für die Applikations-Datenbank
--- Gültig ab: Accounting v0.8.0-alpha
+-- Gültig ab: Accounting v1.0.0-beta
 -- 
 
 -- --------------------------------------------------------

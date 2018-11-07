@@ -314,24 +314,24 @@ if (isset($_POST['submit'])) {
                 <div class="row">
                     <div class="form-group col-12"> <!-- Beschreibung -->
                         <label for="nameFavorite">Beschreibung</label>
-                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite">
+                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite" disabled>
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked>
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked disabled>
                     <label class="form-check-label" for="radioFavorite1">
                         In der Applikation
                     </label>
                 </div>
                 <div class="form-group form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2">
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2" disabled>
                     <label class="form-check-label" for="radioFavorite2">
                         Als Lesezeichen
                     </label>
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formaction="" formnovalidate="">Favorit speichern</button>
+                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formaction="" formnovalidate="" disabled>Favorit speichern</button>
                     </div>
                 </div>
                 </form>

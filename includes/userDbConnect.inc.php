@@ -1,7 +1,7 @@
 <?php
 if ($_SESSION['userDb']['userDbSet']) {
     // SQL-Query bereitstellen
-    $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbPassword`, `dbName` FROM `databases` WHERE `dbID` = " . intaval($_SESSION['userDb']['dbID']) . " AND `userID` = " . intaval($_SESSION['userID']);
+    $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbPassword`, `dbName` FROM `databases` WHERE `dbID` = " . intval($_SESSION['userDb']['dbID']) . " AND `userID` = " . intval($_SESSION['userID']);
 
     // Anmeldedaten abfragen
     $result = mysqli_fetch_assoc(mysqli_query($config['link'], $sqlquery));

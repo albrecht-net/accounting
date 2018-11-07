@@ -295,7 +295,45 @@ if (isset($_POST['submit'])) {
                         <div class="col-6 col-md-3">
                             <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
                         </div>
-                    <div>
+                    </div>
+            </div>
+        </div>
+
+        <h3 class="mt-3" id="addFavorite">Als Favorit speichern</h3>
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <p>Beim Speichern einer Buchung als Favorit wird eine Vorlage erstellt, welche alle aktuell ausgefüllten Felder beinhaltet. Hinweis: Beim Speichern als Favorit wird keine Buchung erstellt!</p>
+                <p>Es kann dabei zwischen zwei Arten ausgewählt werden:</p>
+                <dl class="row">
+                    <dt class="col-sm-3">Applikation</dt>
+                    <dd class="col-sm-9">Beim Speichern in der Applikation wird die Vorlage gespeichert und kann über die Menuleiste der Applikation ausgewählt und geöffnet werden.</dd>
+                    <dt class="col-sm-3">Lesezeichen</dt>
+                    <dd class="col-sm-9">Beim Speichern als Lesezeichen wird eine URL erzeugt, welche als Lesezeichen verwenden werden kann. Die Vorlage wird nicht zusätzlich gespeichert.</dd>
+                </dl>
+                <div class="row">
+                    <div class="form-group col-12"> <!-- Beschreibung -->
+                        <label for="nameFavorite">Beschreibung</label>
+                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite" disabled>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked disabled>
+                    <label class="form-check-label" for="radioFavorite1">
+                        In der Applikation
+                    </label>
+                </div>
+                <div class="form-group form-check">
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2" disabled>
+                    <label class="form-check-label" for="radioFavorite2">
+                        Als Lesezeichen
+                    </label>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formaction="" formnovalidate="" disabled>Favorit speichern</button>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>

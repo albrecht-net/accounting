@@ -177,7 +177,7 @@ require_once 'config.php';
                 }
 
                 // Benutzer in der userconfig registrieren
-                $sqlquery = "INSERT INTO `userconfig` (`userID`) VALUES (" . $dataSetup['setup']['userID'] . ")";
+                $sqlquery = "INSERT IGNORE INTO `userconfig` (`userID`) VALUES (" . $dataSetup['setup']['userID'] . ")";
 
                 // SQL-Query ausführen und überprüfen
                 if (!mysqli_query($config['link'], $sqlquery)) {

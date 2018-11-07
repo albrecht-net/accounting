@@ -32,10 +32,10 @@ CREATE TABLE `favorites` (
   `userID` int(32) NOT NULL,
   `dbID` int(32) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `value` text() NOT NULL,
+  `value` text NOT NULL,
   PRIMARY KEY (`favoriteID`),
   KEY `userID` (`userID`),
-  KEY `dbID` (`userID`)
+  KEY `dbID` (`dbID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -83,7 +83,7 @@ ALTER TABLE `databases`
 --
 ALTER TABLE `favorites`
   ADD CONSTRAINT `favorites_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`dbD`) REFERENCES `db` (`dbD`) ON DELETE CASCADE;
+  ADD CONSTRAINT `favorites_ibfk_2` FOREIGN KEY (`dbID`) REFERENCES `databases` (`dbID`) ON DELETE CASCADE;
 
 
 -- --------------------------------------------------------

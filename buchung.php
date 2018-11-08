@@ -18,6 +18,11 @@ if (isset($_POST['submit'])) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
+} elseif (isset($_POST['submitFavorite'])) {
+    if (!include 'includes/addBuchungFavorite.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
 }
 ?>
 
@@ -194,14 +199,14 @@ if (isset($_POST['submit'])) {
                             <select class="form-control" id="kontoHaben" name="kontoHaben" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['kontoID']; ?><?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-2"> <!-- Betrag -->
                             <label for="totalbetrag">Betrag</label>
-                            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['betrag']; ?>" required>
+                            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['totalbetrag']; ?>" required>
                         </div>
                     </div>
                     <div class="row">
@@ -314,24 +319,24 @@ if (isset($_POST['submit'])) {
                 <div class="row">
                     <div class="form-group col-12"> <!-- Beschreibung -->
                         <label for="nameFavorite">Beschreibung</label>
-                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite" disabled>
+                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite">
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked disabled>
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked>
                     <label class="form-check-label" for="radioFavorite1">
                         In der Applikation
                     </label>
                 </div>
                 <div class="form-group form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2" disabled>
+                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2">
                     <label class="form-check-label" for="radioFavorite2">
                         Als Lesezeichen
                     </label>
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formaction="" formnovalidate="" disabled>Favorit speichern</button>
+                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formnovalidate="">Favorit speichern</button>
                     </div>
                 </div>
                 </form>

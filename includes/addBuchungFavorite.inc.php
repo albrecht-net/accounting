@@ -1,7 +1,6 @@
 <?php
 // Array Eingabe
 $dataInput = array(
-    'validDb' => intval($_SESSION['userDb']['dbID']),
     'empfänger' => intval($_POST['empfänger']),
     'reNummer' => trim($_POST['reNummer']),
     'buchungstext' => trim($_POST['buchungstext']),
@@ -15,26 +14,33 @@ $dataInput = array(
 );
 
 $dataFavorite = array(
+    'templateUserdDb' => intval($_SESSION['userDb']['dbID']),
     'favoriteName' => trim($_POST['nameFavorite'])
 );
 
-switch (intval($_POST['radioFavorite'])) {
+// Leere Felder aus Eingabe Array entfernen
+$dataInput = array_diff($dataInput, array(NULL, '', 0));
+$dataFavorite = array_diff($dataFavorite, array(NULL, '', 0));
 
-    case (1): // Speichern in Applikation
-        var_dump($dataInput);
-        echo '<br>';
-        $json = json_encode($dataInput);
-        var_dump($json);
-        echo '<br>';
-        var_dump(json_decode($json, TRUE));
-        exit;
-
-    case (2): // Als Link ausgeben
-    ?>
-    <a href="buchung.php?<?php echo(http_build_query($dataInput)); ?>">Link</a>
-    <?php
-        
-    break;
+// Prüfen ob Eingabe vorhanden
+if (count($dataInput) > 0) {
+    switch (intval($_POST['radioFavorite'])) {
+        case (1): // Speichern in Applikation
+            var_dump($dataInput);
+            echo '<br>';
+            $json = json_encode($dataInput);
+            var_dump($json);
+            echo '<br>';
+            var_dump(json_decode($json, TRUE));
+            exit;
+            break;
+        case (2): // Als Link ausgeben
+            $msg['favoriteURL']['set'] = 1;
+            $msg['favoriteURL']['name'] = $dataFavorite['favoriteName'];
+            $msg['favoriteURL']['data'] = array_merge($dataFavorite['templateUserDb'], $dataInput);
+            break;
+    }
+} else {
+    $msg['noInput'] = 1;
 }
-exit();
 ?>

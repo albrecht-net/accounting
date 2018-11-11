@@ -88,22 +88,32 @@ if (isset($_POST['submit'])) {
                 <div class="alert alert-primary alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     Eintrag erfolgreich gespeichert
                 </div>
                 <?php elseif ($msg['sqlInsertError']): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
                 </div>
                 <?php elseif ($msg['sqlUpdateError']): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
+                </div>
+                <?php elseif ($msg['favoriteURL']['set']): ?>
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>Vorlage als Lesezeichen</h4>
+                    <p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p>
+                    <hr>
+                    <a href="buchung.php?<?php echo http_build_query($msg['favoriteURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['favoriteURL']['name']) ? $msg['favoriteURL']['name'] : 'Buchungs-Vorlage'); ?></a>
                 </div>
                 <?php endif ?>         
                 <form action="buchung.php" method="POST">

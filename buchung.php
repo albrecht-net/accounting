@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
-} elseif (isset($_POST['submitFavorite'])) {
+} elseif (isset($_POST['submitTemplate'])) {
     if (!include 'includes/addBuchungFavorite.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
                     </button>
                     Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
                 </div>
-                <?php elseif ($msg['favoriteURL']['set']): ?>
+                <?php elseif ($msg['templateURL']['set']): ?>
                 <div class="alert alert-primary alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
                     <h4>Vorlage als Lesezeichen</h4>
                     <p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p>
                     <hr>
-                    <a href="buchung.php?<?php echo http_build_query($msg['favoriteURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['favoriteURL']['name']) ? $msg['favoriteURL']['name'] : 'Buchungs-Vorlage'); ?></a>
+                    <a href="buchung.php?<?php echo http_build_query($msg['templateURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['templateURL']['name']) ? $msg['templateURL']['name'] : 'Buchungs-Vorlage'); ?></a>
                 </div>
                 <?php endif ?>         
                 <form action="buchung.php" method="POST">
@@ -314,7 +314,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <h3 class="mt-3" id="addFavorite">Als Favorit speichern</h3>
+        <h3 class="mt-3" id="addTemplate">Als Favorit speichern</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
@@ -328,25 +328,25 @@ if (isset($_POST['submit'])) {
                 </dl>
                 <div class="row">
                     <div class="form-group col-12"> <!-- Beschreibung -->
-                        <label for="nameFavorite">Beschreibung</label>
-                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite">
+                        <label for="nameTemplate">Beschreibung</label>
+                        <input class="form-control" type="text" id="nameTemplate" name="nameTemplate">
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked>
-                    <label class="form-check-label" for="radioFavorite1">
+                    <input class="form-check-input" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked>
+                    <label class="form-check-label" for="radioTemplate1">
                         In der Applikation
                     </label>
                 </div>
                 <div class="form-group form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2">
-                    <label class="form-check-label" for="radioFavorite2">
+                    <input class="form-check-input" type="radio" name="radioTemplate" id="radioTemplate2" value="2">
+                    <label class="form-check-label" for="radioTemplate2">
                         Als Lesezeichen
                     </label>
                 </div>
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formnovalidate="">Favorit speichern</button>
+                        <button type="submitTemplate" class="btn btn-secondary btn-block" name="submitTemplate" formnovalidate="">Favorit speichern</button>
                     </div>
                 </div>
                 </form>

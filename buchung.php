@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
         exit();
     }
 } elseif (isset($_POST['submitTemplate'])) {
-    if (!include 'includes/addBuchungFavorite.inc.php') {
+    if (!include 'includes/addBuchungTemplate.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }

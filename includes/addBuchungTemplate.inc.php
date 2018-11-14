@@ -34,9 +34,6 @@ if (count($dataInput['input']) > 0) {
             $dataInput['value'] = json_encode($dataInput['input']);
             unset($dataInput['input']);
 
-            var_dump($dataInput);
-
-
             // Datenbankangaben speichern
             $columns = "`" . implode("`, `", array_keys($dataInput)) . "`, `" . implode("`, `", array_keys($dataFunctions)) . "`";
             $values = "'" . implode("', '", $dataInput) . "', " . implode(", ", $dataFunctions);
@@ -51,7 +48,8 @@ if (count($dataInput['input']) > 0) {
         case (2): // Als Link ausgeben
             $msg['templateURL']['set'] = 1;
             $msg['templateURL']['name'] = $dataInput['name'];
-            $msg['templateURL']['data'] = array_merge($dataInput['dbID'], $dataInput['input']);
+            $msg['templateURL']['data'] = $dataInput['input'];
+            $msg['templateURL']['data']['dbID'] = $dataInput['dbID'];
             break;
     }
 } else {

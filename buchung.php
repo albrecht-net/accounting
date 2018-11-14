@@ -18,7 +18,7 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
-} elseif (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 1)) {
+} elseif (isset($_POST['submitTemplate']) && ($_POST['addAsTemplate'] == 1)) {
     if (!include 'includes/addBuchungTemplate.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -183,10 +183,10 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
         
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
+                            <select class="form-control" id="kontoSoll" name="kontoSoll">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
+                            <select class="form-control" id="kontoSoll" name="kontoSoll" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
@@ -203,10 +203,10 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
+                            <select class="form-control" id="kontoHaben" name="kontoHaben">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
+                            <select class="form-control" id="kontoHaben" name="kontoHaben" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
@@ -216,7 +216,7 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
                         </div>
                         <div class="form-group col-md-2"> <!-- Betrag -->
                             <label for="totalbetrag">Betrag</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['totalbetrag']; ?>" required>
+                            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['totalbetrag']; ?>" required>
                         </div>
                     </div>
                     <div class="row">
@@ -314,11 +314,11 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
             </div>
         </div>
 
-        <h3 class="mt-3" id="addTemplate">Als Favorit speichern</h3>
+        <h3 class="mt-3" id="addTemplate">Als Vorlage speichern</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <p>Beim Speichern einer Buchung als Favorit wird eine Vorlage erstellt, welche alle aktuell ausgefüllten Felder beinhaltet. Hinweis: Beim Speichern als Favorit wird keine Buchung erstellt!</p>
+                <p>Beim Speichern einer Buchung wird eine Vorlage erstellt, welche alle aktuell ausgefüllten Felder beinhaltet. Hinweis: Beim Speichern als Vorlage wird keine Buchung erstellt!</p>
                 <p>Es kann dabei zwischen zwei Arten ausgewählt werden:</p>
                 <dl class="row">
                     <dt class="col-sm-3">Applikation</dt>
@@ -327,27 +327,28 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
                     <dd class="col-sm-9">Beim Speichern als Lesezeichen wird eine URL erzeugt, welche als Lesezeichen verwenden werden kann. Die Vorlage wird nicht zusätzlich gespeichert.</dd>
                 </dl>
                 <div class="form-group form-check"> <!-- Als Vorlage -->
-                    <input class="form-check-input chk-toggle-master" type="checkbox" id="addAsTemplate" name="addAsTemplate" value="1">
+                    <input class="form-check-input checkbox-toggle-master" type="checkbox" id="addAsTemplate" name="addAsTemplate" value="1">
                     <label class="form-check-label" for="addAsTemplate">Als Vorlage hinzufügen</label>
                 </div>
                 <div class="row">
                     <div class="form-group col-12"> <!-- Beschreibung -->
                         <label for="nameTemplate">Beschreibung</label>
-                        <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate" required disabled>
+                        <input class="form-control chk-toggle-slave" type="text" id="nameTemplate" name="nameTemplate" required disabled>
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked disabled>
+                    <input class="form-check-input chk-toggle-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked disabled>
                     <label class="form-check-label" for="radioTemplate1">
                         In der Applikation
                     </label>
                 </div>
                 <div class="form-group form-check">
-                    <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2" disabled>
+                    <input class="form-check-input chk-toggle-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2" disabled>
                     <label class="form-check-label" for="radioTemplate2">
                         Als Lesezeichen
                     </label>
                 </div>
+
                 </form>
             </div>
         </div>
@@ -366,11 +367,9 @@ if (isset($_POST['submit']) && ($_POST['addAsTemplate'] == 0)) {
     <script>
         $(".chk-toggle-master").on('click', function() {
             if($(this).prop('checked')) {
-                $(".chk-toggle-dis-slave").prop('disabled', false);
-                $(".chk-toggle-req-slave").prop('required', false);
+                $(".chk-toggle-slave").prop('disabled', false);
             } else {
-                $(".chk-toggle-dis-slave").prop('disabled', true);
-                $(".chk-toggle-req-slave").prop('required', true);
+                $(".chk-toggle-slave").prop('disabled', true);
             }
         })
     </script>

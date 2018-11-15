@@ -31,7 +31,7 @@ if (count($dataInput['input']) > 0) {
             );
 
             // Input zu JSON
-            $dataInput['value'] = json_encode($dataInput['input']);
+            $dataInput['value'] = json_encode($dataInput['input'], JSON_UNESCAPED_UNICODE);
             unset($dataInput['input']);
 
             // Datenbankangaben speichern
@@ -53,6 +53,6 @@ if (count($dataInput['input']) > 0) {
             break;
     }
 } else {
-    $msg['noInput'] = 1;
+    $msg['noTemplateInput'] = 1;
 }
 ?>

@@ -49,7 +49,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,6 +60,9 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="templates.php">Vorlagen</a>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-right">
@@ -114,6 +117,13 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                     <p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p>
                     <hr>
                     <a href="buchung.php?<?php echo http_build_query($msg['templateURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['templateURL']['name']) ? $msg['templateURL']['name'] : 'Buchungs-Vorlage'); ?></a>
+                </div>
+                <?php elseif ($msg['noTemplateInput']): ?>
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    Bitte wählen Sie mindestens 1 Feld aus, welches in der Vorlage gespeichert werden soll
                 </div>
                 <?php endif ?>         
                 <form action="buchung.php" method="POST">

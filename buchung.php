@@ -18,7 +18,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
-} elseif (isset($_POST['submitTemplate']) && ($_POST['chkAddTemplate'] == 1)) {
+} elseif (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 1)) {
     if (!include 'includes/addBuchungTemplate.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();

@@ -86,13 +86,11 @@ if ($_POST['tableContent'] == 'templates') {
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) >= 1):
-                $i = 1; 
                 ?>
                 <div class="table-responsive">                    
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">Erstelldatum</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Definierte Werte</th>
@@ -105,7 +103,6 @@ if ($_POST['tableContent'] == 'templates') {
                             // Decode json value
                             $valueDecoded = json_decode($row['value'], TRUE); ?>
                             <tr>
-                                <th scope="row"><?php echo $i; ?></th>
                                 <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>

@@ -87,7 +87,7 @@ if (!$lsc) {
                                 <th scope="col">#</th>
                                 <th scope="col">Erstelldatum</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Werte</th>
+                                <th scope="col">Definierte Werte</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,9 +97,9 @@ if (!$lsc) {
                             $valueDecoded = json_decode($row['value'], TRUE); ?>
                             <tr>
                                 <th scope="row"><?php echo $i; ?></th>
-                                <td><?php echo $row['datumErstellt']; ?></td>
+                                <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
-                                <td><?php print_r($valueDecoded); ?></td>
+                                <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
                                 <?php $i++; ?>
                             </tr>
                             <?php endwhile; ?>

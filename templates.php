@@ -5,8 +5,16 @@ require_once 'config.php';
 // Prüfen ob Benutzer angemeldet
 require 'includes/loginSessionCheck.inc.php';
 if (!$lsc) {
-    header('Location: login.php?rd=' . urlencode('buchung.php'));
+    header('Location: login.php?rd=' . urlencode('templates.php'));
     exit();
+}
+
+// Überprüfen ob Submit geklickt wurde
+if ($_POST['tableContent'] == 'templates') {
+    if (!include 'includes/deleteTemplate.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
 }
 ?>
 
@@ -73,7 +81,7 @@ if (!$lsc) {
             <div class="col-12 mb-5">
             <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `datumErstellt`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
+                $sqlquery = "SELECT `templateID`, `datumErstellt`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
@@ -88,6 +96,7 @@ if (!$lsc) {
                                 <th scope="col">Erstelldatum</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Definierte Werte</th>
+                                <th scope="cold"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -100,6 +109,7 @@ if (!$lsc) {
                                 <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
+                                <td><button type="button" class="btn btn-secondary tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
                                 <?php $i++; ?>
                             </tr>
                             <?php endwhile; ?>
@@ -124,5 +134,7 @@ if (!$lsc) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Eintrag löschen -->
+    <script src="js/trValueDelete.js"></script>
 </body>
 </html>

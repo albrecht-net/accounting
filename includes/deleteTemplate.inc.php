@@ -1,5 +1,4 @@
 <?php
-
 if (empty($_POST['delID'])) {
     echo 0;
 } else {

@@ -211,13 +211,11 @@ if (isset($_POST['submitAddDb'])) {
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) == 1):
-                $i = 1; 
                 ?>
                 <div class="table-responsive">                    
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">IP / Hostname</th>
                                 <th scope="col">Port</th>
                                 <th scope="col">Benutzername</th>
@@ -227,12 +225,10 @@ if (isset($_POST['submitAddDb'])) {
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr>
-                                <th scope="row"><?php echo $i; ?></th>
                                 <td><?php echo $row['dbHost']; ?></td>
                                 <td><?php echo $row['dbPort']; ?></td>
                                 <td><?php echo $row['dbUsername']; ?></td>
                                 <td><?php echo $row['dbName']; ?></td>
-                                <?php $i++; ?>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

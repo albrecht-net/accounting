@@ -53,6 +53,9 @@ if (isset($_POST['submitAddDb'])) {
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../templates.php">Vorlagen</a>
+                </li>
             </ul>
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">

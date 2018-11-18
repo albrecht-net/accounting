@@ -13,8 +13,13 @@ if (!$lsc) {
 require_once 'includes/userDbConnect.inc.php';
 
 // Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
     if (!include 'includes/saveBuchung.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
+} elseif (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 1)) {
+    if (!include 'includes/addBuchungTemplate.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
@@ -44,7 +49,7 @@ if (isset($_POST['submit'])) {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -55,6 +60,9 @@ if (isset($_POST['submit'])) {
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="templates.php">Vorlagen</a>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-right">
@@ -83,29 +91,46 @@ if (isset($_POST['submit'])) {
                 <div class="alert alert-primary alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     Eintrag erfolgreich gespeichert
                 </div>
                 <?php elseif ($msg['sqlInsertError']): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
                 </div>
                 <?php elseif ($msg['sqlUpdateError']): ?>
                 <div class="alert alert-danger alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>    
+                    </button>
                     Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
+                </div>
+                <?php elseif ($msg['templateURL']['set']): ?>
+                <div class="alert alert-primary alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4>Vorlage als Lesezeichen</h4>
+                    <p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p>
+                    <hr>
+                    <a href="buchung.php?<?php echo http_build_query($msg['templateURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['templateURL']['name']) ? $msg['templateURL']['name'] : 'Buchungs-Vorlage'); ?></a>
+                </div>
+                <?php elseif ($msg['noTemplateInput']): ?>
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    Bitte wählen Sie mindestens 1 Feld aus, welches in der Vorlage gespeichert werden soll
                 </div>
                 <?php endif ?>         
                 <form action="buchung.php" method="POST">
                     <div class="row">
                         <div class="form-group col-md-3"> <!-- Buchungsdatum -->
                             <label for="datum">Buchungsdatum</label>
-                            <input class="form-control" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
+                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="form-group col-md-2"> <!-- Periode -->
                             <label for="periode">Periode</label>
@@ -168,10 +193,10 @@ if (isset($_POST['submit'])) {
         
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="kontoSoll" name="kontoSoll">
+                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="kontoSoll" name="kontoSoll" required>
+                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
@@ -188,20 +213,20 @@ if (isset($_POST['submit'])) {
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="kontoHaben" name="kontoHaben">
+                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="kontoHaben" name="kontoHaben" required>
+                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['kontoID']; ?><?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>"><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-2"> <!-- Betrag -->
                             <label for="totalbetrag">Betrag</label>
-                            <input class="form-control" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['betrag']; ?>" required>
+                            <input class="form-control chk-toggle-req-slave" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['totalbetrag']; ?>" required>
                         </div>
                     </div>
                     <div class="row">
@@ -276,10 +301,10 @@ if (isset($_POST['submit'])) {
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz" multiple>
+                            <select class="form-control chk-toggle-dis-invert-slave" id="buchungsreferenz" name="buchungsreferenz" multiple>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
+                            <select class="form-control chk-toggle-dis-invert-slave" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <option value="<?php echo $row['buchungID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
                                 <?php endwhile;
@@ -299,11 +324,11 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <h3 class="mt-3" id="addFavorite">Als Favorit speichern</h3>
+        <h3 class="mt-3" id="addTemplate">Als Vorlage speichern</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <p>Beim Speichern einer Buchung als Favorit wird eine Vorlage erstellt, welche alle aktuell ausgefüllten Felder beinhaltet. Hinweis: Beim Speichern als Favorit wird keine Buchung erstellt!</p>
+                <p>Beim Speichern einer Buchung wird eine Vorlage erstellt, welche alle aktuell ausgefüllten Felder beinhaltet. Hinweis: Beim Speichern als Vorlage wird keine Buchung erstellt!</p>
                 <p>Es kann dabei zwischen zwei Arten ausgewählt werden:</p>
                 <dl class="row">
                     <dt class="col-sm-3">Applikation</dt>
@@ -311,29 +336,29 @@ if (isset($_POST['submit'])) {
                     <dt class="col-sm-3">Lesezeichen</dt>
                     <dd class="col-sm-9">Beim Speichern als Lesezeichen wird eine URL erzeugt, welche als Lesezeichen verwenden werden kann. Die Vorlage wird nicht zusätzlich gespeichert.</dd>
                 </dl>
+                <div class="form-group form-check"> <!-- Als Vorlage -->
+                    <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
+                    <label class="form-check-label" for="chkAddTemplate">Als Vorlage hinzufügen</label>
+                </div>
                 <div class="row">
                     <div class="form-group col-12"> <!-- Beschreibung -->
-                        <label for="nameFavorite">Beschreibung</label>
-                        <input class="form-control" type="text" id="nameFavorite" name="nameFavorite" disabled>
+                        <label for="nameTemplate">Beschreibung</label>
+                        <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate" required disabled>
                     </div>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite1" value="1" checked disabled>
-                    <label class="form-check-label" for="radioFavorite1">
+                    <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked disabled>
+                    <label class="form-check-label" for="radioTemplate1">
                         In der Applikation
                     </label>
                 </div>
                 <div class="form-group form-check">
-                    <input class="form-check-input" type="radio" name="radioFavorite" id="radioFavorite2" value="2" disabled>
-                    <label class="form-check-label" for="radioFavorite2">
+                    <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2" disabled>
+                    <label class="form-check-label" for="radioTemplate2">
                         Als Lesezeichen
                     </label>
                 </div>
-                <div class="row">
-                    <div class="col-6 col-md-3">
-                        <button type="submitFavorite" class="btn btn-secondary btn-block" name="submitFavorite" formaction="" formnovalidate="" disabled>Favorit speichern</button>
-                    </div>
-                </div>
+
                 </form>
             </div>
         </div>
@@ -348,5 +373,19 @@ if (isset($_POST['submit'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Checkbox Toggle -->
+    <script>
+        $(".chk-toggle-master").on('click', function() {
+            if($(this).prop('checked')) {
+                $(".chk-toggle-dis-slave").prop('disabled', false);
+                $(".chk-toggle-dis-invert-slave").prop('disabled', true);
+                $(".chk-toggle-req-slave").prop('required', false);
+            } else {
+                $(".chk-toggle-dis-slave").prop('disabled', true);
+                $(".chk-toggle-dis-invert-slave").prop('disabled', false);
+                $(".chk-toggle-req-slave").prop('required', true);
+            }
+        })
+    </script>
 </body>
 </html>

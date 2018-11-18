@@ -1,6 +1,14 @@
 # Changelog
 Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokumentiert.
 
+## v1.4.0-beta (2018.11.18)
+### Added
+- Eine Buchung kann als Vorlage gespeichert werden oder mit einem generierten URL als Lesezeichen im Browser eingefügt werden
+- Verlinkte Ziel-Datenbanken können in den Einstellungen entfernt werden
+- Sitemap
+### Changed
+- Favorites zu Templates (Vorlage) umbenannt (Tabelle, Felder in Applikations-Datenbank von "favorites" zu "templates" umbenannt)
+
 ## v1.0.1-beta (2018.11.07)
 ### Fixed
 - userDbConnect.php Sqlquery Fehlerkorrektur

@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 --
--- Update von v0.8.0-alpha zu v1.x.x-beta
+-- Update von v0.8.0-alpha zu v1.4.0-beta
 --
 
 RENAME TABLE `favorites` TO `templates`;

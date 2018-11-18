@@ -15,6 +15,11 @@ if (isset($_POST['submitAddDb'])) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
+} elseif ($_POST['tableContent'] == 'databases') {
+    if (!include '../includes/deleteDatabase.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
 }
 ?>
 
@@ -26,6 +31,9 @@ if (isset($_POST['submitAddDb'])) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/mainSite.css">
 
     <title>Datenbank</title>
 </head>
@@ -154,33 +162,31 @@ if (isset($_POST['submitAddDb'])) {
             <div class="col-12 mb-5">
                 <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `userID` = " . intval($_SESSION['userID']);
+                $sqlquery = "SELECT `dbID`, `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `userID` = " . intval($_SESSION['userID']);
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) >= 1):
-                $i = 1; 
                 ?>
                 <div class="table-responsive">                    
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
                                 <th scope="col">IP / Hostname</th>
                                 <th scope="col">Port</th>
                                 <th scope="col">Benutzername</th>
                                 <th scope="col">Datenbankname</th>
+                                <th scope="cold"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr>
-                                <th scope="row"><?php echo $i; ?></th>
                                 <td><?php echo $row['dbHost']; ?></td>
                                 <td><?php echo $row['dbPort']; ?></td>
                                 <td><?php echo $row['dbUsername']; ?></td>
                                 <td><?php echo $row['dbName']; ?></td>
-                                <?php $i++; ?>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="databases-<?php echo $row['dbID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -253,6 +259,8 @@ if (isset($_POST['submitAddDb'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Eintrag löschen -->
+    <script src="../js/trValueDelete.js"></script>
 </body>
 </html>
 

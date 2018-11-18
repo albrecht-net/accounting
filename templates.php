@@ -27,6 +27,9 @@ if ($_POST['tableContent'] == 'templates') {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/mainSite.css">
+
     <title>Gespeicherte Vorlagen</title>
 </head>
 <body>
@@ -94,7 +97,7 @@ if ($_POST['tableContent'] == 'templates') {
                                 <th scope="col">Erstelldatum</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Definierte Werte</th>
-                                <th scope="cold"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,8 +109,7 @@ if ($_POST['tableContent'] == 'templates') {
                                 <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
-                                <td><button type="button" class="btn btn-secondary tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
-                                <?php $i++; ?>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

@@ -192,6 +192,7 @@ if (isset($_POST['submitAddDb'])) {
                         </tbody>
                     </table>
                 </div>
+                <p>Beim Löschen einer Datenbank werden alle damit verknüpften Vorlagen auch entfernt!</p>
                 <?php else: ?>
                 <p class="lead">Keine Datenbank gefunden</p>
                 <p>Es wurde noch keine Datenbank mit Ihrem Benutzer verlinkt. Fügen Sie Ihre erste Ziel-Datenbank gleich <a href="#addDatabase">hier</a> hinzu.</p>

@@ -77,7 +77,7 @@ if ($_POST['tableContent'] == 'templates') {
     </nav>
 
     <div class="container">
-        <h3 class="mt-3" id="newEntry">Gespeicherte Vorlagen</h3>
+        <h3 class="mt-3" id="savedTemplates">Gespeicherte Vorlagen</h3>
         <hr class="mb-4">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">

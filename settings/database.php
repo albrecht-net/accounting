@@ -158,7 +158,7 @@ if (isset($_POST['submitAddDb'])) {
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) > 1):
+                if (mysqli_num_rows($result) >= 1):
                 $i = 1; 
                 ?>
                 <div class="table-responsive">                    

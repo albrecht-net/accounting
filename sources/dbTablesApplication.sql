@@ -36,7 +36,7 @@ CREATE TABLE `templates` (
   `value` text() NOT NULL,
   PRIMARY KEY (`templateID`),
   KEY `userID` (`userID`),
-  KEY `dbID` (`userID`)
+  KEY `dbID` (`dbID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -82,10 +82,10 @@ ALTER TABLE `databases`
 --
 -- Constraints der Tabelle `templates`
 --
+
 ALTER TABLE `templates`
   ADD CONSTRAINT `templates_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `templates_ibfk_2` FOREIGN KEY (`dbD`) REFERENCES `db` (`dbD`) ON DELETE CASCADE;
-
+  ADD CONSTRAINT `templates_ibfk_2` FOREIGN KEY (`dbID`) REFERENCES `databases` (`dbID`) ON DELETE CASCADE;
 
 -- --------------------------------------------------------
 

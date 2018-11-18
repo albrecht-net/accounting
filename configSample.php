@@ -1,4 +1,11 @@
-<?php /* WEB-APPLICATION CONFIG */
+<?php
+/**
+ * Diese Datei beinhaltet die Konfiguartion für die Web-Applikation
+ * Eingaben können direkt in dieser Datei vorgenommen werden und diese dann von configSample.php zu config.php umbenennen.
+ * 
+ * Gültig ab: Accounting v0.5.0-alpha
+ */
+
 $data = array(
     // Servername oder IP-Addresse
     'dbHost' => '',
@@ -24,8 +31,5 @@ if (!$config['link']) {
     exit('Connect Error: ' . mysqli_connect_error());
 }
 
-// Datenbankname weitergeben
-$config['dbName'] = $data['dbName'];
-
-return $config;
+unset($data);
 ?>

@@ -90,6 +90,9 @@ if (isset($_POST['submitAddDb'])) {
             <li class="nav-item">
                 <a class="nav-link active" href="database.php">Datenbank</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="sitemap.php">Sitemap</a>
+            </li>
         </ul>
 
         <h3 class="mt-3" id="addDatabase">Datenbank hinzufügen</h3>

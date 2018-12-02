@@ -1,5 +1,5 @@
 -- Datenbank Tabellen Vorlage für die Benutzer-Zieldatenbank
--- Gültig ab: Accounting v0.9.1-alpha
+-- Gültig ab: Accounting vx.x.x-beta
 -- 
 
 -- --------------------------------------------------------
@@ -71,10 +71,39 @@ CREATE TABLE `klassifikation` (
 CREATE TABLE `konto` (
   `kontoID` varchar(5) NOT NULL,
   `bezeichnung` varchar(32) NOT NULL,
+  `kategorie` varchar(3) NOT NULL,
+  `kontoNR` varchar(2) NOT NULL,
   `aktiv` enum('Y','N') NOT NULL DEFAULT 'Y',
   `abstMöglich` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`kontoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `kontoKategorie`
+--
+
+CREATE TABLE `kontoKategorie` (
+  `kategorieID` VARCHAR(3) NOT NULL,
+  `bezeichnung` VARCHAR(32),
+  `klasse` VARCHAR(1) NOT NULL,
+  `kategorieNR` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`kategorieID`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `kontoKlasse`
+--
+
+CREATE TABLE `kontoKlasse` (
+  `klasseID` VARCHAR(1) NOT NULL,
+  `bezeichnung` VARCHAR(32),
+  `vorzeichen` TINYINT NOT NULL,
+  PRIMARY KEY (`klasseID`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -93,6 +122,7 @@ CREATE TABLE `periode` (
 --
 -- Constraints der Tabelle `journal`
 --
+
 ALTER TABLE `journal`
   ADD CONSTRAINT `journal_ibfk_1` FOREIGN KEY (`empfänger`) REFERENCES `empfänger` (`empfängerID`),
   ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY (`kontoSoll`) REFERENCES `konto` (`kontoID`),
@@ -102,3 +132,88 @@ ALTER TABLE `journal`
   ADD CONSTRAINT `journal_ibfk_6` FOREIGN KEY (`klassifikation2`) REFERENCES `klassifikation` (`klassifikationID`),
   ADD CONSTRAINT `journal_ibfk_7` FOREIGN KEY (`klassifikation3`) REFERENCES `klassifikation` (`klassifikationID`),
   ADD CONSTRAINT `journal_ibfk_8` FOREIGN KEY (`buchungsreferenz`) REFERENCES `journal` (`buchungID`);
+
+-- --------------------------------------------------------
+
+--
+-- Constraints der Tabelle `kontoKategorie`
+--
+
+ALTER TABLE `kontoKategorie`
+  ADD CONSTRAINT `kontoKategorie_ibfk_1` FOREIGN KEY (`klasse`) REFERENCES `kontoKlasse` (`klasseID`) ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Constraints der Tabelle `konto`
+--
+
+ALTER TABLE `konto`
+  ADD CONSTRAINT `konto_ibfk_1` FOREIGN KEY (`kategorie`) REFERENCES `kontoKategorie` (`kategorieID`) ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger der Tabelle `kontoKlasse`
+--
+
+CREATE TRIGGER `update_child_kontoKategorie` AFTER UPDATE
+ON
+  `kontoKlasse` FOR EACH ROW
+UPDATE
+  kontoKategorie
+SET
+  kontoKategorie.kategorieID = CONCAT(kontoKategorie.klasse,kontoKategorie.kategorieNR)
+WHERE
+  kontoKategorie.klasse = NEW.klasseID;
+
+-- --------------------------------------------------------
+
+--
+-- Trigger der Tabelle `kontoKategorie`
+--
+
+-- generate_kategorieID_insert
+CREATE TRIGGER `generate_kategorieID_insert` BEFORE INSERT
+ON
+  `kontoKategorie` FOR EACH ROW
+SET
+  NEW.kategorieID = CONCAT(NEW.klasse, NEW.kategorieNR);
+
+-- generate_kategorieID_update
+CREATE TRIGGER `generate_kategorieID_update` BEFORE UPDATE
+ON
+  `kontoKategorie` FOR EACH ROW
+SET
+  NEW.kategorieID = CONCAT(NEW.klasse, NEW.kategorieNR);
+
+-- update_child_konto
+CREATE TRIGGER `update_child_konto` AFTER UPDATE
+ON
+  `kontoKategorie` FOR EACH ROW
+UPDATE
+  konto
+SET
+  konto.kontoID = CONCAT(konto.kategorie,konto.kontoNR)
+WHERE
+  konto.kategorie = NEW.kategorieID;
+  
+-- --------------------------------------------------------
+
+--
+-- Trigger der Tabelle `konto`
+--
+
+-- generate_kontoID_insert
+CREATE TRIGGER `generate_kontoID_insert` BEFORE INSERT
+ON
+  `konto` FOR EACH ROW
+SET
+  NEW.kontoID = CONCAT(NEW.kategorie, NEW.kontoNR);
+
+-- generate_kontoID_update
+CREATE TRIGGER `generate_kontoID_update` BEFORE UPDATE
+ON
+  `konto` FOR EACH ROW
+SET
+  NEW.kontoID = CONCAT(NEW.kategorie, NEW.kontoNR);

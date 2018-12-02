@@ -50,6 +50,20 @@ ALTER TABLE `kontoKategorie`
 ALTER TABLE `konto`
   ADD CONSTRAINT `konto_ibfk_1` FOREIGN KEY (`kategorie`) REFERENCES `kontoKategorie` (`kategorieID`) ON UPDATE CASCADE;
 
+ALTER TABLE
+  `journal`
+DROP FOREIGN KEY
+  `journal_ibfk_2`;
+ALTER TABLE
+  `journal` ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY(`kontoSoll`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
+
+ALTER TABLE
+  `journal`
+DROP FOREIGN KEY
+  `journal_ibfk_3`;
+ALTER TABLE
+  `journal` ADD CONSTRAINT `journal_ibfk_3` FOREIGN KEY(`kontoHaben`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
+
 CREATE TRIGGER `update_child_kontoKategorie` AFTER UPDATE
 ON
   `kontoKlasse` FOR EACH ROW

@@ -125,8 +125,8 @@ CREATE TABLE `periode` (
 
 ALTER TABLE `journal`
   ADD CONSTRAINT `journal_ibfk_1` FOREIGN KEY (`empfänger`) REFERENCES `empfänger` (`empfängerID`),
-  ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY (`kontoSoll`) REFERENCES `konto` (`kontoID`),
-  ADD CONSTRAINT `journal_ibfk_3` FOREIGN KEY (`kontoHaben`) REFERENCES `konto` (`kontoID`),
+  ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY (`kontoSoll`) REFERENCES `konto` (`kontoID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `journal_ibfk_3` FOREIGN KEY (`kontoHaben`) REFERENCES `konto` (`kontoID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `journal_ibfk_4` FOREIGN KEY (`periode`) REFERENCES `periode` (`periodeID`),
   ADD CONSTRAINT `journal_ibfk_5` FOREIGN KEY (`klassifikation1`) REFERENCES `klassifikation` (`klassifikationID`),
   ADD CONSTRAINT `journal_ibfk_6` FOREIGN KEY (`klassifikation2`) REFERENCES `klassifikation` (`klassifikationID`),

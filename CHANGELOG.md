@@ -30,7 +30,7 @@ Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokume
 ### Changed
 - In Tabelle "konto" das Feld "abstMoeglich" zu "abstMöglich" geändert
 ### Note
-- Diese Version ist nicht mehr aufgrund der Neubenennung der Datenbank-Tabellen nicht mehr rückwärzkompatibel. Ausserdem wird auf eine Erhöhung der Hauptversionsnummer verzichtet, da Accounting noch im Alpha Stadium ist.
+- Diese Version ist aufgrund der Neubenennung der Datenbank-Tabellen nicht mehr rückwärzkompatibel. Ausserdem wird auf eine Erhöhung der Hauptversionsnummer verzichtet, da Accounting noch im Alpha Stadium ist.
 
 ## v0.8.0-alpha (2018.10.31)
 ### Added
@@ -40,7 +40,7 @@ Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokume
 - Tabelle von "buchungen" zu "journal" umbenannt
 - Tabelle von "konten" zu "konto" umbenannt
 ### Note
-- Diese Version ist nicht mehr aufgrund der Neubenennung der Datenbank-Tabellen nicht mehr rückwärzkompatibel. Ausserdem wird auf eine Erhöhung der Hauptversionsnummer verzichtet, da Accounting noch im Alpha Stadium ist.
+- Diese Version ist aufgrund der Neubenennung der Datenbank-Tabellen nicht mehr rückwärzkompatibel. Ausserdem wird auf eine Erhöhung der Hauptversionsnummer verzichtet, da Accounting noch im Alpha Stadium ist.
 
 ## v0.5.0-alpha (2018.10.28)
 ### Added

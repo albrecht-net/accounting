@@ -188,7 +188,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <label for="kontoSoll">Konto Soll</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konto`";
+                            $sqlquery = "SELECT konto.kontoID, konto.bezeichnung AS kontoBezeichnung, kontoKategorie.bezeichnung AS kategorieBezeichnung FROM konto LEFT JOIN kontoKategorie ON konto.kategorie = kontoKategorie.kategorieID WHERE konto.aktiv = 'Y' ORDER BY kontoKategorie.bezeichnung ASC, konto.bezeichnung ASC";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
@@ -198,9 +198,27 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <?php else: ?>
                             <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
                                 <option></option>
-                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
-                                <?php endwhile;
+                                <?php
+                                // Resulat in 1 Array schreiben, sortiert nach Kategorie
+                                $valueArray = [];
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    if ($row['kategorieBezeichnung'] != $kategorie) {
+                                        $i = 0;
+                                    }
+
+                                    $kategorie = $row['kategorieBezeichnung'];
+
+                                    $valueArray[$kategorie][$i] = $row;
+                                    $i++;
+                                }
+
+                                // Array in Dropdown ausgeben
+                                foreach ($valueArray as $key => $row1): ?>
+                                    <optgroup label="<?php echo $key; ?>">
+                                    <?php foreach ($row1 as $key => $row2): ?>
+                                        <option value="<?php echo $row2['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row2['kontoID'] ? ' selected' : ''); ?>><?php echo $row2['kontoID'] . ' ' . $row2['kontoBezeichnung']; ?></option>
+                                    <?php endforeach;
+                                endforeach;
                             endif; ?>
                             </select>
                         </div>
@@ -208,7 +226,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <label for="kontoHaben">Konto Haben</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `kontoID`, `bezeichnung` FROM `konto`";
+                            $sqlquery = "SELECT konto.kontoID, konto.bezeichnung AS kontoBezeichnung, kontoKategorie.bezeichnung AS kategorieBezeichnung FROM konto LEFT JOIN kontoKategorie ON konto.kategorie = kontoKategorie.kategorieID WHERE konto.aktiv = 'Y' ORDER BY kontoKategorie.bezeichnung ASC, konto.bezeichnung ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
@@ -218,9 +236,27 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <?php else: ?>
                             <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
                                 <option></option>
-                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row['kontoID'] ? ' selected' : ''); ?>><?php echo str_pad($row['kontoID'], 5, ' ') . $row['bezeichnung']; ?></option>
-                                <?php endwhile;
+                                <?php
+                                // Resulat in 1 Array schreiben, sortiert nach Kategorie
+                                $valueArray = [];
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    if ($row['kategorieBezeichnung'] != $kategorie) {
+                                        $i = 0;
+                                    }
+
+                                    $kategorie = $row['kategorieBezeichnung'];
+
+                                    $valueArray[$kategorie][$i] = $row;
+                                    $i++;
+                                }
+
+                                // Array in Dropdown ausgeben
+                                foreach ($valueArray as $key => $row1): ?>
+                                    <optgroup label="<?php echo $key; ?>">
+                                    <?php foreach ($row1 as $key => $row2): ?>
+                                        <option value="<?php echo $row2['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row2['kontoID'] ? ' selected' : ''); ?>><?php echo $row2['kontoID'] . ' ' . $row2['kontoBezeichnung']; ?></option>
+                                    <?php endforeach;
+                                endforeach;
                             endif; ?>
                             </select>
                         </div>

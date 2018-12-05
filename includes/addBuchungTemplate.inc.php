@@ -13,8 +13,6 @@ $dataInput = array(
         'klassifikation2' => intval($_POST['klassifikation2']),
         'klassifikation3' => intval($_POST['klassifikation3'])
     ),
-    'userID' => intval($_SESSION['userID']),
-    'dbID' => intval($_SESSION['userDb']['dbID']),
     'name' => mysqli_real_escape_string($userLink, trim($_POST['nameTemplate']))
 );
 
@@ -30,26 +28,25 @@ if (count($dataInput['input']) > 0) {
                 'datumErstellt' => 'NOW()'
             );
 
-            // Input zu JSON
-            $dataInput['value'] = json_encode($dataInput['input'], JSON_UNESCAPED_UNICODE);
+            $dataInput = array_merge($dataInput, $dataInput['input']);
             unset($dataInput['input']);
 
-            // Datenbankangaben speichern
+            // SQL-Query bereitstellen
             $columns = "`" . implode("`, `", array_keys($dataInput)) . "`, `" . implode("`, `", array_keys($dataFunctions)) . "`";
             $values = "'" . implode("', '", $dataInput) . "', " . implode(", ", $dataFunctions);
-            $sqlquery = "INSERT INTO `templates` (" . $columns . ") VALUES (" . $values . ")";
+            $sqlquery = "INSERT INTO `template` (" . $columns . ") VALUES (" . $values . ")";
 
             // SQL-Query ausführen und überprüfen
-            if (!mysqli_query($config['link'], $sqlquery)) {
-                echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
-                exit();
+            if (!mysqli_query($userLink, $sqlquery)) {
+                $msg['sqlInsertError'] = 1;
             }
+            $msg['templateSuccess'] = 1;
             break;
         case (2): // Als Link ausgeben
             $msg['templateURL']['set'] = 1;
             $msg['templateURL']['name'] = $dataInput['name'];
             $msg['templateURL']['data'] = $dataInput['input'];
-            $msg['templateURL']['data']['dbID'] = $dataInput['dbID'];
+            $msg['templateURL']['data']['dbID'] = $_SESSION['userDb']['dbID'];
             break;
     }
 } else {

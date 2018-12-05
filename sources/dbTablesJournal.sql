@@ -120,6 +120,36 @@ CREATE TABLE `periode` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `template`
+--
+
+CREATE TABLE `template` (
+  `templateID` int(32) NOT NULL AUTO_INCREMENT,
+  `datumErstellt` datetime NOT NULL DEFAULT current_timestamp(),
+  `name` varchar(32) NOT NULL,
+  `empfänger` int(32) DEFAULT NULL,
+  `reNummer` varchar(64) DEFAULT NULL,
+  `buchungstext` text DEFAULT NULL,
+  `totalbetrag` float(12,2) NOT NULL DEFAULT 0.00,
+  `kontoSoll` varchar(5) DEFAULT NULL,
+  `kontoHaben` varchar(5) DEFAULT NULL,
+  `periode` int(32) DEFAULT NULL,
+  `klassifikation1` int(32) DEFAULT NULL,
+  `klassifikation2` int(32) DEFAULT NULL,
+  `klassifikation3` int(32) DEFAULT NULL,
+  PRIMARY KEY (`templateID`),
+  KEY `empfänger` (`empfänger`),
+  KEY `kontoSoll` (`kontoSoll`),
+  KEY `kontoHaben` (`kontoHaben`),
+  KEY `periode` (`periode`),
+  KEY `klassifikation1` (`klassifikation1`),
+  KEY `klassifikation2` (`klassifikation2`),
+  KEY `klassifikation3` (`klassifikation3`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Constraints der Tabelle `journal`
 --
 
@@ -150,6 +180,21 @@ ALTER TABLE `kontoKategorie`
 
 ALTER TABLE `konto`
   ADD CONSTRAINT `konto_ibfk_1` FOREIGN KEY (`kategorie`) REFERENCES `kontoKategorie` (`kategorieID`) ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Constraints der Tabelle `template`
+--
+
+ALTER TABLE `template`
+  ADD CONSTRAINT `template_ibfk_1` FOREIGN KEY(`empfänger`) REFERENCES `empfänger`(`empfängerID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_2` FOREIGN KEY(`kontoSoll`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_3` FOREIGN KEY(`kontoHaben`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_4` FOREIGN KEY(`periode`) REFERENCES `periode`(`periodeID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`klassifikation1`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`klassifikation2`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_7` FOREIGN KEY(`klassifikation3`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
 
 -- --------------------------------------------------------
 

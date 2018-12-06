@@ -11,6 +11,7 @@ Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokume
 ### Changend
 - In der Ziel-Datenbank Tabelle "konto" wird die Konto-ID automatisch aus der Kategorien-ID und der Konto-NR generiert
 - Die Auswahlfelder für Konto Haben und Soll in der Eingabemaske werden nach der Konto-Kategorie sortiert
+- Die Tabelle "Template" wurde von der Applikations- in die Ziel-Datenbank verschoben
 
 ---
 

@@ -23,23 +23,6 @@ CREATE TABLE `databases` (
 
 -- --------------------------------------------------------
 
---
--- Tabellenstruktur für Tabelle `templates`
---
-
-CREATE TABLE `templates` (
-  `templateID` int(32) NOT NULL AUTO_INCREMENT,
-  `datumErstellt` datetime NOT NULL DEFAULT current_timestamp(),
-  `userID` int(32) NOT NULL,
-  `dbID` int(32) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `value` text() NOT NULL,
-  PRIMARY KEY (`templateID`),
-  KEY `userID` (`userID`),
-  KEY `dbID` (`dbID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `users`
@@ -76,16 +59,6 @@ CREATE TABLE `userconfig` (
 --
 ALTER TABLE `databases`
   ADD CONSTRAINT `databases_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE;
-
--- --------------------------------------------------------
-
---
--- Constraints der Tabelle `templates`
---
-
-ALTER TABLE `templates`
-  ADD CONSTRAINT `templates_ibfk_1` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE CASCADE,
-  ADD CONSTRAINT `templates_ibfk_2` FOREIGN KEY (`dbID`) REFERENCES `databases` (`dbID`) ON DELETE CASCADE;
 
 -- --------------------------------------------------------
 

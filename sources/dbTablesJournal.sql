@@ -150,6 +150,31 @@ CREATE TABLE `template` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `standingOrder`
+--
+
+CREATE TABLE `standingOrder` (
+  `standingOrderID` INT(11) NOT NULL AUTO_INCREMENT,
+  `template` INT(11) NOT NULL COMMENT 'sad',
+  `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `label` VARCHAR(32) DEFAULT NULL,
+  `validFromType` INT(11) NOT NULL,
+  `validFrom` DATE NOT NULL,
+  `periodicityType` INT(11) NOT NULL,
+  `periodicityValue` INT(11) NOT NULL,
+  `validToType` INT(11) NOT NULL,
+  `validTo` DATE DEFAULT NULL,
+  `initialEvents` INT(11) NULL DEFAULT NULL,
+  `handledEvents` INT(11) NULL DEFAULT NULL,
+  `remainingEvents` INT(11) NULL DEFAULT NULL,
+  `nextExecutionDate` DATE NOT NULL,
+  PRIMARY KEY(`standingOrderID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Dauerauftrag';
+
+-- --------------------------------------------------------
+
+--
 -- Constraints der Tabelle `journal`
 --
 
@@ -195,6 +220,15 @@ ALTER TABLE `template`
   ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`klassifikation1`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
   ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`klassifikation2`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
   ADD CONSTRAINT `template_ibfk_7` FOREIGN KEY(`klassifikation3`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
+
+-- --------------------------------------------------------
+
+--
+-- Constraints der Tabelle `standingOrder`
+--
+
+ALTER TABLE `standingOrder`
+  ADD CONSTRAINT `standingOrder_ibfk_1` FOREIGN KEY (`template`) REFERENCES `template` (`templateID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- --------------------------------------------------------
 

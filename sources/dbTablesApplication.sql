@@ -1,5 +1,5 @@
 -- Datenbank Tabellen Vorlage für die Applikations-Datenbank
--- Gültig ab: Accounting v1.4.0-beta
+-- Gültig ab: Accounting vx.x.x-beta
 --
 
 -- --------------------------------------------------------
@@ -10,7 +10,7 @@
 
 CREATE TABLE `databases` (
   `dbID` int(32) NOT NULL AUTO_INCREMENT,
-  `datumErstellt` datetime NOT NULL,
+  `created` datetime NOT NULL,
   `userID` int(32) NOT NULL,
   `dbHost` varchar(32) NOT NULL,
   `dbPort` int(16) NOT NULL,

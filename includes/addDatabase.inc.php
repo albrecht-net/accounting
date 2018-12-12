@@ -17,7 +17,7 @@ if (!$tempLink) {
     $msg['tempLinkError'] = 1;
 } else {
     $dataFunctions = array(
-        'datumErstellt' => 'NOW()'
+        'created' => 'NOW()'
     );
 
     // Datenbankangaben speichern

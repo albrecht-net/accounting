@@ -9,12 +9,15 @@
 --
 
 CREATE TABLE `recipient` (
-  `recipientID` int(32) NOT NULL AUTO_INCREMENT,
+  `recipientID` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(64) NOT NULL,
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `customerNumber` varchar(64) NOT NULL,
   PRIMARY KEY (`recipientID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Empfänger';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Empfänger';
 
 -- --------------------------------------------------------
 
@@ -23,20 +26,20 @@ CREATE TABLE `recipient` (
 --
 
 CREATE TABLE `journal` (
-  `entryID` int(32) NOT NULL AUTO_INCREMENT,
+  `entryID` int(11) NOT NULL AUTO_INCREMENT,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `date` date DEFAULT NULL,
-  `recipient` int(32) DEFAULT NULL,
+  `recipient` int(11) DEFAULT NULL,
   `invoiceNo` varchar(64) DEFAULT NULL,
   `entryText` text DEFAULT NULL,
   `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
   `debitAccount` varchar(5) DEFAULT NULL,
   `creditAccount` varchar(5) DEFAULT NULL,
-  `period` int(32) DEFAULT NULL,
-  `classification1` int(32) DEFAULT NULL,
-  `classification2` int(32) DEFAULT NULL,
-  `classification3` int(32) DEFAULT NULL,
-  `entryReference` int(32) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `classification1` int(11) DEFAULT NULL,
+  `classification2` int(11) DEFAULT NULL,
+  `classification3` int(11) DEFAULT NULL,
+  `entryReference` int(11) DEFAULT NULL,
   `reconcilation` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`entryID`),
   KEY `recipient` (`recipient`),
@@ -47,7 +50,10 @@ CREATE TABLE `journal` (
   KEY `classification2` (`classification2`),
   KEY `classification3` (`classification3`),
   KEY `entryReference` (`entryReference`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Journal';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Journal';
 
 -- --------------------------------------------------------
 
@@ -56,11 +62,14 @@ CREATE TABLE `journal` (
 --
 
 CREATE TABLE `classification` (
-  `classificationID` int(32) NOT NULL AUTO_INCREMENT,
+  `classificationID` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(64) NOT NULL,
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`classificationID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Klassifikation';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Klassifikation';
 
 -- --------------------------------------------------------
 
@@ -76,7 +85,10 @@ CREATE TABLE `account` (
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `reconcilationAllow` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`accountID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Konto';
 
 -- --------------------------------------------------------
 
@@ -90,7 +102,10 @@ CREATE TABLE `accountCategory` (
   `class` VARCHAR(1) NOT NULL,
   `categoryNo` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`categoryID`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto-Kategorie';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Konto-Kategorie';
 
 -- --------------------------------------------------------
 
@@ -103,7 +118,10 @@ CREATE TABLE `accountClass` (
   `label` VARCHAR(32),
   `sign` TINYINT NOT NULL,
   PRIMARY KEY (`classID`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto-Klasse';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Konto-Klasse';
 
 -- --------------------------------------------------------
 
@@ -112,10 +130,13 @@ CREATE TABLE `accountClass` (
 --
 
 CREATE TABLE `period` (
-  `periodID` int(32) NOT NULL AUTO_INCREMENT,
+  `periodID` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(32) NOT NULL,
   PRIMARY KEY (`periodID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Periode';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Periode';
 
 -- --------------------------------------------------------
 
@@ -124,19 +145,19 @@ CREATE TABLE `period` (
 --
 
 CREATE TABLE `template` (
-  `templateID` int(32) NOT NULL AUTO_INCREMENT,
+  `templateID` int(11) NOT NULL AUTO_INCREMENT,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
   `name` varchar(32) NOT NULL,
-  `recipient` int(32) DEFAULT NULL,
+  `recipient` int(11) DEFAULT NULL,
   `invoiceNo` varchar(64) DEFAULT NULL,
   `entryText` text DEFAULT NULL,
   `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
   `debitAccount` varchar(5) DEFAULT NULL,
   `creditAccount` varchar(5) DEFAULT NULL,
-  `period` int(32) DEFAULT NULL,
-  `classification1` int(32) DEFAULT NULL,
-  `classification2` int(32) DEFAULT NULL,
-  `classification3` int(32) DEFAULT NULL,
+  `period` int(11) DEFAULT NULL,
+  `classification1` int(11) DEFAULT NULL,
+  `classification2` int(11) DEFAULT NULL,
+  `classification3` int(11) DEFAULT NULL,
   PRIMARY KEY (`templateID`),
   KEY `recipient` (`recipient`),
   KEY `debitAccount` (`debitAccount`),
@@ -145,7 +166,10 @@ CREATE TABLE `template` (
   KEY `classification1` (`classification1`),
   KEY `classification2` (`classification2`),
   KEY `classification3` (`classification3`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Vorlage';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Vorlage';
 
 -- --------------------------------------------------------
 
@@ -170,7 +194,10 @@ CREATE TABLE `standingOrder` (
   `remainingEvents` INT(11) NULL DEFAULT NULL,
   `nextExecutionDate` DATE NOT NULL,
   PRIMARY KEY(`standingOrderID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dauerauftrag';
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4
+COMMENT = 'Dauerauftrag';
 
 -- --------------------------------------------------------
 

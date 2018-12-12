@@ -7,7 +7,9 @@
 --
 -- Update von v1.4.0-beta zu vx.x.x-beta
 --
-
+ALTER TABLE `databases` DEFAULT charset = utf8mb4 COLLATE = utf8mb4_general_ci;
+ALTER TABLE `users` DEFAULT charset = utf8mb4 COLLATE = utf8mb4_general_ci
+ALTER TABLE `userconfig` DEFAULT charset = utf8mb4 COLLATE = utf8mb4_general_ci
 ALTER TABLE `databases` CHANGE `datumErstellt` `created` DATETIME NOT NULL;
 
 -- --------------------------------------------------------

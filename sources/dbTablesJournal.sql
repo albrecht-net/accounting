@@ -14,7 +14,7 @@ CREATE TABLE `recipient` (
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `customerNumber` varchar(64) NOT NULL,
   PRIMARY KEY (`recipientID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Empfänger';
 
 -- --------------------------------------------------------
 
@@ -25,19 +25,19 @@ CREATE TABLE `recipient` (
 CREATE TABLE `journal` (
   `entryID` int(32) NOT NULL AUTO_INCREMENT,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `date` date DEFAULT NULL,
-  `recipient` int(32) DEFAULT NULL,
-  `invoiceNo` varchar(64) DEFAULT NULL,
-  `entryText` text DEFAULT NULL,
-  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
-  `debitAccount` varchar(5) DEFAULT NULL,
-  `creditAccount` varchar(5) DEFAULT NULL,
-  `period` int(32) DEFAULT NULL,
-  `classification1` int(32) DEFAULT NULL,
-  `classification2` int(32) DEFAULT NULL,
-  `classification3` int(32) DEFAULT NULL,
-  `entryReference` int(32) DEFAULT NULL,
-  `reconcilation` enum('Y','N') NOT NULL DEFAULT 'N',
+  `date` date DEFAULT NULL COMMENT='Buchungsdatum',
+  `recipient` int(32) DEFAULT NULL COMMENT='Empfänger',
+  `invoiceNo` varchar(64) DEFAULT NULL COMMENT='Rechnungsnummer',
+  `entryText` text DEFAULT NULL COMMENT='Buchungstext',
+  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00 COMMENT='Totalbetrag',
+  `debitAccount` varchar(5) DEFAULT NULL COMMENT='Soll-Konto',
+  `creditAccount` varchar(5) DEFAULT NULL COMMENT='Haben-Konto',
+  `period` int(32) DEFAULT NULL COMMENT='Periode',
+  `classification1` int(32) DEFAULT NULL COMMENT='Klassifikation1',
+  `classification2` int(32) DEFAULT NULL COMMENT='Klassifikation2',
+  `classification3` int(32) DEFAULT NULL COMMENT='Klassifikation3',
+  `entryReference` int(32) DEFAULT NULL COMMENT='Buchungsreferenz',
+  `reconcilation` enum('Y','N') NOT NULL DEFAULT 'N' COMMENT='Abstimmung',
   PRIMARY KEY (`entryID`),
   KEY `recipient` (`recipient`),
   KEY `debitAccount` (`debitAccount`),
@@ -47,7 +47,7 @@ CREATE TABLE `journal` (
   KEY `classification2` (`classification2`),
   KEY `classification3` (`classification3`),
   KEY `entryReference` (`entryReference`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Journal';
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE `classification` (
   `label` varchar(64) NOT NULL,
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`classificationID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Klassifikation';
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ CREATE TABLE `account` (
   `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   `reconcilationAllow` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`accountID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto';
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE `accountCategory` (
   `class` VARCHAR(1) NOT NULL,
   `categoryNo` VARCHAR(2) NOT NULL,
   PRIMARY KEY (`categoryID`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto-Kategorie';
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE `accountClass` (
   `label` VARCHAR(32),
   `sign` TINYINT NOT NULL,
   PRIMARY KEY (`classID`)
-) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+) ENGINE = InnoDB DEFAULT CHARSET=utf8 COMMENT='Konto-Klasse';
 
 -- --------------------------------------------------------
 
@@ -115,7 +115,7 @@ CREATE TABLE `period` (
   `periodID` int(32) NOT NULL AUTO_INCREMENT,
   `label` varchar(32) NOT NULL,
   PRIMARY KEY (`periodID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Periode';
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ CREATE TABLE `template` (
   KEY `classification1` (`classification1`),
   KEY `classification2` (`classification2`),
   KEY `classification3` (`classification3`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Vorlage';
 
 -- --------------------------------------------------------
 

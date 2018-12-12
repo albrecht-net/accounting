@@ -170,7 +170,7 @@ CREATE TABLE `standingOrder` (
   `remainingEvents` INT(11) NULL DEFAULT NULL,
   `nextExecutionDate` DATE NOT NULL,
   PRIMARY KEY(`standingOrderID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Dauerauftrag';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dauerauftrag';
 
 -- --------------------------------------------------------
 
@@ -213,12 +213,12 @@ ALTER TABLE `account`
 --
 
 ALTER TABLE `template`
-  ADD CONSTRAINT `template_ibfk_1` FOREIGN KEY(`recipient`) REFERENCES `recipient`(`recipientID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_2` FOREIGN KEY(`debitAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_3` FOREIGN KEY(`creditAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_4` FOREIGN KEY(`period`) REFERENCES `period`(`periodID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`classification1`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`classification2`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_1` FOREIGN KEY(`recipient`) REFERENCES `recipient`(`recipientID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_ibfk_2` FOREIGN KEY(`debitAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_ibfk_3` FOREIGN KEY(`creditAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_ibfk_4` FOREIGN KEY(`period`) REFERENCES `period`(`periodID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`classification1`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`classification2`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `template_ibfk_7` FOREIGN KEY(`classification3`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
 
 -- --------------------------------------------------------

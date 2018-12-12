@@ -5,6 +5,14 @@
 -- --------------------------------------------------------
 
 --
+-- Update von v1.4.0-beta zu vx.x.x-beta
+--
+
+ALTER TABLE `databases` CHANGE `datumErstellt` `created` DATETIME NOT NULL;
+
+-- --------------------------------------------------------
+
+--
 -- Update von v0.8.0-alpha zu v1.4.0-beta
 --
 

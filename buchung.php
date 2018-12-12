@@ -188,7 +188,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <label for="debitAccount">Konto Soll</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT account.accountID, account.label AS accountBezeichnung, accountCategory.label AS categoryLabel FROM account LEFT JOIN accountCategory ON account.category = accountCategory.categoryID WHERE account.active = 'Y' ORDER BY accountCategory.label ASC, account.label ASC";
+                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountBezeichnung`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
@@ -226,7 +226,7 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                             <label for="creditAccount">Konto Haben</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT account.accountID, account.label AS accountBezeichnung, accountCategory.label AS categoryLabel FROM account LEFT JOIN accountCategory ON account.category = accountCategory.categoryID WHERE account.active = 'Y' ORDER BY accountCategory.label ASC, account.label ASC";
+                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountBezeichnung`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden

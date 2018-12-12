@@ -5,15 +5,15 @@
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `empfänger`
+-- Tabellenstruktur für Tabelle `recipient`
 --
 
-CREATE TABLE `empfänger` (
-  `empfängerID` int(32) NOT NULL AUTO_INCREMENT,
-  `bezeichnung` varchar(64) NOT NULL,
-  `aktiv` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `kundennummer` varchar(64) NOT NULL,
-  PRIMARY KEY (`empfängerID`)
+CREATE TABLE `recipient` (
+  `recipientID` int(32) NOT NULL AUTO_INCREMENT,
+  `label` varchar(64) NOT NULL,
+  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `customerNumber` varchar(64) NOT NULL,
+  PRIMARY KEY (`recipientID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -23,98 +23,98 @@ CREATE TABLE `empfänger` (
 --
 
 CREATE TABLE `journal` (
-  `buchungID` int(32) NOT NULL AUTO_INCREMENT,
-  `datumErstellt` datetime NOT NULL DEFAULT current_timestamp(),
-  `datum` date DEFAULT NULL,
-  `empfänger` int(32) DEFAULT NULL,
-  `reNummer` varchar(64) DEFAULT NULL,
-  `buchungstext` text DEFAULT NULL,
-  `totalbetrag` float(12,2) NOT NULL DEFAULT 0.00,
-  `kontoSoll` varchar(5) DEFAULT NULL,
-  `kontoHaben` varchar(5) DEFAULT NULL,
-  `periode` int(32) DEFAULT NULL,
-  `klassifikation1` int(32) DEFAULT NULL,
-  `klassifikation2` int(32) DEFAULT NULL,
-  `klassifikation3` int(32) DEFAULT NULL,
-  `buchungsreferenz` int(32) DEFAULT NULL,
-  `abstimmung` enum('Y','N') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`buchungID`),
-  KEY `empfänger` (`empfänger`),
-  KEY `kontoSoll` (`kontoSoll`),
-  KEY `kontoHaben` (`kontoHaben`),
-  KEY `periode` (`periode`),
-  KEY `klassifikation1` (`klassifikation1`),
-  KEY `klassifikation2` (`klassifikation2`),
-  KEY `klassifikation3` (`klassifikation3`),
-  KEY `buchungsreferenz` (`buchungsreferenz`)
+  `entryID` int(32) NOT NULL AUTO_INCREMENT,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `date` date DEFAULT NULL,
+  `recipient` int(32) DEFAULT NULL,
+  `invoiceNo` varchar(64) DEFAULT NULL,
+  `entryText` text DEFAULT NULL,
+  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
+  `debitAccount` varchar(5) DEFAULT NULL,
+  `creditAccount` varchar(5) DEFAULT NULL,
+  `period` int(32) DEFAULT NULL,
+  `classification1` int(32) DEFAULT NULL,
+  `classification2` int(32) DEFAULT NULL,
+  `classification3` int(32) DEFAULT NULL,
+  `entryReference` int(32) DEFAULT NULL,
+  `reconcilation` enum('Y','N') NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`entryID`),
+  KEY `recipient` (`recipient`),
+  KEY `debitAccount` (`debitAccount`),
+  KEY `creditAccount` (`creditAccount`),
+  KEY `period` (`period`),
+  KEY `classification1` (`classification1`),
+  KEY `classification2` (`classification2`),
+  KEY `classification3` (`classification3`),
+  KEY `entryReference` (`entryReference`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `klassifikation`
+-- Tabellenstruktur für Tabelle `classification`
 --
 
-CREATE TABLE `klassifikation` (
-  `klassifikationID` int(32) NOT NULL AUTO_INCREMENT,
-  `bezeichnung` varchar(64) NOT NULL,
-  `aktiv` enum('Y','N') NOT NULL DEFAULT 'Y',
-  PRIMARY KEY (`klassifikationID`)
+CREATE TABLE `classification` (
+  `classificationID` int(32) NOT NULL AUTO_INCREMENT,
+  `label` varchar(64) NOT NULL,
+  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
+  PRIMARY KEY (`classificationID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `konto`
+-- Tabellenstruktur für Tabelle `account`
 --
 
-CREATE TABLE `konto` (
-  `kontoID` varchar(5) NOT NULL,
-  `bezeichnung` varchar(32) NOT NULL,
-  `kategorie` varchar(3) NOT NULL,
-  `kontoNR` varchar(2) NOT NULL,
-  `aktiv` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `abstMöglich` enum('Y','N') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`kontoID`)
+CREATE TABLE `account` (
+  `accountID` varchar(5) NOT NULL,
+  `label` varchar(32) NOT NULL,
+  `category` varchar(3) NOT NULL,
+  `accountNo` varchar(2) NOT NULL,
+  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `reconcilationAllow` enum('Y','N') NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`accountID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `kontoKategorie`
+-- Tabellenstruktur für Tabelle `accountCategory`
 --
 
-CREATE TABLE `kontoKategorie` (
-  `kategorieID` VARCHAR(3) NOT NULL,
-  `bezeichnung` VARCHAR(32),
-  `klasse` VARCHAR(1) NOT NULL,
-  `kategorieNR` VARCHAR(2) NOT NULL,
-  PRIMARY KEY (`kategorieID`)
+CREATE TABLE `accountCategory` (
+  `categoryID` VARCHAR(3) NOT NULL,
+  `label` VARCHAR(32),
+  `class` VARCHAR(1) NOT NULL,
+  `categoryNo` VARCHAR(2) NOT NULL,
+  PRIMARY KEY (`categoryID`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `kontoKlasse`
+-- Tabellenstruktur für Tabelle `accountClass`
 --
 
-CREATE TABLE `kontoKlasse` (
-  `klasseID` VARCHAR(1) NOT NULL,
-  `bezeichnung` VARCHAR(32),
-  `vorzeichen` TINYINT NOT NULL,
-  PRIMARY KEY (`klasseID`)
+CREATE TABLE `accountClass` (
+  `classID` VARCHAR(1) NOT NULL,
+  `label` VARCHAR(32),
+  `sign` TINYINT NOT NULL,
+  PRIMARY KEY (`classID`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `periode`
+-- Tabellenstruktur für Tabelle `period`
 --
 
-CREATE TABLE `periode` (
-  `periodeID` int(32) NOT NULL AUTO_INCREMENT,
-  `bezeichnung` varchar(32) NOT NULL,
-  PRIMARY KEY (`periodeID`)
+CREATE TABLE `period` (
+  `periodID` int(32) NOT NULL AUTO_INCREMENT,
+  `label` varchar(32) NOT NULL,
+  PRIMARY KEY (`periodID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -125,26 +125,26 @@ CREATE TABLE `periode` (
 
 CREATE TABLE `template` (
   `templateID` int(32) NOT NULL AUTO_INCREMENT,
-  `datumErstellt` datetime NOT NULL DEFAULT current_timestamp(),
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
   `name` varchar(32) NOT NULL,
-  `empfänger` int(32) DEFAULT NULL,
-  `reNummer` varchar(64) DEFAULT NULL,
-  `buchungstext` text DEFAULT NULL,
-  `totalbetrag` float(12,2) NOT NULL DEFAULT 0.00,
-  `kontoSoll` varchar(5) DEFAULT NULL,
-  `kontoHaben` varchar(5) DEFAULT NULL,
-  `periode` int(32) DEFAULT NULL,
-  `klassifikation1` int(32) DEFAULT NULL,
-  `klassifikation2` int(32) DEFAULT NULL,
-  `klassifikation3` int(32) DEFAULT NULL,
+  `recipient` int(32) DEFAULT NULL,
+  `invoiceNo` varchar(64) DEFAULT NULL,
+  `entryText` text DEFAULT NULL,
+  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
+  `debitAccount` varchar(5) DEFAULT NULL,
+  `creditAccount` varchar(5) DEFAULT NULL,
+  `period` int(32) DEFAULT NULL,
+  `classification1` int(32) DEFAULT NULL,
+  `classification2` int(32) DEFAULT NULL,
+  `classification3` int(32) DEFAULT NULL,
   PRIMARY KEY (`templateID`),
-  KEY `empfänger` (`empfänger`),
-  KEY `kontoSoll` (`kontoSoll`),
-  KEY `kontoHaben` (`kontoHaben`),
-  KEY `periode` (`periode`),
-  KEY `klassifikation1` (`klassifikation1`),
-  KEY `klassifikation2` (`klassifikation2`),
-  KEY `klassifikation3` (`klassifikation3`)
+  KEY `recipient` (`recipient`),
+  KEY `debitAccount` (`debitAccount`),
+  KEY `creditAccount` (`creditAccount`),
+  KEY `period` (`period`),
+  KEY `classification1` (`classification1`),
+  KEY `classification2` (`classification2`),
+  KEY `classification3` (`classification3`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -179,32 +179,32 @@ CREATE TABLE `standingOrder` (
 --
 
 ALTER TABLE `journal`
-  ADD CONSTRAINT `journal_ibfk_1` FOREIGN KEY (`empfänger`) REFERENCES `empfänger` (`empfängerID`),
-  ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY (`kontoSoll`) REFERENCES `konto` (`kontoID`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `journal_ibfk_3` FOREIGN KEY (`kontoHaben`) REFERENCES `konto` (`kontoID`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `journal_ibfk_4` FOREIGN KEY (`periode`) REFERENCES `periode` (`periodeID`),
-  ADD CONSTRAINT `journal_ibfk_5` FOREIGN KEY (`klassifikation1`) REFERENCES `klassifikation` (`klassifikationID`),
-  ADD CONSTRAINT `journal_ibfk_6` FOREIGN KEY (`klassifikation2`) REFERENCES `klassifikation` (`klassifikationID`),
-  ADD CONSTRAINT `journal_ibfk_7` FOREIGN KEY (`klassifikation3`) REFERENCES `klassifikation` (`klassifikationID`),
-  ADD CONSTRAINT `journal_ibfk_8` FOREIGN KEY (`buchungsreferenz`) REFERENCES `journal` (`buchungID`);
+  ADD CONSTRAINT `journal_ibfk_1` FOREIGN KEY (`recipient`) REFERENCES `recipient` (`recipientID`),
+  ADD CONSTRAINT `journal_ibfk_2` FOREIGN KEY (`debitAccount`) REFERENCES `account` (`accountID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `journal_ibfk_3` FOREIGN KEY (`creditAccount`) REFERENCES `account` (`accountID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `journal_ibfk_4` FOREIGN KEY (`period`) REFERENCES `period` (`periodID`),
+  ADD CONSTRAINT `journal_ibfk_5` FOREIGN KEY (`classification1`) REFERENCES `classification` (`classificationID`),
+  ADD CONSTRAINT `journal_ibfk_6` FOREIGN KEY (`classification2`) REFERENCES `classification` (`classificationID`),
+  ADD CONSTRAINT `journal_ibfk_7` FOREIGN KEY (`classification3`) REFERENCES `classification` (`classificationID`),
+  ADD CONSTRAINT `journal_ibfk_8` FOREIGN KEY (`entryReference`) REFERENCES `journal` (`entryID`);
 
 -- --------------------------------------------------------
 
 --
--- Constraints der Tabelle `kontoKategorie`
+-- Constraints der Tabelle `accountCategory`
 --
 
-ALTER TABLE `kontoKategorie`
-  ADD CONSTRAINT `kontoKategorie_ibfk_1` FOREIGN KEY (`klasse`) REFERENCES `kontoKlasse` (`klasseID`) ON UPDATE CASCADE;
+ALTER TABLE `accountCategory`
+  ADD CONSTRAINT `accountCategory_ibfk_1` FOREIGN KEY (`class`) REFERENCES `accountClass` (`classID`) ON UPDATE CASCADE;
 
 -- --------------------------------------------------------
 
 --
--- Constraints der Tabelle `konto`
+-- Constraints der Tabelle `account`
 --
 
-ALTER TABLE `konto`
-  ADD CONSTRAINT `konto_ibfk_1` FOREIGN KEY (`kategorie`) REFERENCES `kontoKategorie` (`kategorieID`) ON UPDATE CASCADE;
+ALTER TABLE `account`
+  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`category`) REFERENCES `accountCategory` (`categoryID`) ON UPDATE CASCADE;
 
 -- --------------------------------------------------------
 
@@ -213,13 +213,13 @@ ALTER TABLE `konto`
 --
 
 ALTER TABLE `template`
-  ADD CONSTRAINT `template_ibfk_1` FOREIGN KEY(`empfänger`) REFERENCES `empfänger`(`empfängerID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_2` FOREIGN KEY(`kontoSoll`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_3` FOREIGN KEY(`kontoHaben`) REFERENCES `konto`(`kontoID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_4` FOREIGN KEY(`periode`) REFERENCES `periode`(`periodeID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`klassifikation1`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`klassifikation2`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
-  ADD CONSTRAINT `template_ibfk_7` FOREIGN KEY(`klassifikation3`) REFERENCES `klassifikation`(`klassifikationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_1` FOREIGN KEY(`recipient`) REFERENCES `recipient`(`recipientID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_2` FOREIGN KEY(`debitAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_3` FOREIGN KEY(`creditAccount`) REFERENCES `account`(`accountID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_4` FOREIGN KEY(`period`) REFERENCES `period`(`periodID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_5` FOREIGN KEY(`classification1`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_6` FOREIGN KEY(`classification2`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `template_ibfk_7` FOREIGN KEY(`classification3`) REFERENCES `classification`(`classificationID`) ON UPDATE CASCADE;
 
 -- --------------------------------------------------------
 
@@ -233,66 +233,66 @@ ALTER TABLE `standingOrder`
 -- --------------------------------------------------------
 
 --
--- Trigger der Tabelle `kontoKlasse`
+-- Trigger der Tabelle `accountClass`
 --
 
-CREATE TRIGGER `update_child_kontoKategorie` AFTER UPDATE
+CREATE TRIGGER `update_child_accountCategory` AFTER UPDATE
 ON
-  `kontoKlasse` FOR EACH ROW
+  `accountClass` FOR EACH ROW
 UPDATE
-  kontoKategorie
+  accountCategory
 SET
-  kontoKategorie.kategorieID = CONCAT(kontoKategorie.klasse,kontoKategorie.kategorieNR)
+  accountCategory.categoryID = CONCAT(accountCategory.class,accountCategory.categoryNo)
 WHERE
-  kontoKategorie.klasse = NEW.klasseID;
+  accountCategory.class = NEW.classID;
 
 -- --------------------------------------------------------
 
 --
--- Trigger der Tabelle `kontoKategorie`
+-- Trigger der Tabelle `accountCategory`
 --
 
--- generate_kategorieID_insert
-CREATE TRIGGER `generate_kategorieID_insert` BEFORE INSERT
+-- generate_categoryID_insert
+CREATE TRIGGER `generate_categoryID_insert` BEFORE INSERT
 ON
-  `kontoKategorie` FOR EACH ROW
+  `accountCategory` FOR EACH ROW
 SET
-  NEW.kategorieID = CONCAT(NEW.klasse, NEW.kategorieNR);
+  NEW.categoryID = CONCAT(NEW.class, NEW.categoryNo);
 
--- generate_kategorieID_update
-CREATE TRIGGER `generate_kategorieID_update` BEFORE UPDATE
+-- generate_categoryID_update
+CREATE TRIGGER `generate_categoryID_update` BEFORE UPDATE
 ON
-  `kontoKategorie` FOR EACH ROW
+  `accountCategory` FOR EACH ROW
 SET
-  NEW.kategorieID = CONCAT(NEW.klasse, NEW.kategorieNR);
+  NEW.categoryID = CONCAT(NEW.class, NEW.categoryNo);
 
--- update_child_konto
-CREATE TRIGGER `update_child_konto` AFTER UPDATE
+-- update_child_account
+CREATE TRIGGER `update_child_account` AFTER UPDATE
 ON
-  `kontoKategorie` FOR EACH ROW
+  `accountCategory` FOR EACH ROW
 UPDATE
-  konto
+  account
 SET
-  konto.kontoID = CONCAT(konto.kategorie,konto.kontoNR)
+  account.accountID = CONCAT(account.category,account.accountNo)
 WHERE
-  konto.kategorie = NEW.kategorieID;
+  account.category = NEW.categoryID;
   
 -- --------------------------------------------------------
 
 --
--- Trigger der Tabelle `konto`
+-- Trigger der Tabelle `account`
 --
 
--- generate_kontoID_insert
-CREATE TRIGGER `generate_kontoID_insert` BEFORE INSERT
+-- generate_accountID_insert
+CREATE TRIGGER `generate_accountID_insert` BEFORE INSERT
 ON
-  `konto` FOR EACH ROW
+  `account` FOR EACH ROW
 SET
-  NEW.kontoID = CONCAT(NEW.kategorie, NEW.kontoNR);
+  NEW.accountID = CONCAT(NEW.category, NEW.accountNo);
 
--- generate_kontoID_update
-CREATE TRIGGER `generate_kontoID_update` BEFORE UPDATE
+-- generate_accountID_update
+CREATE TRIGGER `generate_accountID_update` BEFORE UPDATE
 ON
-  `konto` FOR EACH ROW
+  `account` FOR EACH ROW
 SET
-  NEW.kontoID = CONCAT(NEW.kategorie, NEW.kontoNR);
+  NEW.accountID = CONCAT(NEW.category, NEW.accountNo);

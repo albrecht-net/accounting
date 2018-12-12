@@ -84,7 +84,7 @@ if ($_POST['tableContent'] == 'templates') {
             <div class="col-12 mb-5">
             <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `templateID`, `datumErstellt`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
+                $sqlquery = "SELECT `templateID`, `created`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
@@ -106,7 +106,7 @@ if ($_POST['tableContent'] == 'templates') {
                             // Decode json value
                             $valueDecoded = json_decode($row['value'], TRUE); ?>
                             <tr>
-                                <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
+                                <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>

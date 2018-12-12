@@ -129,45 +129,45 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                 <form action="buchung.php" method="POST">
                     <div class="row">
                         <div class="form-group col-md-3"> <!-- Buchungsdatum -->
-                            <label for="datum">Buchungsdatum</label>
-                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="datum" name="datum" value="<?php echo date('Y-m-d'); ?>" required>
+                            <label for="date">Buchungsdatum</label>
+                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="form-group col-md-2"> <!-- Periode -->
-                            <label for="periode">Periode</label>
+                            <label for="period">Periode</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `periodeID`, `bezeichnung` FROM `periode` ORDER BY `bezeichnung` ASC";
+                            $sqlquery = "SELECT `periodID`, `label` FROM `period` ORDER BY `label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="periode" name="periode">
+                            <select class="form-control" id="period" name="period">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="periode" name="periode">
+                            <select class="form-control" id="period" name="period">
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['periodeID']; ?>"<?php echo ($_GET['periode'] == $row['periodeID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['periodID']; ?>"<?php echo ($_GET['period'] == $row['periodID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-7"> <!-- Empfänger -->
-                            <label for="empfänger">Empfänger</label>
+                            <label for="recipient">Empfänger</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `empfängerID`, `bezeichnung` FROM `empfänger` WHERE `aktiv` = 'Y' ORDER BY `bezeichnung` ASC";
+                            $sqlquery = "SELECT `recipientID`, `label` FROM `recipient` WHERE `active` = 'Y' ORDER BY `label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="empfänger" name="empfänger">
+                            <select class="form-control" id="recipient" name="recipient">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="empfänger" name="empfänger">
+                            <select class="form-control" id="recipient" name="recipient">
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['empfängerID']; ?>"<?php echo ($_GET['empfänger'] == $row['empfängerID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['recipientID']; ?>"<?php echo ($_GET['recipient'] == $row['recipientID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
@@ -175,40 +175,40 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                     </div>
                     <div class="row">
                         <div class="form-group col-md-5"> <!-- Rechnungsummer -->
-                            <label for="reNummer">Rechnungsnummer</label>
-                            <input class="form-control" type="text" id="reNummer" name="reNummer">
+                            <label for="invoiceNo">Rechnungsnummer</label>
+                            <input class="form-control" type="text" id="invoiceNo" name="invoiceNo">
                         </div>
                         <div class="form-group col-md-7"> <!-- Beschreibung -->
-                            <label for="buchungstext">Beschreibung</label>
-                            <input class="form-control" type="text" id="buchungstext" name="buchungstext" value="<?php echo $_GET['buchungstext']; ?>">
+                            <label for="entryText">Beschreibung</label>
+                            <input class="form-control" type="text" id="entryText" name="entryText" value="<?php echo $_GET['entryText']; ?>">
                         </div>  
                     </div>
                     <div class="row">
                         <div class="form-group col-md-5"> <!-- Konto Soll -->
-                            <label for="kontoSoll">Konto Soll</label>
+                            <label for="debitAccount">Konto Soll</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT konto.kontoID, konto.bezeichnung AS kontoBezeichnung, kontoKategorie.bezeichnung AS kategorieBezeichnung FROM konto LEFT JOIN kontoKategorie ON konto.kategorie = kontoKategorie.kategorieID WHERE konto.aktiv = 'Y' ORDER BY kontoKategorie.bezeichnung ASC, konto.bezeichnung ASC";
+                            $sqlquery = "SELECT account.accountID, account.label AS accountBezeichnung, accountCategory.label AS categoryLabel FROM account LEFT JOIN accountCategory ON account.category = accountCategory.categoryID WHERE account.active = 'Y' ORDER BY accountCategory.label ASC, account.label ASC";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
+                            <select class="form-control chk-toggle-req-slave" id="debitAccount" name="debitAccount" required>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoSoll" name="kontoSoll" required>
+                            <select class="form-control chk-toggle-req-slave" id="debitAccount" name="debitAccount" required>
                                 <option></option>
                                 <?php
                                 // Resulat in 1 Array schreiben, sortiert nach Kategorie
                                 $valueArray = [];
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    if ($row['kategorieBezeichnung'] != $kategorie) {
+                                    if ($row['categoryLabel'] != $category) {
                                         $i = 0;
                                     }
 
-                                    $kategorie = $row['kategorieBezeichnung'];
+                                    $category = $row['categoryLabel'];
 
-                                    $valueArray[$kategorie][$i] = $row;
+                                    $valueArray[$category][$i] = $row;
                                     $i++;
                                 }
 
@@ -216,37 +216,37 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                                 foreach ($valueArray as $key => $row1): ?>
                                     <optgroup label="<?php echo $key; ?>">
                                     <?php foreach ($row1 as $key => $row2): ?>
-                                        <option value="<?php echo $row2['kontoID']; ?>"<?php echo ($_GET['kontoSoll'] == $row2['kontoID'] ? ' selected' : ''); ?>><?php echo $row2['kontoID'] . ' ' . $row2['kontoBezeichnung']; ?></option>
+                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['debitAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountBezeichnung']; ?></option>
                                     <?php endforeach;
                                 endforeach;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-5"> <!-- Konto Haben -->
-                            <label for="kontoHaben">Konto Haben</label>
+                            <label for="creditAccount">Konto Haben</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT konto.kontoID, konto.bezeichnung AS kontoBezeichnung, kontoKategorie.bezeichnung AS kategorieBezeichnung FROM konto LEFT JOIN kontoKategorie ON konto.kategorie = kontoKategorie.kategorieID WHERE konto.aktiv = 'Y' ORDER BY kontoKategorie.bezeichnung ASC, konto.bezeichnung ASC";
+                            $sqlquery = "SELECT account.accountID, account.label AS accountBezeichnung, accountCategory.label AS categoryLabel FROM account LEFT JOIN accountCategory ON account.category = accountCategory.categoryID WHERE account.active = 'Y' ORDER BY accountCategory.label ASC, account.label ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
+                            <select class="form-control chk-toggle-req-slave" id="creditAccount" name="creditAccount" required>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control chk-toggle-req-slave" id="kontoHaben" name="kontoHaben" required>
+                            <select class="form-control chk-toggle-req-slave" id="creditAccount" name="creditAccount" required>
                                 <option></option>
                                 <?php
                                 // Resulat in 1 Array schreiben, sortiert nach Kategorie
                                 $valueArray = [];
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    if ($row['kategorieBezeichnung'] != $kategorie) {
+                                    if ($row['categoryLabel'] != $category) {
                                         $i = 0;
                                     }
 
-                                    $kategorie = $row['kategorieBezeichnung'];
+                                    $category = $row['categoryLabel'];
 
-                                    $valueArray[$kategorie][$i] = $row;
+                                    $valueArray[$category][$i] = $row;
                                     $i++;
                                 }
 
@@ -254,74 +254,74 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                                 foreach ($valueArray as $key => $row1): ?>
                                     <optgroup label="<?php echo $key; ?>">
                                     <?php foreach ($row1 as $key => $row2): ?>
-                                        <option value="<?php echo $row2['kontoID']; ?>"<?php echo ($_GET['kontoHaben'] == $row2['kontoID'] ? ' selected' : ''); ?>><?php echo $row2['kontoID'] . ' ' . $row2['kontoBezeichnung']; ?></option>
+                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['creditAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountBezeichnung']; ?></option>
                                     <?php endforeach;
                                 endforeach;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-2"> <!-- Betrag -->
-                            <label for="totalbetrag">Betrag</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="totalbetrag" name="totalbetrag" step="0.01" lang="en" value="<?php echo $_GET['totalbetrag']; ?>" required>
+                            <label for="grandTotal">Betrag</label>
+                            <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.01" lang="en" value="<?php echo $_GET['grandTotal']; ?>" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4"> <!-- Klassifikation 1 -->
-                            <label for="klassifikation1">Klassifikation 1</label>
+                            <label for="classification1">Klassifikation 1</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="klassifikation1" name="klassifikation1">
+                            <select class="form-control" id="classification1" name="classification1">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="klassifikation1" name="klassifikation1">
+                            <select class="form-control" id="classification1" name="classification1">
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation1'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification1'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-4"> <!-- Klassifikation 2 -->
-                            <label for="klassifikation2">Klassifikation 2</label>
+                            <label for="classification2">Klassifikation 2</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="klassifikation2" name="klassifikation2">
+                            <select class="form-control" id="classification2" name="classification2">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="klassifikation2" name="klassifikation2">
+                            <select class="form-control" id="2" name="classification2">
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation2'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification2'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                         <div class="form-group col-md-4"> <!-- Klassifikation 3 -->
-                            <label for="klassifikation3">Klassifikation 3</label>
+                            <label for="classification3">Klassifikation 3</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `klassifikationID`, `bezeichnung` FROM `klassifikation` ORDER BY `bezeichnung` ASC";
+                            $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="klassifikation3" name="klassifikation3">
+                            <select class="form-control" id="classification3" name="classification3">
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="klassifikation3" name="klassifikation3">
+                            <select class="form-control" id="classification3" name="classification3">
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['klassifikationID']; ?>"<?php echo ($_GET['klassifikation3'] == $row['klassifikationID'] ? ' selected' : ''); ?>><?php echo $row['bezeichnung']; ?></option>
+                                <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification3'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
@@ -329,28 +329,28 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                     </div>
                     <div class="row">
                         <div class="form-group col-12"> <!-- Buchungsreferenz -->
-                            <label for="buchungsreferenz">Buchungsreferenz</label>
+                            <label for="entryReference">Buchungsreferenz</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `journal`.`buchungID`, `journal`.`datum`, `empfänger`.`bezeichnung` AS `empfänger`, `journal`.`totalbetrag` FROM `journal` LEFT JOIN `empfänger` ON `journal`.`empfänger` = `empfänger`.`empfängerID` RIGHT JOIN `konto` AS `kontoHaben` ON `journal`.`kontoHaben` = `kontoHaben`.`kontoID` RIGHT JOIN `konto` AS `kontoSoll` ON `journal`.`kontoSoll` = `kontoSoll`.`kontoID` WHERE `journal`.`abstimmung` = 'N' AND (`kontoHaben`.`abstMöglich` = 'Y' OR `kontoSoll`.`abstMöglich` = 'Y') ORDER BY `journal`.`datumErstellt` ASC";
+                            $sqlquery = "SELECT `journal`.`entryID`, `journal`.`date`, `recipient`.`label` AS `recipient`, `journal`.`grandTotal` FROM `journal` LEFT JOIN `recipient` ON `journal`.`recipient` = `recipient`.`recipientID` RIGHT JOIN `account` AS `creditAccount` ON `journal`.`creditAccount` = `creditAccount`.`accountID` RIGHT JOIN `account` AS `debitAccount` ON `journal`.`debitAccount` = `debitAccount`.`accountID` WHERE `journal`.`reconcilation` = 'N' AND (`creditAccount`.`reconcilationAllow` = 'Y' OR `debitAccount`.`reconcilationAllow` = 'Y') ORDER BY `journal`.`created` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control chk-toggle-dis-invert-slave" id="buchungsreferenz" name="buchungsreferenz" multiple>
+                            <select class="form-control chk-toggle-dis-invert-slave" id="entryReference" name="entryReference" multiple>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control chk-toggle-dis-invert-slave" id="buchungsreferenz" name="buchungsreferenz[]" multiple>
+                            <select class="form-control chk-toggle-dis-invert-slave" id="entryReference" name="entryReference[]" multiple>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['buchungID']; ?>"><?php echo $row['datum'] . ', ' . $row['empfänger'] . ', CHF ' . $row['totalbetrag']; ?></option>
+                                <option value="<?php echo $row['entryID']; ?>"><?php echo $row['date'] . ', ' . $row['recipient'] . ', CHF ' . $row['grandTotal']; ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group form-check"> <!-- Abstimmung -->
-                        <input class="form-check-input" type="checkbox" id="abstimmung" name="abstimmung" value="1" disabled>
-                        <label class="form-check-label" for="abstimmung">Abstimmung</label>
+                        <input class="form-check-input" type="checkbox" id="reconcilation" name="reconcilation" value="1" disabled>
+                        <label class="form-check-label" for="reconcilation">Abstimmung</label>
                     </div>
                     <div class="row">
                         <div class="col-6 col-md-3">

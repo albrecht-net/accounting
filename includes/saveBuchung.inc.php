@@ -1,22 +1,22 @@
 <?php
 // Array Eingabe
 $dataInput = array(
-    'datum' => mysqli_real_escape_string($userLink, $_POST['datum']),
-    'empfänger' => intval($_POST['empfänger']),
-    'reNummer' => mysqli_real_escape_string($userLink, trim($_POST['reNummer'])),
-    'buchungstext' => mysqli_real_escape_string($userLink, trim($_POST['buchungstext'])),
-    'totalbetrag' => floatval($_POST['totalbetrag']),
-    'kontoSoll' => intval($_POST['kontoSoll']),
-    'kontoHaben' => intval($_POST['kontoHaben']),
-    'periode' => intval($_POST['periode']),
-    'klassifikation1' => intval($_POST['klassifikation1']),
-    'klassifikation2' => intval($_POST['klassifikation2']),
-    'klassifikation3' => intval($_POST['klassifikation3']),
-    'abstimmung' => ($_POST['abstimmung'] == 1 ? 'Y' : 0)
+    'date' => mysqli_real_escape_string($userLink, $_POST['date']),
+    'recipient' => intval($_POST['recipient']),
+    'invoiceNo' => mysqli_real_escape_string($userLink, trim($_POST['invoiceNo'])),
+    'entryText' => mysqli_real_escape_string($userLink, trim($_POST['entryText'])),
+    'grandTotal' => floatval($_POST['grandTotal']),
+    'debitAccount' => intval($_POST['debitAccount']),
+    'creditAccount' => intval($_POST['creditAccount']),
+    'period' => intval($_POST['period']),
+    'classification1' => intval($_POST['classification1']),
+    'classification2' => intval($_POST['classification2']),
+    'classification3' => intval($_POST['classification3']),
+    'reconcilation' => ($_POST['reconcilation'] == 1 ? 'Y' : 0)
 );
 
 $dataUpdateAbst = array(
-    'buchungsreferenz' => (isset($_POST['buchungsreferenz']) ? array_map(intval, $_POST['buchungsreferenz']) : NULL)
+    'entryReference' => (isset($_POST['entryReference']) ? array_map(intval, $_POST['entryReference']) : NULL)
 );
 
 // Leere Felder aus Eingabe Array entfernen
@@ -25,7 +25,7 @@ $dataInput = array_diff($dataInput, array(NULL, '', 0));
 // Prüfen ob Eingabe vorhanden
 if (count($dataInput) > 0) {
     $dataFunctions = array(
-        'datumErstellt' => 'NOW()'
+        'created' => 'NOW()'
     );
 
     // SQL-Query bereitstellen
@@ -38,12 +38,12 @@ if (count($dataInput) > 0) {
         $msg['sqlInsertError'] = 1;
 
     // Prüfen ob Abstimmung gewählt
-    } elseif (count($dataUpdateAbst['buchungsreferenz']) > 0) {
+    } elseif (count($dataUpdateAbst['entryReference']) > 0) {
         // ID der erstellten Buchung abrufen
         $refID = mysqli_insert_id($userLink);
 
         // SQL-Query bereitstellen
-        $sqlquery = "UPDATE `journal` SET `journal`.`buchungsreferenz` = ". $refID .", `journal`.`abstimmung` = 'Y' WHERE `journal`.`buchungID` IN (" . implode(',', $dataUpdateAbst['buchungsreferenz']) . ") AND `journal`.`abstimmung` = 'N'";
+        $sqlquery = "UPDATE `journal` SET `journal`.`entryReference` = ". $refID .", `journal`.`reconcilation` = 'Y' WHERE `journal`.`entryID` IN (" . implode(',', $dataUpdateAbst['entryReference']) . ") AND `journal`.`reconcilation` = 'N'";
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {

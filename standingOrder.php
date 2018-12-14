@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
                                 <div class="col-3"> <!-- PeriodizitätValue -->
                                     <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" required>
                                 </div>
-                                <div class="col-8 col-md-3"> <!-- PeriodizitätType -->
+                                <div class="col-7 col-md-3"> <!-- PeriodizitätType -->
                                     <select class="form-control" id="periodicityType" name="periodicityType">
                                         <option></option>
                                         <option value="1">Tag(e)</option>

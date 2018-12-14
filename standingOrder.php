@@ -113,65 +113,100 @@ if (isset($_POST['submit'])) {
                             <label for="label">Beschreibung</label>
                             <input class="form-control chk-toggle-dis-slave" type="text" id="label" name="label" required>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-3"> <!-- Startdatum -->
                             <label for="validFromValue">Startdatum</label>
                             <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validFromValue" name="validFromValue" min="<?php echo date('Y-m-d'); ?>" required>
                         </div>
-                        <div class="form-check"> <!-- Nutze Startdatum -->
-                            <input class="form-check-input" type="radio" name="validFromType" id="validFromType1" value="1" checked>
-                            <label class="form-check-label" for="validFromType1">
-                                Nutze Startdatum
-                            </label>
-                        </div>
-                        <div class="form-check"> <!-- Nutze Monatsende -->
-                            <input class="form-check-input" type="radio" name="validFromType" id="validFromType2" value="2">
-                            <label class="form-check-label" for="validFromType2">
-                                Nutze Monatsende
-                            </label>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <div class="form-check"> <!-- Nutze Startdatum -->
+                                <input class="form-check-input" type="radio" name="validFromType" id="validFromType1" value="1" checked>
+                                <label class="form-check-label" for="validFromType1">
+                                    Nutze Startdatum
+                                </label>
+                            </div>
+                            <div class="form-check"> <!-- Nutze Monatsende -->
+                                <input class="form-check-input" type="radio" name="validFromType" id="validFromType2" value="2">
+                                <label class="form-check-label" for="validFromType2">
+                                    Nutze Monatsende
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-2"> <!-- PeriodizitätValue -->
-                            <label for="periodicityValue">PeriodizitätValue</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" required>
-                        </div>
-                        <div class="form-group col-md-8"> <!-- Periodizität -->
-                            <label for="periodicityType">Periodizität</label>
-                            <select class="form-control" id="periodicityType" name="periodicityType">
-                                <option></option>
-                                <option value="1">Tag(e)</option>
-                                <option value="2">Woche(n)</option>
-                                <option value="4">Monat(e)</option>
-                                <option value="8">Jahr(e)</option>
-                            </select>
+                        <div class="form-group col-12"> <!-- Periodizität -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="periodicityValue">Wiederholen alle:</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3"> <!-- PeriodizitätValue -->
+                                    <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" required>
+                                </div>
+                                <div class="col-8 col-md-3"> <!-- PeriodizitätType -->
+                                    <select class="form-control" id="periodicityType" name="periodicityType">
+                                        <option></option>
+                                        <option value="1">Tag(e)</option>
+                                        <option value="2">Woche(n)</option>
+                                        <option value="4">Monat(e)</option>
+                                        <option value="8">Jahr(e)</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-check"> <!-- Gültig bis Widerruf -->
-                            <input class="form-check-input" type="radio" name="validToType" id="validToType1" value="1" checked>
-                            <label class="form-check-label" for="validToType1">
-                                Auf Widerruf
-                            </label>
-                        </div>
-                        <div class="form-check"> <!-- Gültig bis Enddatum -->
-                            <input class="form-check-input" type="radio" name="validToType" id="validToType2" value="2">
-                            <label class="form-check-label" for="validToType2">
-                                Bis Enddatum
-                            </label>
-                        </div>
-                        <div class="form-check"> <!-- Gültig n mal -->
-                            <input class="form-check-input" type="radio" name="validToType" id="validToType3" value="4">
-                            <label class="form-check-label" for="validToType3">
-                                Gültig n mal
-                            </label>
-                        </div>
-                        <div class="form-group col-md-3"> <!-- Enddatum -->
-                            <label for="validToValue">Enddatum</label>
-                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
-                        </div>
-                        <div class="form-group col-md-2"> <!-- GültigValue -->
-                            <label for="initialEvents">initialEvents</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1">
+                        <div class="col-12">
+                            <div class=" form-group row"> <!-- Gültig bis Widerruf -->
+                                <div class="col-5 align-self-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="validToType" id="validToType1" value="1" checked>
+                                        <label class="form-check-label" for="validToType1">
+                                            Auf Widerruf
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-7">
+                                    <input class="form-control-plaintext" type="text" disabled>
+                                </div>
+                            </div>
+                            
+                            <div class=" form-group row"> <!-- Gültig bis Enddatum -->
+                                <div class="col-3 col-sm-2 col-lg-1 align-self-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="validToType" id="validToType2" value="2">
+                                        <label class="form-check-label" for="validToType2">
+                                            Am:
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-md-3"> <!-- Enddatum -->
+                                    <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
+                                </div>
+                            </div>
+
+                            <div class=" form-group row"> <!-- Gültig n mal -->
+                                <div class="col-3 col-sm-2 col-lg-1 align-self-center">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="validToType" id="validToType3" value="4">
+                                        <label class="form-check-label" for="validToType3">
+                                            Nach:
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-3 col-md-2"> <!-- Value n -->
+                                    <input class="form-control chk-toggle-req-slave" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1">
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <input class="form-control-plaintext" type="text" disabled value="Termin(en)">
+                                </div>
+                            </div>
+                            
+                            
                         </div>
                     </div>
                     <div class="row">

@@ -5,12 +5,20 @@ require_once 'config.php';
 // Prüfen ob Benutzer angemeldet
 require 'includes/loginSessionCheck.inc.php';
 if (!$lsc) {
-    header('Location: login.php?rd=' . urlencode('buchung.php'));
+    header('Location: login.php?rd=' . urlencode('standingOrder.php'));
     exit();
 }
 
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
+
+// Überprüfen ob Submit geklickt wurde
+if (isset($_POST['submit'])) {
+    if (!include 'includes/addStandingOrder.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +43,8 @@ require_once 'includes/userDbConnect.inc.php';
                 <li class="nav-item">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="buchung.php">Neue Buchung</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -102,34 +110,34 @@ require_once 'includes/userDbConnect.inc.php';
                             </select>
                         </div>
                         <div class="form-group col-md-7"> <!-- Beschreibung -->
-                            <label for="nameTemplate">Beschreibung</label>
-                            <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate" required>
+                            <label for="label">Beschreibung</label>
+                            <input class="form-control chk-toggle-dis-slave" type="text" id="label" name="label" required>
                         </div>
                         <div class="form-group col-md-3"> <!-- Startdatum -->
-                            <label for="startdatum">Startdatum</label>
-                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="startdatum" name="startdatum" min="<?php echo date('Y-m-d'); ?>" required>
+                            <label for="validFromValue">Startdatum</label>
+                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validFromValue" name="validFromValue" min="<?php echo date('Y-m-d'); ?>" required>
                         </div>
                         <div class="form-check"> <!-- Nutze Startdatum -->
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="1" checked>
-                            <label class="form-check-label" for="exampleRadios1">
+                            <input class="form-check-input" type="radio" name="validFromType" id="validFromType1" value="1" checked>
+                            <label class="form-check-label" for="validFromType1">
                                 Nutze Startdatum
                             </label>
                         </div>
                         <div class="form-check"> <!-- Nutze Monatsende -->
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="2">
-                            <label class="form-check-label" for="exampleRadios2">
+                            <input class="form-check-input" type="radio" name="validFromType" id="validFromType2" value="2">
+                            <label class="form-check-label" for="validFromType2">
                                 Nutze Monatsende
                             </label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-2"> <!-- PeriodizitätValue -->
-                            <label for="periodizitätValue">PeriodizitätValue</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="periodizitätValue" name="periodizitätValue" step="1" lang="en" min="1" required>
+                            <label for="periodicityValue">PeriodizitätValue</label>
+                            <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" required>
                         </div>
                         <div class="form-group col-md-8"> <!-- Periodizität -->
-                            <label for="periodizitätType">Periodizität</label>
-                            <select class="form-control" id="periodizitätType" name="periodizitätType">
+                            <label for="periodicityType">Periodizität</label>
+                            <select class="form-control" id="periodicityType" name="periodicityType">
                                 <option></option>
                                 <option value="1">Tag(e)</option>
                                 <option value="2">Woche(n)</option>
@@ -140,30 +148,30 @@ require_once 'includes/userDbConnect.inc.php';
                     </div>
                     <div class="row">
                         <div class="form-check"> <!-- Gültig bis Widerruf -->
-                            <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios11" value="1" checked>
-                            <label class="form-check-label" for="exampleRadios11">
+                            <input class="form-check-input" type="radio" name="validToType" id="validToType1" value="1" checked>
+                            <label class="form-check-label" for="validToType1">
                                 Auf Widerruf
                             </label>
                         </div>
                         <div class="form-check"> <!-- Gültig bis Enddatum -->
-                            <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios12" value="2">
-                            <label class="form-check-label" for="exampleRadios12">
+                            <input class="form-check-input" type="radio" name="validToType" id="validToType2" value="2">
+                            <label class="form-check-label" for="validToType2">
                                 Bis Enddatum
                             </label>
                         </div>
                         <div class="form-check"> <!-- Gültig n mal -->
-                            <input class="form-check-input" type="radio" name="exampleRadios2" id="exampleRadios13" value="4">
-                            <label class="form-check-label" for="exampleRadios13">
+                            <input class="form-check-input" type="radio" name="validToType" id="validToType3" value="4">
+                            <label class="form-check-label" for="validToType3">
                                 Gültig n mal
                             </label>
                         </div>
                         <div class="form-group col-md-3"> <!-- Enddatum -->
-                            <label for="enddatum">Enddatum</label>
-                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="enddatum" name="enddatum" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
+                            <label for="validToValue">Enddatum</label>
+                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
                         </div>
                         <div class="form-group col-md-2"> <!-- GültigValue -->
-                            <label for="GültigValue">PeriodizitätValue</label>
-                            <input class="form-control chk-toggle-req-slave" type="number" id="GültigValue" name="GültigValue" step="1" lang="en" min="1">
+                            <label for="initialEvents">initialEvents</label>
+                            <input class="form-control chk-toggle-req-slave" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1">
                         </div>
                     </div>
                     <div class="row">

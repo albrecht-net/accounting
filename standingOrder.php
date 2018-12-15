@@ -83,11 +83,7 @@ if (isset($_POST['submit'])) {
         <div class="row">
             <div class="col-12 mb-5">
                 <form action="standingOrder.php" method="POST">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <p>Daueraufträge basieren auf einer bereits erstellten <a href="templates.php#savedTemplates">Vorlage</a>.</p>
-                        </div>
-                    </div>
+                    <p>Daueraufträge basieren auf einer bereits erstellten <a href="templates.php#savedTemplates">Vorlage</a>.</p>
                     <div class="row">
                         <div class="form-group col-md-5"> <!-- Buchungsvorlage auswählen -->
                             <label for="template">Buchungsvorlage auswählen</label>
@@ -118,6 +114,7 @@ if (isset($_POST['submit'])) {
                         <div class="form-group col-md-3"> <!-- Startdatum -->
                             <label for="validFromValue">Startdatum</label>
                             <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validFromValue" name="validFromValue" min="<?php echo date('Y-m-d'); ?>" required>
+                            <small id="validFromValueHelp" class="form-text text-muted">Das Startdatum muss immer ausgewählt werden. Das Monatsende wird auf den letzten des ausgewählten Monats festgelegt.</small>
                         </div>
                     </div>
                     <div class="row">
@@ -144,15 +141,14 @@ if (isset($_POST['submit'])) {
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-3"> <!-- PeriodizitätValue -->
-                                    <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" required>
+                                <div class="col-3 col-md-2"> <!-- PeriodizitätValue -->
+                                    <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" value="1" required>
                                 </div>
                                 <div class="col-7 col-md-3"> <!-- PeriodizitätType -->
                                     <select class="form-control" id="periodicityType" name="periodicityType">
-                                        <option></option>
                                         <option value="1">Tag(e)</option>
                                         <option value="2">Woche(n)</option>
-                                        <option value="4">Monat(e)</option>
+                                        <option value="4" selected>Monat(e)</option>
                                         <option value="8">Jahr(e)</option>
                                     </select>
                                 </div>
@@ -161,7 +157,7 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <div class=" form-group row"> <!-- Gültig bis Widerruf -->
+                            <div class="form-group form-row"> <!-- Gültig bis Widerruf -->
                                 <div class="col-5 align-self-center">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="validToType" id="validToType1" value="1" checked>
@@ -174,8 +170,7 @@ if (isset($_POST['submit'])) {
                                     <input class="form-control-plaintext" type="text" disabled>
                                 </div>
                             </div>
-                            
-                            <div class=" form-group row"> <!-- Gültig bis Enddatum -->
+                            <div class="form-group form-row"> <!-- Gültig bis Enddatum -->
                                 <div class="col-3 col-sm-2 col-lg-1 align-self-center">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="validToType" id="validToType2" value="2">
@@ -188,8 +183,7 @@ if (isset($_POST['submit'])) {
                                     <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
                                 </div>
                             </div>
-
-                            <div class=" form-group row"> <!-- Gültig n mal -->
+                            <div class="form-group form-row"> <!-- Gültig n mal -->
                                 <div class="col-3 col-sm-2 col-lg-1 align-self-center">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="validToType" id="validToType3" value="4">
@@ -205,8 +199,6 @@ if (isset($_POST['submit'])) {
                                     <input class="form-control-plaintext" type="text" disabled value="Termin(en)">
                                 </div>
                             </div>
-                            
-                            
                         </div>
                     </div>
                     <div class="row">
@@ -215,14 +207,6 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-
-        <h3 class="mt-3" id="addTemplate">Als Vorlage speichern</h3>
-        <hr class="mb-4">
-        <div class="row">
-            <div class="col-12 mb-5">
-                
             </div>
         </div>
 

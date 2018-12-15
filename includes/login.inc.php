@@ -21,7 +21,7 @@ if (mysqli_num_rows($result) != 1) {
         $msg['invalid'] = 1;
     } else {
         // Benutzerdaten in Session schreiben
-        $_SESSION['userID'] = $dataDb['userID'];
+        $_SESSION['userID'] = intval($dataDb['userID']);
         $_SESSION['username'] = $dataDb['username'];
 
         // Überprüfen ob Benutzer eine Standarddatenbank hat

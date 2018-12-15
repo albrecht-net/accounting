@@ -42,7 +42,7 @@ if (isset($_POST['submit']) && !empty($_POST['dbID'])) {
         
         <?php
         // Prüfen ob eine Datenbank für den angemeldeten Benutzer verfügbar ist
-        $sqlquery = "SELECT `dbID`, `dbHost`, `dbName` FROM `databases` WHERE `userID` = '" . $_SESSION['userID'] . "'";
+        $sqlquery = "SELECT `dbID`, `dbHost`, `dbName` FROM `databases` WHERE `userID` = '" . intval($_SESSION['userID']) . "'";
         $result = mysqli_query($config['link'], $sqlquery);
         if (mysqli_num_rows($result) >= 1):
 

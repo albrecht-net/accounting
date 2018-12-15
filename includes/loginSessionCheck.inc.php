@@ -3,7 +3,7 @@ session_start();
 
 // Array Sessiondata
 $dataSession = array(
-	'userID' => mysqli_real_escape_string($config['link'], $_SESSION['userID']),
+	'userID' => intval($_SESSION['userID']),
 	'username' => mysqli_real_escape_string($config['link'], $_SESSION['username'])
 );
 

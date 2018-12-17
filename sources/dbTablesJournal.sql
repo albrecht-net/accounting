@@ -147,7 +147,7 @@ COMMENT = 'Periode';
 CREATE TABLE `template` (
   `templateID` int(11) NOT NULL AUTO_INCREMENT,
   `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `name` varchar(32) NOT NULL,
+  `label` varchar(32) NOT NULL,
   `recipient` int(11) DEFAULT NULL,
   `invoiceNo` varchar(64) DEFAULT NULL,
   `entryText` text DEFAULT NULL,

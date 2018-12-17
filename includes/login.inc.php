@@ -40,6 +40,12 @@ if (mysqli_num_rows($result) != 1) {
 
                     $_SESSION['userDb']['userDbSet'] = 1;
 
+                    // Mit Ziel Datenbank verbinden
+                    if (include_once 'userDbConnect.inc.php') {
+                        // Fällige Daueraufträge prüfen
+                        include 'standingOrderCheck.inc.php';
+                    }
+
                     // Weiterleitung
                     if (empty($dataInputGet['rd'])) {
                         header('Location: index.php');

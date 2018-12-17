@@ -32,6 +32,12 @@ if (mysqli_num_rows($result) != 1) {
         }
     }
 
+    // Mit Ziel Datenbank verbinden
+    if (include_once 'userDbConnect.inc.php') {
+        // Fällige Daueraufträge prüfen
+        include 'standingOrderCheck.inc.php';
+    }
+
     // Weiterleitung
     if (empty($_GET['rd'])) {
         header('Location: index.php');

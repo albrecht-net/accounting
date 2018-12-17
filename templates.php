@@ -9,6 +9,9 @@ if (!$lsc) {
     exit();
 }
 
+// Mit Ziel Datenbank verbinden
+require_once 'includes/userDbConnect.inc.php';
+
 // Überprüfen ob Submit geklickt wurde
 if ($_POST['tableContent'] == 'templates') {
     if (!include 'includes/deleteTemplate.inc.php') {
@@ -91,8 +94,8 @@ include 'includes/standingOrderCheck.inc.php';
             <div class="col-12 mb-5">
             <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `templateID`, `created`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
-                $result = mysqli_query($config['link'], $sqlquery);
+                $sqlquery = "SELECT `templateID`, `created`, `label`, `recipient`, `invoiceNo`, `entryText`, `grandTotal`, `debitAccount`, `creditAccount`, `period`, `classification1`, `classification2`, `classification3` FROM `template` ORDER BY `label` ASC";
+                $result = mysqli_query($userLink, $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) >= 1):
@@ -109,13 +112,21 @@ include 'includes/standingOrderCheck.inc.php';
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
-                                
-                            // Decode json value
-                            $valueDecoded = json_decode($row['value'], TRUE); ?>
+
+                            // Vorlage-Werte in neues Array schreiben
+                            $valueTemplate = array_slice($row, 3);
+                            
+                            // Leere Felder aus valueTemplate Array entfernen
+                            $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
+
+                            if (intval($_GET['template'] == $row['templateID'])): ?>
+                            <tr class="table-warning">
+                            <?php else: ?>
                             <tr>
+                            <?php endif; ?>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
-                                <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
+                                <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo $row['label']; ?></a></td>
+                                <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>

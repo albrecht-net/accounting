@@ -217,13 +217,13 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <h3 class="mt-3" id="addTemplate">Erfasste Daueraufträge</h3>
+        <h3 class="mt-3" id="registeredStandingOrder">Erfasste Daueraufträge</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
                 <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.label AS standingOrderLabel, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
+                $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.label AS standingOrderLabel, standingOrder.template AS templateID, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
                 $result = mysqli_query($userLink, $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
@@ -264,7 +264,7 @@ if (isset($_POST['submit'])) {
                             <tr>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                 <td><?php echo $row['standingOrderLabel']; ?></td>
-                                <td><?php echo $row['templateLabel']; ?></td>
+                                <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo $row['templateLabel']; ?></a></td>
                                 <td><?php echo 'Alle ' . $row['periodicityValue'] . ' ' . $row['periodicityType']; ?></td>
                                 <td><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></td>
                                 <td><?php echo ($row['handledEvents'] == NULL ? 0 : $row['handledEvents']); ?></td>

@@ -195,7 +195,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <label for="debitAccount">Konto Soll</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountBezeichnung`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
+                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
         
                             // Prüfen ob Datensätze vorhanden
@@ -223,7 +223,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 foreach ($valueArray as $key => $row1): ?>
                                     <optgroup label="<?php echo $key; ?>">
                                     <?php foreach ($row1 as $key => $row2): ?>
-                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['debitAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountBezeichnung']; ?></option>
+                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['debitAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountLabel']; ?></option>
                                     <?php endforeach;
                                 endforeach;
                             endif; ?>
@@ -233,7 +233,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <label for="creditAccount">Konto Haben</label>
                             <?php
                             // SQL-Query bereitstellen
-                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountBezeichnung`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
+                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
                             $result = mysqli_query($userLink, $sqlquery);
 
                             // Prüfen ob Datensätze vorhanden
@@ -261,7 +261,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 foreach ($valueArray as $key => $row1): ?>
                                     <optgroup label="<?php echo $key; ?>">
                                     <?php foreach ($row1 as $key => $row2): ?>
-                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['creditAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountBezeichnung']; ?></option>
+                                        <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['creditAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountLabel']; ?></option>
                                     <?php endforeach;
                                 endforeach;
                             endif; ?>

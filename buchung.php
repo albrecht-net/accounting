@@ -24,6 +24,9 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
         exit();
     }
 }
+
+// Fällige Daueraufträge prüfen
+include 'includes/standingOrderCheck.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +52,11 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item active">
+                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
+                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span><span class="sr-only">(current)</span></a>
+                    <?php else: ?>
                     <a class="nav-link" href="buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

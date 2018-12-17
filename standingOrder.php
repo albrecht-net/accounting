@@ -44,7 +44,11 @@ if (isset($_POST['submit'])) {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
+                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
+                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span></a>
+                    <?php else: ?>
                     <a class="nav-link" href="buchung.php">Neue Buchung</a>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -207,6 +211,51 @@ if (isset($_POST['submit'])) {
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+
+        <h3 class="mt-3" id="addTemplate">Als Vorlage speichern</h3>
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <?php
+                // SQL-Query bereitstellen
+                $sqlquery = "SELECT `templateID`, `created`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
+                $result = mysqli_query($config['link'], $sqlquery);
+
+                // Prüfen ob Datensätze vorhanden
+                if (mysqli_num_rows($result) >= 1):
+                ?>
+                <div class="table-responsive">                    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Erstelldatum</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Vorlage</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while ($row = mysqli_fetch_assoc($result)):
+                                
+                            // Decode json value
+                            $valueDecoded = json_decode($row['value'], TRUE); ?>
+                            <tr>
+                                <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                                <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
+                                <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php else: ?>
+                <p class="lead">Keine Vorlage gefunden</p>
+                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="buchung.php#addTemplate">hier</a>.</p>
+                <?php endif; ?>
+                </div>
             </div>
         </div>
 

@@ -16,6 +16,9 @@ if ($_POST['tableContent'] == 'templates') {
         exit();
     }
 }
+
+// Fällige Daueraufträge prüfen
+include 'includes/standingOrderCheck.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +47,11 @@ if ($_POST['tableContent'] == 'templates') {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
+                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
+                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span></a>
+                    <?php else: ?>
                     <a class="nav-link" href="buchung.php">Neue Buchung</a>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,7 +126,7 @@ if ($_POST['tableContent'] == 'templates') {
                 <p class="lead">Keine Vorlage gefunden</p>
                 <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="buchung.php#addTemplate">hier</a>.</p>
                 <?php endif; ?>
-            </div>
+                </div>
             </div>
         </div>
 

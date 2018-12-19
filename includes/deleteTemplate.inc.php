@@ -3,9 +3,9 @@ if (empty($_POST['delID'])) {
     echo 0;
 } else {
     // SQL-Query bereitstellen
-    $sqlquery = "DELETE FROM `templates` WHERE `templateID` = " . intval($_POST['delID']) . " AND `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
+    $sqlquery = "DELETE FROM `template` WHERE `templateID` = " . intval($_POST['delID']);
 
-    $result = mysqli_query($config['link'], $sqlquery);
+    $result = mysqli_query($userLink, $sqlquery);
 
     // Prüfen ob 1 Resultat
     if (!$result) {

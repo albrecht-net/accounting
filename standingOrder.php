@@ -101,10 +101,10 @@ if (isset($_POST['submit'])) {
 
                             // Prüfen ob Datensätze vorhanden
                             if (mysqli_num_rows($result) < 1): ?>
-                            <select class="form-control" id="template" name="template">
+                            <select class="form-control" id="template" name="template" required>
                                 <option disabled>Keine Datensätze vorhanden</option>
                             <?php else: ?>
-                            <select class="form-control" id="template" name="template">
+                            <select class="form-control" id="template" name="template" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <option value="<?php echo $row['templateID']; ?>"<?php echo ($_GET['template'] == $row['templateID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
                     <div class="row">
                         <div class="form-group col-md-3"> <!-- Startdatum -->
                             <label for="validFromValue">Startdatum</label>
-                            <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validFromValue" name="validFromValue" min="<?php echo date('Y-m-d'); ?>" required>
+                            <input class="form-control" type="date" id="validFromValue" name="validFromValue" min="<?php echo date('Y-m-d'); ?>" required>
                             <small id="validFromValueHelp" class="form-text text-muted">Das Startdatum muss immer ausgewählt werden. Das Monatsende wird auf den letzten des ausgewählten Monats festgelegt.</small>
                         </div>
                     </div>
@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                                 <div class="col-7 col-md-3"> <!-- Enddatum -->
-                                    <input class="form-control chk-toggle-dis-invert-slave" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
+                                    <input class="form-control radio-toggle-2" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required disabled>
                                 </div>
                             </div>
                             <div class="form-group form-row"> <!-- Gültig n mal -->
@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
                                 <div class="col-3 col-md-2"> <!-- Value n -->
-                                    <input class="form-control chk-toggle-req-slave" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1">
+                                    <input class="form-control radio-toggle-4" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1" required disabled>
                                 </div>
                                 <div class="col-4 pl-0">
                                     <input class="form-control-plaintext" type="text" disabled value="Termin(en)">
@@ -294,5 +294,24 @@ if (isset($_POST['submit'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Radiobutton Toggle -->
+    <script>
+    $("input[name=validToType]").change(function() {
+        switch ($(this).val()) {
+            case '1':
+                $(".radio-toggle-2").prop('disabled', true);
+                $(".radio-toggle-4").prop('disabled', true);
+                break;
+            case '2':
+                $(".radio-toggle-2").prop('disabled', false);
+                $(".radio-toggle-4").prop('disabled', true);
+                break;
+            case '4':
+                $(".radio-toggle-2").prop('disabled', true);
+                $(".radio-toggle-4").prop('disabled', false);
+                break;
+        }
+    })
+    </script>
 </body>
 </html>

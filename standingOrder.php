@@ -19,6 +19,9 @@ if (isset($_POST['submit'])) {
         exit();
     }
 }
+
+// Fällige Daueraufträge prüfen
+include 'includes/standingOrderCheck.inc.php';
 ?>
 
 <!DOCTYPE html>

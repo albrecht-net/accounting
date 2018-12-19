@@ -18,6 +18,11 @@ if (isset($_POST['submit'])) {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
     }
+} elseif ($_POST['tableContent'] == 'standingOrder') {
+    if (!include 'includes/deleteStandingOrder.inc.php') {
+        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
+        exit();
+    }
 }
 
 // Fällige Daueraufträge prüfen
@@ -273,7 +278,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo ($row['handledEvents'] == NULL ? 0 : $row['handledEvents']); ?></td>
                                 <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['standingorderID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="standingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -316,5 +321,7 @@ include 'includes/standingOrderCheck.inc.php';
         }
     })
     </script>
+    <!-- Eintrag löschen -->
+    <script src="js/trValueDelete.js"></script>
 </body>
 </html>

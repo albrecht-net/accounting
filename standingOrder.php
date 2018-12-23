@@ -92,9 +92,9 @@ include 'includes/standingOrderCheck.inc.php';
     </nav>
 
     <div class="container">
+        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
         <h3 class="mt-3" id="addStandingOrder">Dauerauftrag erfassen</h3>
         <hr class="mb-4">
-        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">
             <div class="col-12 mb-5">
                 <form action="standingOrder.php" method="POST">

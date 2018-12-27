@@ -109,7 +109,7 @@ include 'includes/standingOrderCheck.inc.php';
                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
                     <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo ($_GET['standingOrder'] == $row['standingOrderID'] ? ' active' : ''); ?>">
                         <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel']); ?></h6>
-                        <small>Fällig am: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
+                        <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
                     </a>
                     <?php endwhile; ?>
                 </div>

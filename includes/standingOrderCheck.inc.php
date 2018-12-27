@@ -1,6 +1,13 @@
 <?php
+// Cookie Reload auf folgenden Seiten erzwingen
+$sites = array(
+    'buchung.php'
+);
+
+$forceReload = in_array(end(explode('/', $_SERVER['PHP_SELF'])), $sites);
+
 // Anzahl fälliger Daueraufträge ermitteln und in Cookie zwischenspeichern
-if (!isset($_COOKIE['standingOrder']) || (json_decode($_COOKIE['standingOrder'], TRUE)['userID'] != intval($_SESSION['userID'])) || (json_decode($_COOKIE['standingOrder'], TRUE)['dbID'] != intval($_SESSION['userDb']['dbID']))) {
+if (!isset($_COOKIE['standingOrder']) || $forceReload || (json_decode($_COOKIE['standingOrder'], TRUE)['userID'] != intval($_SESSION['userID'])) || (json_decode($_COOKIE['standingOrder'], TRUE)['dbID'] != intval($_SESSION['userDb']['dbID']))) {
     $sqlquery = "SELECT `standingOrderID` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW()";
 
     $values = array(

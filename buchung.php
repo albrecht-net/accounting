@@ -94,26 +94,29 @@ include 'includes/standingOrderCheck.inc.php';
             <div class="col-md-4 order-md-2">
                 <h3 class="mt-3" id="standingOrder">Daueraufträge</h3>
                 <hr class="mb-4">
-
-                <?php
-                // Prüfen ob Datensätze vorhanden
-                if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) < 1): ?>
-                <p>Keine anstehende Buchung.</p>
-
-                <?php else: 
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW()";
-                $result = mysqli_query($userLink, $sqlquery);
-                ?>
-                <div class="list-group">
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo ($_GET['standingOrder'] == $row['standingOrderID'] ? ' active' : ''); ?>">
-                        <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel']); ?></h6>
-                        <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
-                    </a>
-                    <?php endwhile; ?>
+                <div class="row">
+                    <div class="col-12 mb-5">
+                        <?php
+                        // Prüfen ob Datensätze vorhanden
+                        if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) < 1): ?>
+                        <p>Keine anstehende Buchung.</p>
+        
+                        <?php else: 
+                        // SQL-Query bereitstellen
+                        $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW()";
+                        $result = mysqli_query($userLink, $sqlquery);
+                        ?>
+                        <div class="list-group">
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo ($_GET['standingOrder'] == $row['standingOrderID'] ? ' active' : ''); ?>">
+                                <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel']); ?></h6>
+                                <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
+                            </a>
+                            <?php endwhile; ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
-                <?php endif; ?>
             </div>
 
             <div class="col-md-8 order-md-1">

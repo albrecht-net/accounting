@@ -25,8 +25,37 @@ if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
     }
 }
 
-// Fällige Daueraufträge prüfen
-include 'includes/standingOrderCheck.inc.php';
+// Dauerauftrag prüfen und bereitstellen
+if (isset($_GET['standingOrder'])) {
+    // StandingOrderID temp in Session speichern
+    $_SESSION['standingOrder']['standingOrderSet'] = 1;
+    $_SESSION['standingOrder']['standingOrderID'] = intval($_GET['standingOrder']);
+
+    // SQL-Query bereitstellen
+    $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `standingOrder`.`nextExecutionDate` <= NOW()";
+    $result = mysqli_query($userLink, $sqlquery);
+
+    // Prüfen ob Datensätze vorhanden
+    if (mysqli_num_rows($result) != 1) {
+        unset($_SESSION['standingOrder']);
+        $msg['invalidStandingOrder'] = 1;
+    } else {
+        // Abfrage in Array schreiben
+        $dataDb = mysqli_fetch_assoc($result);
+
+        // Leere Felder aus valueTemplate Array entfernen
+        $dataDb = array_diff($dataDb, array(NULL, '', 0, '0.00'));
+
+        // Vorlage-Werte GET-Variable zuweisen
+        foreach ($dataDb as $key => $row) {
+            $_GET[$key] = $row;
+        }
+    }
+} else {
+    unset($_SESSION['standingOrder']);
+    // Fällige Daueraufträge prüfen
+    include 'includes/standingOrderCheck.inc.php';
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +137,7 @@ include 'includes/standingOrderCheck.inc.php';
                         ?>
                         <div class="list-group">
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo ($_GET['standingOrder'] == $row['standingOrderID'] ? ' active' : ''); ?>">
+                            <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' active' : ''); ?>">
                                 <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel']); ?></h6>
                                 <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
                             </a>
@@ -410,7 +439,11 @@ include 'includes/standingOrderCheck.inc.php';
                             <dd class="col-sm-9">Beim Speichern als Lesezeichen wird eine URL erzeugt, welche als Lesezeichen verwenden werden kann. Die Vorlage wird nicht zusätzlich gespeichert.</dd>
                         </dl>
                         <div class="form-group form-check"> <!-- Als Vorlage -->
+                            <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
+                            <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1" disabled>
+                            <?php else: ?>
                             <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
+                            <?php endif; ?>
                             <label class="form-check-label" for="chkAddTemplate">Als Vorlage hinzufügen</label>
                         </div>
                         <div class="row">

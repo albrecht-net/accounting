@@ -231,7 +231,7 @@ include 'includes/standingOrderCheck.inc.php';
             <div class="col-12 mb-5">
                 <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.label AS standingOrderLabel, standingOrder.template AS templateID, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
+                $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.label AS standingOrderLabel, standingOrder.template AS templateID, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate, standingOrder.closed FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
                 $result = mysqli_query($userLink, $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
@@ -249,6 +249,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <th scope="col">Anzahl abgearbeitet</th>
                                 <th scope="col">Anzahl verbleibend</th>
                                 <th scope="col">Enddatum</th>
+                                <th scope="col">Abgeschlossen</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -278,6 +279,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo ($row['handledEvents'] == NULL ? 0 : $row['handledEvents']); ?></td>
                                 <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
+                                <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="standingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>

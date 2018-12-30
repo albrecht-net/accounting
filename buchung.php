@@ -32,7 +32,7 @@ if (isset($_GET['standingOrder'])) {
     $_SESSION['standingOrder']['standingOrderID'] = intval($_GET['standingOrder']);
 
     // SQL-Query bereitstellen
-    $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `standingOrder`.`nextExecutionDate` <= NOW()";
+    $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `standingOrder`.`nextExecutionDate` <= NOW() AND `closed` = 'N'";
     $result = mysqli_query($userLink, $sqlquery);
 
     // Prüfen ob Datensätze vorhanden
@@ -132,7 +132,7 @@ if (isset($_GET['standingOrder'])) {
         
                         <?php else: 
                         // SQL-Query bereitstellen
-                        $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW()";
+                        $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
                         $result = mysqli_query($userLink, $sqlquery);
                         ?>
                         <div class="list-group">

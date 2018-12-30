@@ -180,8 +180,8 @@ COMMENT = 'Vorlage';
 CREATE TABLE `standingOrder` (
   `standingOrderID` INT(11) NOT NULL AUTO_INCREMENT,
   `template` INT(11) NOT NULL,
-  `created` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `label` VARCHAR(32) DEFAULT NULL,
   `validFromType` INT(11) NOT NULL,
   `validFromValue` DATE NOT NULL,
@@ -192,7 +192,8 @@ CREATE TABLE `standingOrder` (
   `initialEvents` INT(11) NULL DEFAULT NULL,
   `handledEvents` INT(11) NULL DEFAULT NULL,
   `remainingEvents` INT(11) NULL DEFAULT NULL,
-  `nextExecutionDate` DATE NOT NULL,
+  `nextExecutionDate` DATE NULL DEFAULT NULL,
+  `closed` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`standingOrderID`),
   INDEX ('nextExecutionDate')
 )

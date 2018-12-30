@@ -38,7 +38,8 @@ if (count($dataInput) > 0) {
         if ($dataInput['validToType'] == 1) { // Kein Enddatum
             unset($dataInput['validToValue']);
         } elseif ($dataInput['validToType'] == 2) { // Nutze Enddatum
-            if ($dataInput['validToValue'] <= $dataInput['nextExecutionDate']) {
+            if ($dataInput['validToValue'] < $dataInput['nextExecutionDate']) {
+                $msg['inputError'];
                 break;
             }
         } elseif ($dataInput['validToType'] == 4) { // Anzahl Wiederholungen
@@ -50,10 +51,18 @@ if (count($dataInput) > 0) {
                     $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' week'), 'Y-m-d');
                     break;
                 case 4: // Monat
-                    $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' month'), 'Y-m-d');
+                    if ($dataInput['validFromType'] == 1) {
+                        $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' month'), 'Y-m-d');
+                    } elseif ($dataInput['validFromType'] == 2) {
+                        $dataInput['validToValue'] = date_format(date_modify(date_create(date_format(date_create($dataInput['nextExecutionDate']), 'Y-m')), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' month'), 'Y-m-t');
+                    }
                     break;
                 case 8: // Jahr
-                    $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' year'), 'Y-m-d');
+                    if ($dataInput['validFromType'] == 1) {
+                        $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' year'), 'Y-m-d');
+                    } elseif ($dataInput['validFromType'] == 2) {
+                        $dataInput['validToValue'] = date_format(date_modify(date_create(date_format(date_create($dataInput['nextExecutionDate']), 'Y-m')), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' year'), 'Y-m-t');
+                    }
                     break;
                 default:
                     $msg['inputError'];

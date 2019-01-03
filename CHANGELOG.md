@@ -13,6 +13,10 @@ Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokume
 - In der Ziel-Datenbank Tabelle "konto" wird die Konto-ID automatisch aus der Kategorien-ID und der Konto-NR generiert
 - Die Auswahlfelder für Konto Haben und Soll in der Eingabemaske werden nach der Konto-Kategorie sortiert
 - Die Tabelle "Template" wurde von der Applikations- in die Ziel-Datenbank verschoben
+- Das Auswahlfeld der Periode auf der Seite "buchung.php" beachtet nun das Datenbankfeld "active" um die Auswahl einzuschränken
+
+### Fixed
+- Bei den Auswahlfelder der Klassifikationen auf der Seite "buchung.php" wird nun das Datenbankfeld "active" beachtet
 
 ---
 

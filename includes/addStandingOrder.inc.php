@@ -81,10 +81,10 @@ if (count($dataInput) > 0) {
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
             $msg['sqlInsertError'] = 1;
-
         } else {
             $msg['success'] = 1;
         }
+        
     } while (0);
 } else {
     $msg['noInput'] = 1;

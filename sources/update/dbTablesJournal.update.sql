@@ -5,7 +5,7 @@
 -- --------------------------------------------------------
 
 --
--- Update von v0.9.1-alpha zu vx.x.x-beta
+-- Update von v0.9.1-alpha zu v2.0.0-beta
 --
 -- Diese Version ist unter Anderem aufgrund der Umstrukturierung der Tabelle "konto" (neu "account") nicht mehr rückwärzkompatibel.
 --

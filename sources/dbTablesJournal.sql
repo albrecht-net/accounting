@@ -190,7 +190,7 @@ CREATE TABLE `standingOrder` (
   `validToType` INT(11) NOT NULL,
   `validToValue` DATE DEFAULT NULL,
   `initialEvents` INT(11) NULL DEFAULT NULL,
-  `handledEvents` INT(11) NULL DEFAULT NULL,
+  `handledEvents` INT(11) NOT NULL DEFAULT 0,
   `remainingEvents` INT(11) NULL DEFAULT NULL,
   `nextExecutionDate` DATE NULL DEFAULT NULL,
   `closed` enum('Y','N') NOT NULL DEFAULT 'N',

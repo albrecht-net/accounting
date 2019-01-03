@@ -66,6 +66,7 @@ include 'includes/standingOrderCheck.inc.php';
                         Weitere erfassen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
@@ -225,7 +226,7 @@ include 'includes/standingOrderCheck.inc.php';
             </div>
         </div>
 
-        <h3 class="mt-3" id="registeredStandingOrder">Erfasste Daueraufträge</h3>
+        <h3 class="mt-3" id="savedStandingOrder">Erfasste Daueraufträge</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">

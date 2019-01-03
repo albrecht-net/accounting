@@ -44,6 +44,7 @@ if (!$lsc) {
                         Weitere erfassen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
@@ -93,7 +94,10 @@ Accounting/
 ├── <a href="../buchung.php">Neue Buchung/</a>
 |   ├── <a href="../buchung.php#newEntry">Neue Buchung erfassen</a>
 │   └── <a href="../buchung.php#addTemplate">Als Vorlage speichern</a>
-├── <del>Weitere erfassen/</del>
+├── Weitere erfassen/
+|   ├── <a href="../standingOrder.php">Dauerauftrag/</a>
+│   │   ├── <a href="../standingOrder.php#addStandingOrder">Dauerauftrag erfassen</a>
+│   │   └── <a href="../standingOrder.php#savedStandingOrder">Erfasste Daueraufträge</a>
 │   ├── <del>Konto</del>
 │   ├── <del>Empfänger</del>
 │   └── <del>Klassifikation</del>

@@ -52,6 +52,7 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
                         Weitere erfassen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>

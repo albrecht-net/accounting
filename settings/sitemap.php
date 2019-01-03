@@ -33,13 +33,18 @@ if (!$lsc) {
                     <a class="nav-link" href="../index.php">Home</a>
                 </li>
                 <li class="nav-item">
+                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
+                    <a class="nav-link" href="../buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span></a>
+                    <?php else: ?>
                     <a class="nav-link" href="../buchung.php">Neue Buchung</a>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Weitere erfassen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="../standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
@@ -89,7 +94,10 @@ Accounting/
 ├── <a href="../buchung.php">Neue Buchung/</a>
 |   ├── <a href="../buchung.php#newEntry">Neue Buchung erfassen</a>
 │   └── <a href="../buchung.php#addTemplate">Als Vorlage speichern</a>
-├── <del>Weitere erfassen/</del>
+├── Weitere erfassen/
+|   ├── <a href="../standingOrder.php">Dauerauftrag/</a>
+│   │   ├── <a href="../standingOrder.php#addStandingOrder">Dauerauftrag erfassen</a>
+│   │   └── <a href="../standingOrder.php#savedStandingOrder">Erfasste Daueraufträge</a>
 │   ├── <del>Konto</del>
 │   ├── <del>Empfänger</del>
 │   └── <del>Klassifikation</del>

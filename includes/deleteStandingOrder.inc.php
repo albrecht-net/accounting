@@ -3,7 +3,7 @@ if (empty($_POST['delID'])) {
     echo 0;
 } else {
     // SQL-Query bereitstellen
-    $sqlquery = "DELETE FROM `template` WHERE `templateID` = " . intval($_POST['delID']);
+    $sqlquery = "DELETE FROM `standingOrder` WHERE `standingOrderID` = " . intval($_POST['delID']);
 
     $result = mysqli_query($userLink, $sqlquery);
 

@@ -1,5 +1,5 @@
 -- Datenbank Tabellen Vorlage für die Applikations-Datenbank
--- Gültig ab: Accounting v1.4.0-beta
+-- Gültig ab: Accounting vx.x.x-beta
 --
 
 -- --------------------------------------------------------
@@ -9,9 +9,9 @@
 --
 
 CREATE TABLE `databases` (
-  `dbID` int(32) NOT NULL AUTO_INCREMENT,
-  `datumErstellt` datetime NOT NULL,
-  `userID` int(32) NOT NULL,
+  `dbID` int(11) NOT NULL AUTO_INCREMENT,
+  `created` datetime NOT NULL,
+  `userID` int(11) NOT NULL,
   `dbHost` varchar(32) NOT NULL,
   `dbPort` int(16) NOT NULL,
   `dbUsername` varchar(64) NOT NULL,
@@ -19,7 +19,9 @@ CREATE TABLE `databases` (
   `dbName` varchar(64) NOT NULL,
   PRIMARY KEY (`dbID`),
   KEY `userID` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -29,7 +31,7 @@ CREATE TABLE `databases` (
 --
 
 CREATE TABLE `users` (
-  `userID` int(32) NOT NULL AUTO_INCREMENT,
+  `userID` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(64) NOT NULL,
@@ -37,7 +39,9 @@ CREATE TABLE `users` (
   `status` enum('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -46,11 +50,13 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `userconfig` (
-  `userID` int(32) NOT NULL,
-  `defaultDb` int(32),
+  `userID` int(11) NOT NULL,
+  `defaultDb` int(11),
   PRIMARY KEY (`userID`),
   KEY `defaultDb` (`defaultDb`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)
+ENGINE = InnoDB
+DEFAULT CHARSET = utf8mb4;
 
 -- --------------------------------------------------------
 

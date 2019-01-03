@@ -6,8 +6,9 @@ Alle bemerkenswerten Änderungen an diesem Projekt werden in dieser Datei dokume
 ## vx.x.x-beta (xxx.xx.xx)
 ### Added
 - In der Ziel-Datenbank Tabelle "kontoKlasse" können die Konto-Klassen definiert werden
-- In der Ziel-Datenbank Tabelle "kontoKategorie" können die Konto-Kategorien definiert werden. Die Kategorie-ID wird automatisch aus der Klassen-ID und Kategorie-NR generiert.
+- In der Ziel-Datenbank Tabelle "kontoKategorie" können die Konto-Kategorien definiert werden. Die Kategorie-ID wird automatisch aus der Klassen-ID und Kategorie-NR generiert
 - Bei einer Änderung der Klassen-, Kategorie- oder Konto-ID werden alle nachfolgenden ID-Nummern automatisch angepasst
+- Mit einem Dauerauftrag ist es möglich, wiederholend daran erinnert zu werden, eine neue Buchung basierend auf einer Vorlage abzuarbeiten
 ### Changend
 - In der Ziel-Datenbank Tabelle "konto" wird die Konto-ID automatisch aus der Kategorien-ID und der Konto-NR generiert
 - Die Auswahlfelder für Konto Haben und Soll in der Eingabemaske werden nach der Konto-Kategorie sortiert

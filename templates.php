@@ -9,6 +9,9 @@ if (!$lsc) {
     exit();
 }
 
+// Mit Ziel Datenbank verbinden
+require_once 'includes/userDbConnect.inc.php';
+
 // Überprüfen ob Submit geklickt wurde
 if ($_POST['tableContent'] == 'templates') {
     if (!include 'includes/deleteTemplate.inc.php') {
@@ -16,6 +19,9 @@ if ($_POST['tableContent'] == 'templates') {
         exit();
     }
 }
+
+// Fällige Daueraufträge prüfen
+include 'includes/standingOrderCheck.inc.php';
 ?>
 
 <!DOCTYPE html>
@@ -44,13 +50,18 @@ if ($_POST['tableContent'] == 'templates') {
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
                 <li class="nav-item">
+                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
+                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span></a>
+                    <?php else: ?>
                     <a class="nav-link" href="buchung.php">Neue Buchung</a>
+                    <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Weitere erfassen
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
                         <a class="dropdown-item disabled" href="#">Empfänger</a>
                         <a class="dropdown-item disabled" href="#">Klassifikation</a>
@@ -77,15 +88,15 @@ if ($_POST['tableContent'] == 'templates') {
     </nav>
 
     <div class="container">
+        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
         <h3 class="mt-3" id="savedTemplates">Gespeicherte Vorlagen</h3>
         <hr class="mb-4">
-        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>        
         <div class="row">
             <div class="col-12 mb-5">
             <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `templateID`, `datumErstellt`, `name`, `value` FROM `templates` WHERE `userID` = " . intval($_SESSION['userID']) . " AND `dbID` = " . intval($_SESSION['userDb']['dbID']);
-                $result = mysqli_query($config['link'], $sqlquery);
+                $sqlquery = "SELECT `templateID`, `created`, `label`, `recipient`, `invoiceNo`, `entryText`, `grandTotal`, `debitAccount`, `creditAccount`, `period`, `classification1`, `classification2`, `classification3` FROM `template` ORDER BY `label` ASC";
+                $result = mysqli_query($userLink, $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) >= 1):
@@ -102,13 +113,21 @@ if ($_POST['tableContent'] == 'templates') {
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
-                                
-                            // Decode json value
-                            $valueDecoded = json_decode($row['value'], TRUE); ?>
+
+                            // Vorlage-Werte in neues Array schreiben
+                            $valueTemplate = array_slice($row, 3);
+                            
+                            // Leere Felder aus valueTemplate Array entfernen
+                            $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
+
+                            if (intval($_GET['template'] == $row['templateID'])): ?>
+                            <tr class="table-warning">
+                            <?php else: ?>
                             <tr>
-                                <td><?php echo date_format(date_create($row['datumErstellt']), 'd.m.Y'); ?></td>
-                                <td><a href="buchung.php?<?php echo http_build_query($valueDecoded); ?>"><?php echo $row['name']; ?></a></td>
-                                <td><?php echo implode(', ', array_keys($valueDecoded)); ?></td>
+                            <?php endif; ?>
+                                <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                                <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo $row['label']; ?></a></td>
+                                <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
@@ -119,7 +138,7 @@ if ($_POST['tableContent'] == 'templates') {
                 <p class="lead">Keine Vorlage gefunden</p>
                 <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="buchung.php#addTemplate">hier</a>.</p>
                 <?php endif; ?>
-            </div>
+                </div>
             </div>
         </div>
 

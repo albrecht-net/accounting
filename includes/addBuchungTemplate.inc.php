@@ -2,16 +2,16 @@
 // Array Eingabe
 $dataInput = array(
     'input' => array(
-        'empfänger' => intval($_POST['empfänger']),
-        'reNummer' => mysqli_real_escape_string($userLink, trim($_POST['reNummer'])),
-        'buchungstext' => mysqli_real_escape_string($userLink, trim($_POST['buchungstext'])),
-        'totalbetrag' => floatval($_POST['totalbetrag']),
-        'kontoSoll' => intval($_POST['kontoSoll']),
-        'kontoHaben' => intval($_POST['kontoHaben']),
-        'periode' => intval($_POST['periode']),
-        'klassifikation1' => intval($_POST['klassifikation1']),
-        'klassifikation2' => intval($_POST['klassifikation2']),
-        'klassifikation3' => intval($_POST['klassifikation3'])
+        'recipient' => intval($_POST['recipient']),
+        'invoiceNo' => mysqli_real_escape_string($userLink, trim($_POST['invoiceNo'])),
+        'entryText' => mysqli_real_escape_string($userLink, trim($_POST['entryText'])),
+        'grandTotal' => floatval($_POST['grandTotal']),
+        'debitAccount' => intval($_POST['debitAccount']),
+        'creditAccount' => intval($_POST['creditAccount']),
+        'period' => intval($_POST['period']),
+        'classification1' => intval($_POST['classification1']),
+        'classification2' => intval($_POST['classification2']),
+        'classification3' => intval($_POST['classification3'])
     ),
     'name' => mysqli_real_escape_string($userLink, trim($_POST['nameTemplate']))
 );
@@ -25,7 +25,7 @@ if (count($dataInput['input']) > 0) {
     switch (intval($_POST['radioTemplate'])) {
         case (1): // Speichern in Applikation
             $dataFunctions = array(
-                'datumErstellt' => 'NOW()'
+                'created' => 'NOW()'
             );
 
             $dataInput = array_merge($dataInput, $dataInput['input']);

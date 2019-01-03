@@ -275,8 +275,8 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo $row['standingOrderLabel']; ?></td>
                                 <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo $row['templateLabel']; ?></a></td>
                                 <td><?php echo 'Alle ' . $row['periodicityValue'] . ' ' . $row['periodicityType']; ?></td>
-                                <td><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></td>
-                                <td><?php echo ($row['handledEvents'] == NULL ? 0 : $row['handledEvents']); ?></td>
+                                <td><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
+                                <td><?php echo $row['handledEvents']; ?></td>
                                 <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                 <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>

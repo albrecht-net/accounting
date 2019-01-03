@@ -203,7 +203,7 @@ if (isset($_GET['standingOrder'])) {
                                     <label for="period">Periode</label>
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `periodID`, `label` FROM `period` ORDER BY `label` ASC";
+                                    $sqlquery = "SELECT `periodID`, `label` FROM `period` WHERE `active` = 'Y' ORDER BY `label` ASC";
                                     $result = mysqli_query($userLink, $sqlquery);
                 
                                     // Prüfen ob Datensätze vorhanden
@@ -337,7 +337,7 @@ if (isset($_GET['standingOrder'])) {
                                     <label for="classification1">Klassifikation 1</label>
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
+                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` WHERE `active` = 'Y' ORDER BY `label` ASC";
                                     $result = mysqli_query($userLink, $sqlquery);
         
                                     // Prüfen ob Datensätze vorhanden
@@ -357,7 +357,7 @@ if (isset($_GET['standingOrder'])) {
                                     <label for="classification2">Klassifikation 2</label>
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
+                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` WHERE `active` = 'Y' ORDER BY `label` ASC";
                                     $result = mysqli_query($userLink, $sqlquery);
         
                                     // Prüfen ob Datensätze vorhanden
@@ -377,7 +377,7 @@ if (isset($_GET['standingOrder'])) {
                                     <label for="classification3">Klassifikation 3</label>
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` ORDER BY `label` ASC";
+                                    $sqlquery = "SELECT `classificationID`, `label` FROM `classification` WHERE `active` = 'Y' ORDER BY `label` ASC";
                                     $result = mysqli_query($userLink, $sqlquery);
         
                                     // Prüfen ob Datensätze vorhanden

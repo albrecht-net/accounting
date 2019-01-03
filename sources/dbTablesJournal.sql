@@ -132,6 +132,7 @@ COMMENT = 'Konto-Klasse';
 CREATE TABLE `period` (
   `periodID` int(11) NOT NULL AUTO_INCREMENT,
   `label` varchar(32) NOT NULL,
+  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`periodID`)
 )
 ENGINE = InnoDB

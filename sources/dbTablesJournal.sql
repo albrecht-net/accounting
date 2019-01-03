@@ -9,10 +9,10 @@
 --
 
 CREATE TABLE `recipient` (
-  `recipientID` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(64) NOT NULL,
-  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `customerNumber` varchar(64) NOT NULL,
+  `recipientID` INT(11) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(64) NOT NULL,
+  `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+  `customerNumber` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`recipientID`)
 )
 ENGINE = InnoDB
@@ -26,21 +26,21 @@ COMMENT = 'Empfänger';
 --
 
 CREATE TABLE `journal` (
-  `entryID` int(11) NOT NULL AUTO_INCREMENT,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `date` date DEFAULT NULL,
-  `recipient` int(11) DEFAULT NULL,
-  `invoiceNo` varchar(64) DEFAULT NULL,
-  `entryText` text DEFAULT NULL,
-  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
-  `debitAccount` varchar(5) DEFAULT NULL,
-  `creditAccount` varchar(5) DEFAULT NULL,
-  `period` int(11) DEFAULT NULL,
-  `classification1` int(11) DEFAULT NULL,
-  `classification2` int(11) DEFAULT NULL,
-  `classification3` int(11) DEFAULT NULL,
-  `entryReference` int(11) DEFAULT NULL,
-  `reconcilation` enum('Y','N') NOT NULL DEFAULT 'N',
+  `entryID` INT(11) NOT NULL AUTO_INCREMENT,
+  `created` DATETIME NOT NULL DEFAULT current_timestamp(),
+  `date` DATE DEFAULT NULL,
+  `recipient` INT(11) DEFAULT NULL,
+  `invoiceNo` VARCHAR(64) DEFAULT NULL,
+  `entryText` TEXT DEFAULT NULL,
+  `grandTotal` FLOAT(12,2) NOT NULL DEFAULT 0.00,
+  `debitAccount` VARCHAR(5) DEFAULT NULL,
+  `creditAccount` VARCHAR(5) DEFAULT NULL,
+  `period` INT(11) DEFAULT NULL,
+  `classification1` INT(11) DEFAULT NULL,
+  `classification2` INT(11) DEFAULT NULL,
+  `classification3` INT(11) DEFAULT NULL,
+  `entryReference` INT(11) DEFAULT NULL,
+  `reconcilation` ENUM('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`entryID`),
   KEY `recipient` (`recipient`),
   KEY `debitAccount` (`debitAccount`),
@@ -62,9 +62,9 @@ COMMENT = 'Journal';
 --
 
 CREATE TABLE `classification` (
-  `classificationID` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(64) NOT NULL,
-  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `classificationID` INT(11) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(64) NOT NULL,
+  `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`classificationID`)
 )
 ENGINE = InnoDB
@@ -78,12 +78,12 @@ COMMENT = 'Klassifikation';
 --
 
 CREATE TABLE `account` (
-  `accountID` varchar(5) NOT NULL,
-  `label` varchar(32) NOT NULL,
-  `category` varchar(3) NOT NULL,
-  `accountNo` varchar(2) NOT NULL,
-  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `reconcilationAllow` enum('Y','N') NOT NULL DEFAULT 'N',
+  `accountID` VARCHAR(5) NOT NULL,
+  `label` VARCHAR(32) NOT NULL,
+  `category` VARCHAR(3) NOT NULL,
+  `accountNo` VARCHAR(2) NOT NULL,
+  `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
+  `reconcilationAllow` ENUM('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`accountID`)
 )
 ENGINE = InnoDB
@@ -130,9 +130,9 @@ COMMENT = 'Konto-Klasse';
 --
 
 CREATE TABLE `period` (
-  `periodID` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) NOT NULL,
-  `active` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `periodID` INT(11) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(32) NOT NULL,
+  `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`periodID`)
 )
 ENGINE = InnoDB
@@ -146,19 +146,19 @@ COMMENT = 'Periode';
 --
 
 CREATE TABLE `template` (
-  `templateID` int(11) NOT NULL AUTO_INCREMENT,
-  `created` datetime NOT NULL DEFAULT current_timestamp(),
-  `label` varchar(32) NOT NULL,
-  `recipient` int(11) DEFAULT NULL,
-  `invoiceNo` varchar(64) DEFAULT NULL,
-  `entryText` text DEFAULT NULL,
-  `grandTotal` float(12,2) NOT NULL DEFAULT 0.00,
-  `debitAccount` varchar(5) DEFAULT NULL,
-  `creditAccount` varchar(5) DEFAULT NULL,
-  `period` int(11) DEFAULT NULL,
-  `classification1` int(11) DEFAULT NULL,
-  `classification2` int(11) DEFAULT NULL,
-  `classification3` int(11) DEFAULT NULL,
+  `templateID` INT(11) NOT NULL AUTO_INCREMENT,
+  `created` DATETIME NOT NULL DEFAULT current_timestamp(),
+  `label` VARCHAR(32) NOT NULL,
+  `recipient` INT(11) DEFAULT NULL,
+  `invoiceNo` VARCHAR(64) DEFAULT NULL,
+  `entryText` TEXT DEFAULT NULL,
+  `grandTotal` FLOAT(12,2) NOT NULL DEFAULT 0.00,
+  `debitAccount` VARCHAR(5) DEFAULT NULL,
+  `creditAccount` VARCHAR(5) DEFAULT NULL,
+  `period` INT(11) DEFAULT NULL,
+  `classification1` INT(11) DEFAULT NULL,
+  `classification2` INT(11) DEFAULT NULL,
+  `classification3` INT(11) DEFAULT NULL,
   PRIMARY KEY (`templateID`),
   KEY `recipient` (`recipient`),
   KEY `debitAccount` (`debitAccount`),
@@ -194,7 +194,7 @@ CREATE TABLE `standingOrder` (
   `handledEvents` INT(11) NOT NULL DEFAULT 0,
   `remainingEvents` INT(11) NULL DEFAULT NULL,
   `nextExecutionDate` DATE NULL DEFAULT NULL,
-  `closed` enum('Y','N') NOT NULL DEFAULT 'N',
+  `closed` ENUM('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`standingOrderID`),
   INDEX ('nextExecutionDate')
 )

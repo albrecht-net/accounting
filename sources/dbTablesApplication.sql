@@ -9,14 +9,14 @@
 --
 
 CREATE TABLE `databases` (
-  `dbID` int(11) NOT NULL AUTO_INCREMENT,
-  `created` datetime NOT NULL,
-  `userID` int(11) NOT NULL,
-  `dbHost` varchar(32) NOT NULL,
-  `dbPort` int(16) NOT NULL,
-  `dbUsername` varchar(64) NOT NULL,
-  `dbPassword` varchar(64) NOT NULL,
-  `dbName` varchar(64) NOT NULL,
+  `dbID` INT(11) NOT NULL AUTO_INCREMENT,
+  `created` DATETIME NOT NULL,
+  `userID` INT(11) NOT NULL,
+  `dbHost` VARCHAR(32) NOT NULL,
+  `dbPort` INT(11) NOT NULL,
+  `dbUsername` VARCHAR(64) NOT NULL,
+  `dbPassword` VARCHAR(64) NOT NULL,
+  `dbName` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`dbID`),
   KEY `userID` (`userID`)
 )
@@ -31,12 +31,12 @@ DEFAULT CHARSET = utf8mb4;
 --
 
 CREATE TABLE `users` (
-  `userID` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(64) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `activation` enum('Y','N') NOT NULL DEFAULT 'N',
-  `status` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `userID` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(64) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(64) NOT NULL,
+  `activation` ENUM('Y','N') NOT NULL DEFAULT 'N',
+  `status` ENUM('Y','N') NOT NULL DEFAULT 'Y',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `username` (`username`)
 )
@@ -50,8 +50,8 @@ DEFAULT CHARSET = utf8mb4;
 --
 
 CREATE TABLE `userconfig` (
-  `userID` int(11) NOT NULL,
-  `defaultDb` int(11),
+  `userID` INT(11) NOT NULL,
+  `defaultDb` INT(11),
   PRIMARY KEY (`userID`),
   KEY `defaultDb` (`defaultDb`)
 )

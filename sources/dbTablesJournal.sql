@@ -17,7 +17,7 @@ CREATE TABLE `recipient` (
 )
 ENGINE = InnoDB
 DEFAULT CHARSET = utf8mb4
-COMMENT = 'Empfänger';
+COMMENT = 'Empfaenger';
 
 -- --------------------------------------------------------
 
@@ -196,7 +196,7 @@ CREATE TABLE `standingOrder` (
   `nextExecutionDate` DATE NULL DEFAULT NULL,
   `closed` ENUM('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`standingOrderID`),
-  INDEX ('nextExecutionDate')
+  INDEX (`nextExecutionDate`)
 )
 ENGINE = InnoDB
 DEFAULT CHARSET = utf8mb4

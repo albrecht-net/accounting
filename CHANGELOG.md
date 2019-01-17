@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.0.2-beta (2019.01.17)
+### Fixed
+- Das Feld "customerNumber" in der Tabelle "recipient" muss keinen Wert mehr enthalten.
+
+---
+
 ## v2.0.1-beta (2019.01.05)
 ### Fixed
 - Es wird nur bei ausgewählter Datenbank auf fällige Daueraufträge geprüft.

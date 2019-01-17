@@ -12,7 +12,7 @@ CREATE TABLE `recipient` (
   `recipientID` INT(11) NOT NULL AUTO_INCREMENT,
   `label` VARCHAR(64) NOT NULL,
   `active` ENUM('Y','N') NOT NULL DEFAULT 'Y',
-  `customerNumber` VARCHAR(64) NOT NULL,
+  `customerNumber` VARCHAR(64) DEFAULT NULL,
   PRIMARY KEY (`recipientID`)
 )
 ENGINE = InnoDB

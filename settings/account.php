@@ -44,7 +44,7 @@ if (isset($_POST['submitChangePassword']) && !empty($_POST['inputOldPassword']))
                     <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
                     <a class="nav-link" href="../buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span></a>
                     <?php else: ?>
-                    <a class="nav-link" href=../buchung.php">Neue Buchung</a>
+                    <a class="nav-link" href="../buchung.php">Neue Buchung</a>
                     <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">

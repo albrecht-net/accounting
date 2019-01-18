@@ -13,7 +13,7 @@ $dataInput = array(
         'classification2' => intval($_POST['classification2']),
         'classification3' => intval($_POST['classification3'])
     ),
-    'name' => mysqli_real_escape_string($userLink, trim($_POST['nameTemplate']))
+    'label' => mysqli_real_escape_string($userLink, trim($_POST['nameTemplate']))
 );
 
 // Leere Felder aus Eingabe Array entfernen

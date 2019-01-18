@@ -100,7 +100,7 @@ include 'includes/standingOrderCheck.inc.php';
             <div class="col-12 mb-5">
                 <form action="standingOrder.php" method="POST">
                     <p>Daueraufträge basieren auf einer bereits erstellten <a href="templates.php#savedTemplates">Vorlage</a>.</p>
-                    <div class="row">
+                    <div class="form-row">
                         <div class="form-group col-md-5"> <!-- Buchungsvorlage auswählen -->
                             <label for="template">Buchungsvorlage auswählen</label>
                             <?php
@@ -156,7 +156,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     <label for="periodicityValue">Wiederholen alle:</label>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-row">
                                 <div class="col-3 col-md-2"> <!-- PeriodizitätValue -->
                                     <input class="form-control chk-toggle-req-slave" type="number" id="periodicityValue" name="periodicityValue" step="1" lang="en" min="1" value="1" required>
                                 </div>

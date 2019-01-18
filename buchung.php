@@ -194,7 +194,7 @@ if (isset($_GET['standingOrder'])) {
                         </div>
                         <?php endif ?>         
                         <form action="buchung.php" method="POST">
-                            <div class="row">
+                            <div class="form-row">
                                 <div class="form-group col-md-3"> <!-- Buchungsdatum -->
                                     <label for="date">Buchungsdatum</label>
                                     <input class="form-control chk-toggle-dis-invert-slave" type="date" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" required>
@@ -240,7 +240,7 @@ if (isset($_GET['standingOrder'])) {
                                     </select>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-row">
                                 <div class="form-group col-md-5"> <!-- Rechnungsummer -->
                                     <label for="invoiceNo">Rechnungsnummer</label>
                                     <input class="form-control" type="text" id="invoiceNo" name="invoiceNo">
@@ -250,7 +250,7 @@ if (isset($_GET['standingOrder'])) {
                                     <input class="form-control" type="text" id="entryText" name="entryText" value="<?php echo $_GET['entryText']; ?>">
                                 </div>  
                             </div>
-                            <div class="row">
+                            <div class="form-row">
                                 <div class="form-group col-md-5"> <!-- Konto Soll -->
                                     <label for="debitAccount">Konto Soll</label>
                                     <?php
@@ -332,7 +332,7 @@ if (isset($_GET['standingOrder'])) {
                                     <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.01" lang="en" value="<?php echo $_GET['grandTotal']; ?>" required>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="form-row">
                                 <div class="form-group col-md-4"> <!-- Klassifikation 1 -->
                                     <label for="classification1">Klassifikation 1</label>
                                     <?php

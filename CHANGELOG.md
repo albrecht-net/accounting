@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Neue Buchungen (nicht Dauerauftrag) können wieder gespeichert werden.
 
 ---
+
 ## v2.0.2-beta (2019.01.17)
 ### Fixed
 - Das Feld "customerNumber" in der Tabelle "recipient" muss keinen Wert mehr enthalten.

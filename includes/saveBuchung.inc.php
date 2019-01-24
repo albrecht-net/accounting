@@ -108,17 +108,17 @@ if (count($dataInput) > 0) {
                     $set[] = "`" . $column . "` = " . $value;
                 }
                 $sqlquery = "UPDATE `standingOrder` SET " . implode(", ", $set) . " WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `nextExecutionDate` <= NOW() AND `closed` = 'N'";
-            }
-        }
 
-        // SQL-Query ausführen und überprüfen
-        if (!mysqli_query($userLink, $sqlquery)) {
-            unset($_SESSION['standingOrder']);
-            $msg['sqlUpdateStandingOrderError'] = 1;
-            break;
-        } else {
-            unset($_SESSION['standingOrder']);
-            $msg['successStandingOrder'] = 1;
+                // SQL-Query ausführen und überprüfen
+                if (!mysqli_query($userLink, $sqlquery)) {
+                    unset($_SESSION['standingOrder']);
+                    $msg['sqlUpdateStandingOrderError'] = 1;
+                    break;
+                } else {
+                    unset($_SESSION['standingOrder']);
+                    $msg['successStandingOrder'] = 1;
+                }
+            }
         }
         
         // 

@@ -6,11 +6,27 @@ if (isset($_POST['submit'])) {
     // Konfiguration einbinden
     require_once '../config.php';
 
+    // Array Response
+    $_SESSION['response'] = array(
+        'alert' => array(
+            'alertType' => NULL,
+            'alertDismissible' => true
+        ),
+        'message' => array(
+            'messageTitle' => NULL,
+            'message' => NULL
+        ),
+        'values' => array()
+    );
+
     // Array Eingabe
     $dataInput = array(
         'username' => mysqli_real_escape_string($config['link'], $_POST['inputUsername']),
         'password' => $_POST['inputPassword']
     );
+
+    // Array GET-Variablen
+    $dataInputGet = $_GET;
 
     // SQL-Query bereitstellen
     $sqlquery = "SELECT `username`, `password`, `userID` FROM `users` WHERE `username` = '" . $dataInput['username'] . "' AND `activation` = 'Y' AND `status` = 'Y'";
@@ -18,14 +34,32 @@ if (isset($_POST['submit'])) {
 
     // Benutzer abfragen
     if (mysqli_num_rows($result) != 1) {
-        $msg['invalid'] = 1;
+        // Rückmeldung und Weiterleitung
+        $_SESSION['response']['alert']['alertType'] = 'danger';
+        $_SESSION['response']['message']['message'] = 'Falsches Kennwort oder Benutzername';
+
+        if (empty($dataInputGet)) {
+            header('Location: ../login.php');
+        } else {
+            $dataInputGet;
+            header('Location: ../login.php?' . http_build_query($dataInputGet));
+        }
     } else {
         // Abfrage in Array schreiben
         $dataDb = mysqli_fetch_assoc($result);
 
         // Passwort validieren
         if (!password_verify($dataInput['password'], $dataDb['password'])) {
-            $msg['invalid'] = 1;
+            // Rückmeldung und Weiterleitung
+            $_SESSION['response']['alert']['alertType'] = 'danger';
+            $_SESSION['response']['message']['message'] = 'Falsches Kennwort oder Benutzername';
+            
+            if (empty($dataInputGet)) {
+                header('Location: ../login.php');
+            } else {
+                $dataInputGet;
+                header('Location: ../login.php?' . http_build_query($dataInputGet));
+            }
         } else {
             // Benutzerdaten in Session schreiben
             $_SESSION['userID'] = intval($dataDb['userID']);
@@ -55,10 +89,10 @@ if (isset($_POST['submit'])) {
 
                         // Weiterleitung
                         if (empty($dataInputGet['rd'])) {
-                            header('Location: index.php');
+                            header('Location: ../index.php');
                         } else {
                             $rd = $dataInputGet['rd'];
-                            header('Location: ' . $rd);
+                            header('Location: ../' . $rd);
                         }
                         exit();
                     }
@@ -69,10 +103,10 @@ if (isset($_POST['submit'])) {
 
             // Weiterleitung
             if (empty($dataInputGet['rd'])) {
-                header('Location: selectDatabase.php');
+                header('Location: ../selectDatabase.php');
             } else {
                 $rd = $dataInputGet['rd'];
-                header('Location: selectDatabase.php?rd=' . urlencode($rd));
+                header('Location: ../selectDatabase.php?rd=' . urlencode($rd));
             }
             exit();
         }

@@ -44,6 +44,7 @@ if (isset($_POST['submit'])) {
             $dataInputGet;
             header('Location: ../login.php?' . http_build_query($dataInputGet));
         }
+        exit();
     } else {
         // Abfrage in Array schreiben
         $dataDb = mysqli_fetch_assoc($result);

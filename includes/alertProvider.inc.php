@@ -4,7 +4,7 @@ if (isset($_SESSION['response'])) {
 }
 
 if (isset($response)):
-    if ($response['alertDismissible']): ?>
+    if ($response['alert']['alertDismissible']): ?>
         <div class="alert alert-<?php echo $response['alert']['alertType']; ?> alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>

@@ -1,30 +1,57 @@
 <?php
-// Array Eingabe
-$dataInput = array(
-    'date' => mysqli_real_escape_string($userLink, $_POST['date']),
-    'recipient' => intval($_POST['recipient']),
-    'invoiceNo' => mysqli_real_escape_string($userLink, trim($_POST['invoiceNo'])),
-    'entryText' => mysqli_real_escape_string($userLink, trim($_POST['entryText'])),
-    'grandTotal' => floatval($_POST['grandTotal']),
-    'debitAccount' => intval($_POST['debitAccount']),
-    'creditAccount' => intval($_POST['creditAccount']),
-    'period' => intval($_POST['period']),
-    'classification1' => intval($_POST['classification1']),
-    'classification2' => intval($_POST['classification2']),
-    'classification3' => intval($_POST['classification3']),
-    'reconcilation' => ($_POST['reconcilation'] == 1 ? 'Y' : 0)
-);
+if (isset($_POST['submit'])) {
 
-$dataUpdateAbst = array(
-    'entryReference' => (isset($_POST['entryReference']) ? array_map(intval, $_POST['entryReference']) : NULL)
-);
+    // Konfiguration einbinden
+    require_once '../config.php';
 
-// Leere Felder aus Eingabe Array entfernen
-$dataInput = array_diff($dataInput, array(NULL, '', 0));
+    // Prüfen ob Benutzer angemeldet
+    require 'loginSessionCheck.inc.php';
+    if (!$lsc) {
+        http_response_code(403);
+        exit();
+    }
+    
+    // Mit Ziel Datenbank verbinden
+    require_once 'userDbConnect.inc.php';
 
-// Prüfen ob Eingabe vorhanden
-if (count($dataInput) > 0) {
-    do {
+    // Array Response
+    $_SESSION['response'] = array(
+        'alert' => array(
+            'alertType' => NULL,
+            'alertDismissible' => true
+        ),
+        'message' => array(
+            'messageTitle' => NULL,
+            'message' => NULL
+        ),
+        'values' => array()
+    );
+
+    // Array Eingabe
+    $dataInput = array(
+        'date' => mysqli_real_escape_string($userLink, $_POST['date']),
+        'recipient' => intval($_POST['recipient']),
+        'invoiceNo' => mysqli_real_escape_string($userLink, trim($_POST['invoiceNo'])),
+        'entryText' => mysqli_real_escape_string($userLink, trim($_POST['entryText'])),
+        'grandTotal' => floatval($_POST['grandTotal']),
+        'debitAccount' => intval($_POST['debitAccount']),
+        'creditAccount' => intval($_POST['creditAccount']),
+        'period' => intval($_POST['period']),
+        'classification1' => intval($_POST['classification1']),
+        'classification2' => intval($_POST['classification2']),
+        'classification3' => intval($_POST['classification3']),
+        'reconcilation' => ($_POST['reconcilation'] == 1 ? 'Y' : 0)
+    );
+
+    $dataUpdateAbst = array(
+        'entryReference' => (isset($_POST['entryReference']) ? array_map(intval, $_POST['entryReference']) : NULL)
+    );
+
+    // Leere Felder aus Eingabe Array entfernen
+    $dataInput = array_diff($dataInput, array(NULL, '', 0));
+
+    // Prüfen ob Eingabe vorhanden
+    if (count($dataInput) > 0) {
         // 
         // Dauerauftrag prüfen und speichern
         // 
@@ -39,8 +66,11 @@ if (count($dataInput) > 0) {
             // Prüfen ob Datensätze vorhanden
             if (mysqli_num_rows($result) < 1) {
                 unset($_SESSION['standingOrder']);
-                $msg['standingOrderError'] = 1;
-                break;
+                $_SESSION['response']['alert']['alertType'] = 'warning';
+                $_SESSION['response']['alert']['alertDismissible'] = true;
+                $_SESSION['response']['message']['message'] = 'Dieser Dauerauftrag ist nicht gültig. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+                header('Location: ../buchung.php');
+                exit();
             } else {
                 // Abfrage in Array schreiben
                 $dataDb = mysqli_fetch_assoc($result);
@@ -73,7 +103,7 @@ if (count($dataInput) > 0) {
                         }
                         break;
                 }
-                 
+                
                 // Auf Abschluss prüfen, wenn gültig bis Widerruf dann keine Überprüfung
                 if ($dataDb['validToType'] == 1) { // Kein Enddatum
                     // Event Counter
@@ -112,11 +142,14 @@ if (count($dataInput) > 0) {
                 // SQL-Query ausführen und überprüfen
                 if (!mysqli_query($userLink, $sqlquery)) {
                     unset($_SESSION['standingOrder']);
-                    $msg['sqlUpdateStandingOrderError'] = 1;
-                    break;
+                    $_SESSION['response']['alert']['alertType'] = 'danger';
+                    $_SESSION['response']['alert']['alertDismissible'] = true;
+                    $_SESSION['response']['message']['message'] = 'Es trat ein Fehler beim Verarbeiten des Dauerauftrags auf. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+                    header('Location: ../buchung.php');
+                    exit();
                 } else {
                     unset($_SESSION['standingOrder']);
-                    $msg['successStandingOrder'] = 1;
+                    // Dauerauftrag erfolgreich gespeichert
                 }
             }
         }
@@ -136,7 +169,11 @@ if (count($dataInput) > 0) {
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
-            $msg['sqlInsertError'] = 1;
+            $_SESSION['response']['alert']['alertType'] = 'danger';
+            $_SESSION['response']['alert']['alertDismissible'] = true;
+            $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong>' . mysqli_error($userLink);
+            header('Location: ../buchung.php');
+            exit();
 
         // Prüfen ob Abstimmung gewählt
         } elseif (count($dataUpdateAbst['entryReference']) > 0) {
@@ -148,16 +185,35 @@ if (count($dataInput) > 0) {
 
             // SQL-Query ausführen und überprüfen
             if (!mysqli_query($userLink, $sqlquery)) {
-                $msg['sqlUpdateError'] = 1;
+                $_SESSION['response']['alert']['alertType'] = 'danger';
+                $_SESSION['response']['alert']['alertDismissible'] = true;
+                $_SESSION['response']['message']['message'] = 'Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+                header('Location: ../buchung.php');
+                exit();
             } else {
-                $msg['success'] = 1;
+                $_SESSION['response']['alert']['alertType'] = 'primary';
+                $_SESSION['response']['alert']['alertDismissible'] = true;
+                $_SESSION['response']['message']['message'] = 'Eintrag erfolgreich gespeichert';
+                header('Location: ../buchung.php');
+                exit();
             }
         } else {
-            $msg['success'] = 1;
+            $_SESSION['response']['alert']['alertType'] = 'primary';
+            $_SESSION['response']['alert']['alertDismissible'] = true;
+            $_SESSION['response']['message']['message'] = 'Eintrag erfolgreich gespeichert';
+            header('Location: ../buchung.php');
+            exit();
         }
 
-    } while(0);
+    } else {
+        $_SESSION['response']['alert']['alertType'] = 'warning';
+        $_SESSION['response']['alert']['alertDismissible'] = true;
+        $_SESSION['response']['message']['message'] = 'Bitte Pflichtfelder ausfüllen!';
+        header('Location: ../buchung.php');
+        exit();
+    }
 } else {
-    $msg['noInput'] = 1;
+    http_response_code(405);
+    header ('Allow: POST');
 }
 ?>

@@ -1,28 +1,11 @@
 <?php
-// Array Eingabe
-$dataInput = array(
-    'input' => array(
-        'recipient' => intval($_POST['recipient']),
-        'invoiceNo' => mysqli_real_escape_string($userLink, trim($_POST['invoiceNo'])),
-        'entryText' => mysqli_real_escape_string($userLink, trim($_POST['entryText'])),
-        'grandTotal' => floatval($_POST['grandTotal']),
-        'debitAccount' => intval($_POST['debitAccount']),
-        'creditAccount' => intval($_POST['creditAccount']),
-        'period' => intval($_POST['period']),
-        'classification1' => intval($_POST['classification1']),
-        'classification2' => intval($_POST['classification2']),
-        'classification3' => intval($_POST['classification3'])
-    ),
-    'label' => mysqli_real_escape_string($userLink, trim($_POST['nameTemplate']))
-);
-
 // Leere Felder aus Eingabe Array entfernen
 $dataInput['input'] = array_diff($dataInput['input'], array(NULL, '', 0));
 $dataInput = array_diff($dataInput, array(NULL, '', 0));
 
 // Prüfen ob Eingabe vorhanden
 if (count($dataInput['input']) > 0) {
-    switch (intval($_POST['radioTemplate'])) {
+    switch ($dataInput['templateType']) {
         case (1): // Speichern in Applikation
             $dataFunctions = array(
                 'created' => 'NOW()'
@@ -38,18 +21,32 @@ if (count($dataInput['input']) > 0) {
 
             // SQL-Query ausführen und überprüfen
             if (!mysqli_query($userLink, $sqlquery)) {
-                $msg['sqlInsertError'] = 1;
+                $_SESSION['response']['alert']['alertType'] = 'danger';
+                $_SESSION['response']['alert']['alertDismissible'] = true;
+                $_SESSION['message']['message'] = '<strong>MySQL Error:</strong>' . mysqli_error($userLink);
+                header('Location: ../buchung.php');
             }
-            $msg['templateSuccess'] = 1;
+            $_SESSION['response']['alert']['alertType'] = 'primary';
+            $_SESSION['response']['alert']['alertDismissible'] = true;
+            $_SESSION['message']['message'] = 'Vorlage erfolgreich gespeichert';
+            header('Location: ../buchung.php');
             break;
         case (2): // Als Link ausgeben
-            $msg['templateURL']['set'] = 1;
-            $msg['templateURL']['name'] = $dataInput['name'];
-            $msg['templateURL']['data'] = $dataInput['input'];
-            $msg['templateURL']['data']['dbID'] = $_SESSION['userDb']['dbID'];
+            $_SESSION['response']['alert']['alertType'] = 'primary';
+            $_SESSION['response']['alert']['alertDismissible'] = true;
+            $_SESSION['response']['message']['messageTitle'] = 'Vorlage als Lesezeichen';
+            $_SESSION['response']['message']['message'] = '<p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p><hr><a href\"buchung.php?' . http_build_query($dataInput['input']) . 'class=\"alert-link\">' . !empty($msg['templateURL']['name']) ? $msg['templateURL']['name'] : 'Buchungs-Vorlage' . '<\/a>';
             break;
     }
 } else {
-    $msg['noTemplateInput'] = 1;
+    $_SESSION['response']['alert']['alertType'] = 'warning';
+    $_SESSION['response']['alert']['alertDismissible'] = true;
+    $_SESSION['message']['message'] = 'Bitte wählen Sie mindestens 1 Feld aus, welches in der Vorlage gespeichert werden soll.';
+    header('Location: ../buchung.php');
 }
+
+$_SESSION['response']['alert']['alertType'] = 'warning';
+$_SESSION['response']['alert']['alertDismissible'] = true;
+$_SESSION['message']['message'] = 'Bitte Pflichtfelder ausfüllen!';
+header('Location: ../buchung.php');
 ?>

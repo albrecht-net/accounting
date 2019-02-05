@@ -12,19 +12,6 @@ if (!$lsc) {
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
 
-// Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 0)) {
-    if (!include 'includes/saveBuchung.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
-} elseif (isset($_POST['submit']) && ($_POST['chkAddTemplate'] == 1)) {
-    if (!include 'includes/addBuchungTemplate.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
-}
-
 // Dauerauftrag prüfen und bereitstellen
 if (isset($_GET['standingOrder'])) {
     // StandingOrderID temp in Session speichern
@@ -154,46 +141,8 @@ if (isset($_GET['standingOrder'])) {
                 <hr class="mb-4">
                 <div class="row">
                     <div class="col-12 mb-5">
-                        <?php if ($msg['success']): ?>
-                        <div class="alert alert-primary alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            Eintrag erfolgreich gespeichert
-                        </div>
-                        <?php elseif ($msg['sqlInsertError']): ?>
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
-                        </div>
-                        <?php elseif ($msg['sqlUpdateError']): ?>
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> <?php echo mysqli_error($userLink); ?>
-                        </div>
-                        <?php elseif ($msg['templateURL']['set']): ?>
-                        <div class="alert alert-primary alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4>Vorlage als Lesezeichen</h4>
-                            <p>Um Fehler zu vermeiden, sollte diese Vorlage nur mit der aktuell gewählten Zieldatenbank genutzt werden. Der untenstehende Link kann nun als Lesezeichen dem Browser hinzugefügt werden:</p>
-                            <hr>
-                            <a href="buchung.php?<?php echo http_build_query($msg['templateURL']['data']); ?>" class="alert-link"><?php echo (!empty($msg['templateURL']['name']) ? $msg['templateURL']['name'] : 'Buchungs-Vorlage'); ?></a>
-                        </div>
-                        <?php elseif ($msg['noTemplateInput']): ?>
-                        <div class="alert alert-warning alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            Bitte wählen Sie mindestens 1 Feld aus, welches in der Vorlage gespeichert werden soll
-                        </div>
-                        <?php endif ?>         
-                        <form action="buchung.php" method="POST">
+                        <?php include_once 'includes/alertProvider.inc.php'; ?>
+                        <form action="includes/newEntry.inc.php" method="POST" id=formNewEntry>
                             <div class="form-row">
                                 <div class="form-group col-md-3"> <!-- Buchungsdatum -->
                                     <label for="date">Buchungsdatum</label>

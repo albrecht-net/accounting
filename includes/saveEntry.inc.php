@@ -19,7 +19,6 @@ if (count($dataInput) > 0) {
         if (mysqli_num_rows($result) < 1) {
             unset($_SESSION['standingOrder']);
             $_SESSION['response']['alert']['alertType'] = 'warning';
-            $_SESSION['response']['alert']['alertDismissible'] = true;
             $_SESSION['response']['message']['message'] = 'Dieser Dauerauftrag ist nicht gültig. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
             header('Location: ../buchung.php');
             exit();
@@ -95,7 +94,6 @@ if (count($dataInput) > 0) {
             if (!mysqli_query($userLink, $sqlquery)) {
                 unset($_SESSION['standingOrder']);
                 $_SESSION['response']['alert']['alertType'] = 'danger';
-                $_SESSION['response']['alert']['alertDismissible'] = true;
                 $_SESSION['response']['message']['message'] = 'Es trat ein Fehler beim Verarbeiten des Dauerauftrags auf. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
                 header('Location: ../buchung.php');
                 exit();
@@ -122,7 +120,6 @@ if (count($dataInput) > 0) {
     // SQL-Query ausführen und überprüfen
     if (!mysqli_query($userLink, $sqlquery)) {
         $_SESSION['response']['alert']['alertType'] = 'danger';
-        $_SESSION['response']['alert']['alertDismissible'] = true;
         $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong> ' . mysqli_error($userLink);
         header('Location: ../buchung.php');
         exit();
@@ -138,20 +135,17 @@ if (count($dataInput) > 0) {
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
             $_SESSION['response']['alert']['alertType'] = 'danger';
-            $_SESSION['response']['alert']['alertDismissible'] = true;
             $_SESSION['response']['message']['message'] = 'Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
             header('Location: ../buchung.php');
             exit();
         } else {
             $_SESSION['response']['alert']['alertType'] = 'primary';
-            $_SESSION['response']['alert']['alertDismissible'] = true;
             $_SESSION['response']['message']['message'] = 'Eintrag erfolgreich gespeichert';
             header('Location: ../buchung.php');
             exit();
         }
     } else {
         $_SESSION['response']['alert']['alertType'] = 'primary';
-        $_SESSION['response']['alert']['alertDismissible'] = true;
         $_SESSION['response']['message']['message'] = 'Eintrag erfolgreich gespeichert';
         header('Location: ../buchung.php');
         exit();
@@ -159,8 +153,7 @@ if (count($dataInput) > 0) {
 
 } else {
     $_SESSION['response']['alert']['alertType'] = 'warning';
-    $_SESSION['response']['alert']['alertDismissible'] = true;
-    $_SESSION['response']['message']['message'] = 'Bitte Pflichtfelder ausfüllen!';
+    $_SESSION['response']['message']['message'] = 'Keine Eingabe erfolgt';
     header('Location: ../buchung.php');
     exit();
 }

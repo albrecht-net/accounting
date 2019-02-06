@@ -1,7 +1,4 @@
 <?php
-// Mit Ziel Datenbank verbinden
-require_once 'userDbConnect.inc.php';
-
 // Leere Felder aus Eingabe Array entfernen
 $dataInput = array_diff($dataInput, array(NULL, '', 0));
 
@@ -23,7 +20,7 @@ if (count($dataInput) > 0) {
             unset($_SESSION['standingOrder']);
             $_SESSION['response']['alert']['alertType'] = 'warning';
             $_SESSION['response']['alert']['alertDismissible'] = true;
-            $_SESSION['response']['message']['message'] = 'Dieser Dauerauftrag ist nicht gültig. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+            $_SESSION['response']['message']['message'] = 'Dieser Dauerauftrag ist nicht gültig. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
             header('Location: ../buchung.php');
             exit();
         } else {
@@ -99,7 +96,7 @@ if (count($dataInput) > 0) {
                 unset($_SESSION['standingOrder']);
                 $_SESSION['response']['alert']['alertType'] = 'danger';
                 $_SESSION['response']['alert']['alertDismissible'] = true;
-                $_SESSION['response']['message']['message'] = 'Es trat ein Fehler beim Verarbeiten des Dauerauftrags auf. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+                $_SESSION['response']['message']['message'] = 'Es trat ein Fehler beim Verarbeiten des Dauerauftrags auf. Die Buchung wurde nicht gespeichert. <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
                 header('Location: ../buchung.php');
                 exit();
             } else {
@@ -126,7 +123,7 @@ if (count($dataInput) > 0) {
     if (!mysqli_query($userLink, $sqlquery)) {
         $_SESSION['response']['alert']['alertType'] = 'danger';
         $_SESSION['response']['alert']['alertDismissible'] = true;
-        $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong>' . mysqli_error($userLink);
+        $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong> ' . mysqli_error($userLink);
         header('Location: ../buchung.php');
         exit();
 
@@ -142,7 +139,7 @@ if (count($dataInput) > 0) {
         if (!mysqli_query($userLink, $sqlquery)) {
             $_SESSION['response']['alert']['alertType'] = 'danger';
             $_SESSION['response']['alert']['alertDismissible'] = true;
-            $_SESSION['response']['message']['message'] = 'Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong>' . mysqli_error($userLink);
+            $_SESSION['response']['message']['message'] = 'Die neue Buchung konnte erfolgreich in der Datenbank gespeichert werden. Es trat jedoch ein Fehler beim Updaten der Abstimmung auf! <strong>MySQL Error:</strong> ' . mysqli_error($userLink);
             header('Location: ../buchung.php');
             exit();
         } else {

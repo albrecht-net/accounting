@@ -11,8 +11,11 @@ if (isset($response)):
         </button>
     <?php else: ?>
         <div class="alert alert-<?php echo $response['alert']['alertType']; ?>" role="alert">
-    <?php endif; ?>
-    <?php echo $response['message']['message']; ?>
+    <?php endif;
+    if (!empty($response['message']['messageTitle'])): ?>
+        <h4><?php echo $response['message']['messageTitle']; ?></h4>
+    <?php endif;
+    echo $response['message']['message']; ?>
 
     </div>
 

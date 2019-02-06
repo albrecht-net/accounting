@@ -36,6 +36,7 @@ if (isset($_POST['submit'])) {
     if (mysqli_num_rows($result) != 1) {
         // Rückmeldung und Weiterleitung
         $_SESSION['response']['alert']['alertType'] = 'danger';
+        $_SESSION['response']['alert']['alertDismissible'] = false;
         $_SESSION['response']['message']['message'] = 'Falsches Kennwort oder Benutzername';
 
         if (empty($dataInputGet)) {
@@ -53,6 +54,7 @@ if (isset($_POST['submit'])) {
         if (!password_verify($dataInput['password'], $dataDb['password'])) {
             // Rückmeldung und Weiterleitung
             $_SESSION['response']['alert']['alertType'] = 'danger';
+            $_SESSION['response']['alert']['alertDismissible'] = false;
             $_SESSION['response']['message']['message'] = 'Falsches Kennwort oder Benutzername';
             
             if (empty($dataInputGet)) {
@@ -79,7 +81,6 @@ if (isset($_POST['submit'])) {
                     if (!empty($dataDb['defaultDb'])) {
                         // Datenbank ID in Session schreiben
                         $_SESSION['userDb']['dbID'] = intval($dataDb['defaultDb']);
-
                         $_SESSION['userDb']['userDbSet'] = 1;
 
                         // Mit Ziel Datenbank verbinden

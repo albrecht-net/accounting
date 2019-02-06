@@ -11,6 +11,9 @@ if (isset($_POST['submit'])) {
         exit();
     }
 
+    // Mit Ziel Datenbank verbinden
+    require_once 'userDbConnect.inc.php';
+
     // Array Response
     $_SESSION['response'] = array(
         'alert' => array(

@@ -13,12 +13,7 @@ if (!$lsc) {
 require_once 'includes/userDbConnect.inc.php';
 
 // Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submit'])) {
-    if (!include 'includes/addStandingOrder.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
-} elseif ($_POST['tableContent'] == 'standingOrder') {
+if ($_POST['tableContent'] == 'standingOrder') {
     if (!include 'includes/deleteStandingOrder.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -98,7 +93,8 @@ include 'includes/standingOrderCheck.inc.php';
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <form action="standingOrder.php" method="POST">
+                <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
+                <form action="includes/addStandingOrder.inc.php" method="POST">
                     <p>Daueraufträge basieren auf einer bereits erstellten <a href="templates.php#savedTemplates">Vorlage</a>.</p>
                     <div class="form-row">
                         <div class="form-group col-md-5"> <!-- Buchungsvorlage auswählen -->

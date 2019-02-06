@@ -1,37 +1,67 @@
 <?php
-// Array Eingabe
-$dataInput = array(
-    'template' => intval($_POST['template']),
-    'label' => mysqli_real_escape_string($userLink, trim($_POST['label'])),
-    'validFromType' => intval($_POST['validFromType']),
-    'validFromValue' => mysqli_real_escape_string($userLink, $_POST['validFromValue']),
-    'periodicityType' => intval($_POST['periodicityType']),
-    'periodicityValue' => intval($_POST['periodicityValue']),
-    'validToType' => intval($_POST['validToType']),
-    'validToValue' => mysqli_real_escape_string($userLink, $_POST['validToValue']),
-    'initialEvents' => intval($_POST['initialEvents']),
-    'remainingEvents' => intval($_POST['initialEvents'])
-);
+if (isset($_POST['submit'])) {
 
-// Leere Felder aus Eingabe Array entfernen
-$dataInput = array_diff($dataInput, array(NULL, '', 0));
+    // Konfiguration einbinden
+    require_once '../config.php';
 
-// Prüfen ob Eingabe vorhanden
-if (count($dataInput) > 0) {
-    $dataFunctions = array(
-        'created' => 'NOW()',
-        'updated' => 'NOW()'
+    // Prüfen ob Benutzer angemeldet
+    require 'loginSessionCheck.inc.php';
+    if (!$lsc) {
+        http_response_code(403);
+        exit();
+    }
+
+    // Mit Ziel Datenbank verbinden
+    require_once 'userDbConnect.inc.php';
+
+    // Array Response
+    $_SESSION['response'] = array(
+        'alert' => array(
+            'alertType' => NULL,
+            'alertDismissible' => true
+        ),
+        'message' => array(
+            'messageTitle' => NULL,
+            'message' => NULL
+        ),
+        'values' => array()
     );
 
-    do {
+    // Array Eingabe
+    $dataInput = array(
+        'template' => intval($_POST['template']),
+        'label' => mysqli_real_escape_string($userLink, trim($_POST['label'])),
+        'validFromType' => intval($_POST['validFromType']),
+        'validFromValue' => mysqli_real_escape_string($userLink, $_POST['validFromValue']),
+        'periodicityType' => intval($_POST['periodicityType']),
+        'periodicityValue' => intval($_POST['periodicityValue']),
+        'validToType' => intval($_POST['validToType']),
+        'validToValue' => mysqli_real_escape_string($userLink, $_POST['validToValue']),
+        'initialEvents' => intval($_POST['initialEvents']),
+        'remainingEvents' => intval($_POST['initialEvents'])
+    );
+
+    // Leere Felder aus Eingabe Array entfernen
+    $dataInput = array_diff($dataInput, array(NULL, '', 0));
+
+    // Prüfen ob Eingabe vorhanden
+    if (count($dataInput) > 0) {
+        $dataFunctions = array(
+            'created' => 'NOW()',
+            'updated' => 'NOW()'
+        );
+
         // Erstes (nächstes) Ausführdatum festlegen
         if ($dataInput['validFromType'] == 1) { // Nutze Startdatum
             $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
         } elseif ($dataInput['validFromType'] == 2) { // Nutze Monatsende
             $dataInput['nextExecutionDate'] = date_format(date_create($dataInput['validFromValue']), 'Y-m-t');
         } else {
-            $msg['inputError'] = 1;
-            break;
+            // Rückmeldung und Weiterleitung
+            $_SESSION['response']['alert']['alertType'] = 'danger';
+            $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+            header('Location: ../standingOrder.php');
+            exit();
         }
 
         // Enddatum festlegen
@@ -39,8 +69,11 @@ if (count($dataInput) > 0) {
             unset($dataInput['validToValue']);
         } elseif ($dataInput['validToType'] == 2) { // Nutze Enddatum
             if ($dataInput['validToValue'] < $dataInput['nextExecutionDate']) {
-                $msg['inputError'];
-                break;
+                // Rückmeldung und Weiterleitung
+                $_SESSION['response']['alert']['alertType'] = 'warning';
+                $_SESSION['response']['message']['message'] = 'Das Startdatum muss vor das Enddatum gesetzt werden';
+                header('Location: ../standingOrder.php');
+                exit();
             }
         } elseif ($dataInput['validToType'] == 4) { // Anzahl Wiederholungen
             switch ($dataInput['periodicityType']) {
@@ -65,12 +98,18 @@ if (count($dataInput) > 0) {
                     }
                     break;
                 default:
-                    $msg['inputError'];
-                    break 2;
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                    header('Location: ../standingOrder.php');
+                    exit();
             }
         } else {
-            $msg['inputError'] = 1;
-            break;
+            // Rückmeldung und Weiterleitung
+            $_SESSION['response']['alert']['alertType'] = 'warning';
+            $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+            header('Location: ../standingOrder.php');
+            exit();
         }
 
         // SQL-Query bereitstellen
@@ -80,13 +119,25 @@ if (count($dataInput) > 0) {
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
-            $msg['sqlInsertError'] = 1;
+            $_SESSION['response']['alert']['alertType'] = 'danger';
+            $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong> ' . mysqli_error($userLink);
+            header('Location: ../standingOrder.php');
+            exit();
         } else {
-            $msg['success'] = 1;
+            $_SESSION['response']['alert']['alertType'] = 'primary';
+            $_SESSION['response']['message']['message'] = 'Dauerauftrag erfolgreich gespeichert';
+            header('Location: ../standingOrder.php');
+            exit();
         }
-        
-    } while (0);
+
+    } else {
+        $_SESSION['response']['alert']['alertType'] = 'warning';
+        $_SESSION['response']['message']['message'] = 'Keine Eingabe erfolgt';
+        header('Location: ../buchung.php');
+        exit();
+    }
 } else {
-    $msg['noInput'] = 1;
+    http_response_code(405);
+    header ('Allow: POST');
 }
 ?>

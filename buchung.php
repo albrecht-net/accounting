@@ -141,7 +141,7 @@ if (isset($_GET['standingOrder'])) {
                 <hr class="mb-4">
                 <div class="row">
                     <div class="col-12 mb-5">
-                        <?php include_once 'includes/alertProvider.inc.php'; ?>
+                        <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
                         <form action="includes/newEntry.inc.php" method="POST" id=formNewEntry>
                             <div class="form-row">
                                 <div class="form-group col-md-3"> <!-- Buchungsdatum -->

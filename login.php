@@ -51,7 +51,7 @@ if ($dataInputGet['loggedout']) {
     <div class="form-group-login">
         <h3>Bitte Anmelden</h3>
 
-        <?php include_once 'includes/alertProvider.inc.php'; ?>
+        <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
 
         <!-- Login Formular -->
         <?php if (empty($dataInputGet)): ?>

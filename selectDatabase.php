@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 // Konfiguration einbinden
 require_once 'config.php';
 

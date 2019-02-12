@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Konfiguration einbinden
     require_once '../config.php';

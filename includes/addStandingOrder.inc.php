@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Konfiguration einbinden
     require_once '../config.php';
@@ -119,11 +119,13 @@ if (isset($_POST['submit'])) {
 
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
+            // Rückmeldung und Weiterleitung
             $_SESSION['response']['alert']['alertType'] = 'danger';
             $_SESSION['response']['message']['message'] = '<strong>MySQL Error:</strong> ' . mysqli_error($userLink);
             header('Location: ../standingOrder.php');
             exit();
         } else {
+            // Rückmeldung und Weiterleitung
             $_SESSION['response']['alert']['alertType'] = 'primary';
             $_SESSION['response']['message']['message'] = 'Dauerauftrag erfolgreich gespeichert';
             header('Location: ../standingOrder.php');
@@ -131,9 +133,10 @@ if (isset($_POST['submit'])) {
         }
 
     } else {
+        // Rückmeldung und Weiterleitung
         $_SESSION['response']['alert']['alertType'] = 'warning';
         $_SESSION['response']['message']['message'] = 'Keine Eingabe erfolgt';
-        header('Location: ../buchung.php');
+        header('Location: ../standingOrder.php');
         exit();
     }
 } else {

@@ -1,27 +1,27 @@
-$(document).ready(function() { 
-    $('.tr-delete').click(function() {
-        // Variables
-        var row = this;
-        var btnValue = this.value.split('-');
-        var tableContent = btnValue[0];
-        var delID = btnValue[1];
-        var numrows = $(this).parents('tbody').find('tr').length
+$('.tr-delete').click(function() {
+    // Variables
+    var row = this,
+        btnValue = row.value.split('-'),
+        tableContent = btnValue[0],
+        delID = btnValue[1],
+        numrows = $(row).parents('tbody').find('tr').length;
 
-        // AJAX Request
-        $.ajax({
-            type: 'POST',
-            data: {tableContent: tableContent, delID: delID},
-            success: function(response) {
-                if (response == 1) {
-                    if (numrows > 1) {
-                        $(row).parents('tr').remove();
-                    } else {
-                        // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
-                        location.reload();  
-                    }
+    // AJAX Request
+    $.ajax({
+        type: 'POST',
+        data: {trValueDelete: true, tableContent: tableContent, delID: delID},
+        cache: false,
+        success: function(response) {
+            if (response == 1) {
+                if (numrows > 1) {
+                    $(row).parents('tr').remove();
+                } else {
+                    // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
+                    location.reload();  
                 }
+                console.log('Deleted record with ID: ' + delID);
             }
-        });
-
+        }
     });
+
 });

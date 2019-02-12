@@ -12,8 +12,8 @@ if (!$lsc) {
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
 
-// Überprüfen ob Submit geklickt wurde
-if ($_POST['tableContent'] == 'standingOrder') {
+// Tabellen-Reihe löschen
+if ($_POST['trValueDelete']) {
     if (!include 'includes/deleteStandingOrder.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -277,7 +277,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                 <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="standingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

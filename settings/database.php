@@ -9,8 +9,8 @@ if (!$lsc) {
     exit();
 }
 
-// Überprüfen ob Submit geklickt wurde
-if ($_POST['tableContent'] == 'databases') {
+// Tabellen-Reihe löschen
+if ($_POST['trValueDelete']) {
     if (!include '../includes/deleteDatabase.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -161,7 +161,7 @@ if ($_POST['tableContent'] == 'databases') {
                                 <td><?php echo $row['dbPort']; ?></td>
                                 <td><?php echo $row['dbUsername']; ?></td>
                                 <td><?php echo $row['dbName']; ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="databases-<?php echo $row['dbID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Database-<?php echo $row['dbID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

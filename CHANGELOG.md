@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.x.x-beta (xxx.xx.xx)
+### Changed
+- Alle Eingabeformulare werden nun direkt aufgerufen, es wird damit verhindert, dass durch ein Neuladen der Seite das Formular erneut gesendet wird.
+- Systemdateien (includes/*.inc.php) können nurnoch durch eine Anfrage der Applikation aufgerufen werden und geben sonst einen Fehler aus.
+
+---
+
 ## v2.0.5-beta (2019.01.24)
 ### Fixed
 - Fehler behoben welcher das speichern einer Vorlage verhindert hat.

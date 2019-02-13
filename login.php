@@ -7,12 +7,29 @@ require_once 'config.php';
 // Array GET-Variablen
 $dataInputGet = $_GET;
 
-// Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
-    if (!include 'includes/login.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
+// Alert
+if ($dataInputGet['loggedout']) {
+    $response = array(
+        'alert' => array(
+            'alertType' => 'primary',
+            'alertDismissible' => false
+        ),
+        'message' => array(
+            'message' => 'Benutzer erfolgreich abgemeldet'
+        ),
+        'values' => array()
+    );
+} elseif ($dataInputGet['passwordchanged']) {
+    $response = array(
+        'alert' => array(
+            'alertType' => 'primary',
+            'alertDismissible' => false
+        ),
+        'message' => array(
+            'message' => 'Das Passwort wurde erfolgreich geändert. Bitte erneut Anmelden.'
+        ),
+        'values' => array()
+    );
 }
 ?>
 
@@ -33,26 +50,14 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
 <body class="text-center">
     <div class="form-group-login">
         <h3>Bitte Anmelden</h3>
-        <?php if ($msg['invalid']): ?>
-        <div class="alert alert-danger" role="alert">
-            Falsches Kennwort oder Benutzername
-        </div>
-        <?php elseif ($dataInputGet['loggedout']):
-        unset($dataInputGet['loggedout']); ?>
-        <div class="alert alert-primary" role="alert">
-            Benutzer erfolgreich abgemeldet
-        </div>
-        <?php elseif ($dataInputGet['passwordchanged']):
-        unset($dataInputGet['passwordchanged']); ?>
-        <div class="alert alert-primary" role="alert">
-            Das Passwort wurde erfolgreich geändert. Bitte erneut Anmelden.
-        </div>
-        <?php endif; ?>
+
+        <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
+
         <!-- Login Formular -->
         <?php if (empty($dataInputGet)): ?>
-        <form action="login.php" method="POST">
+        <form action="includes/login.inc.php" method="POST">
         <?php else: ?>
-        <form action="login.php?<?php echo http_build_query($dataInputGet); ?>" method="POST">
+        <form action="includes/login.inc.php?<?php echo http_build_query($dataInputGet); ?>" method="POST">
         <?php endif; ?>
             <div class="form-group">
                 <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>" placeholder="Benutzername" required>
@@ -60,7 +65,7 @@ if (isset($_POST['submit']) && !empty($_POST['inputUsername'])) {
             </div>
             <button type="submit" class="btn btn-primary btn-block" name="submit">Anmelden</button>
         </form>
-        <p class="mt-5 mb-3 text-muted">© 2018 albrecht-net</p>
+        <p class="mt-5 mb-3 text-muted">© 2019 albrecht-net</p>
     </div>
     
     <!-- jQuery -->

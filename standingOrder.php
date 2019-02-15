@@ -63,8 +63,8 @@ include 'includes/standingOrderCheck.inc.php';
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
-                        <a class="dropdown-item disabled" href="#">Empfänger</a>
-                        <a class="dropdown-item disabled" href="#">Klassifikation</a>
+                        <a class="dropdown-item" href="recipient.php">Empfänger</a>
+                        <a class="dropdown-item" href="classification.php">Klassifikation</a>
                     </div>
                 </li>
                 <li class="nav-item">

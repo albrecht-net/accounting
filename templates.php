@@ -12,8 +12,8 @@ if (!$lsc) {
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
 
-// Überprüfen ob Submit geklickt wurde
-if ($_POST['tableContent'] == 'templates') {
+// Tabellen-Reihe löschen
+if ($_POST['trValueDelete']) {
     if (!include 'includes/deleteTemplate.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -128,7 +128,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                 <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo $row['label']; ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="templates-<?php echo $row['templateID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo $row['templateID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

@@ -9,13 +9,8 @@ if (!$lsc) {
     exit();
 }
 
-// Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submitAddDb'])) {
-    if (!include '../includes/addDatabase.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
-} elseif ($_POST['tableContent'] == 'databases') {
+// Tabellen-Reihe löschen
+if ($_POST['trValueDelete']) {
     if (!include '../includes/deleteDatabase.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -104,36 +99,8 @@ if (isset($_POST['submitAddDb'])) {
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <?php if ($msg['successAddDb']): ?>
-                <div class="alert alert-primary alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>        
-                    <h4>Neue Datenbank erfolgreich gespeichert</h4>
-                    <?php if (mysqli_num_rows($result) >= 1): ?>
-                    <p>Es wurden folgende Tabellen in der Datenbank gefunden:<p>
-                    <ul class="list-unstyled">
-                        <?php while ($row = mysqli_fetch_row($result)): ?>
-                        <li><?php echo $row[0]; ?></li>
-                        <?php endwhile; ?>
-                    </ul>
-                    <?php else: ?>
-                    <p><i>In dieser Datenbank wurden keine Tabellen erkannt</i></p>
-                    <?php endif; ?>
-                </div>
-                <?php elseif ($msg['tempLinkError']): ?>
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button> 
-                    <h4 class="alert-heading">Verbindung fehlgeschlagen!</h4>
-                    <p>Es wurde vergeblich versucht eine temporäre Verbindung zur angegebenen Datenbank aufzubauen. Bitte überprüfen Sie die Angaben.</p>
-                    <hr>
-                    <p class="mb-0">Folgender Fehler wurde von MySQL ausgegeben: <i><?php echo mysqli_connect_error($tempLink); ?></i></p>
-                </div>
-                <?php endif; ?>
-
-                <form method="POST" action="database.php">
+                <?php include_once '../includes/alertProvider.inc.php'; // Alert Provider ?>
+                <form method="POST" action="../includes/addDatabase.inc.php">
                     <div class="form-group">
                         <label for="dbHost">Server IP oder Hostname</label>
                         <input type="text" class="form-control" name="dbHost" id="dbHost" value="<?php echo $_GET['dbHost']; ?>" required>
@@ -157,7 +124,7 @@ if (isset($_POST['submitAddDb'])) {
                     </div>
                     <div class="row">
                         <div class="col-6 col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block" name="submitAddDb">Speichern</button>
+                            <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
                         </div>
                     </div>
                 </form>
@@ -194,7 +161,7 @@ if (isset($_POST['submitAddDb'])) {
                                 <td><?php echo $row['dbPort']; ?></td>
                                 <td><?php echo $row['dbUsername']; ?></td>
                                 <td><?php echo $row['dbName']; ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="databases-<?php echo $row['dbID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Database-<?php echo $row['dbID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

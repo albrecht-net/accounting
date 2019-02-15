@@ -12,13 +12,8 @@ if (!$lsc) {
 // Mit Ziel Datenbank verbinden
 require_once 'includes/userDbConnect.inc.php';
 
-// Überprüfen ob Submit geklickt wurde
-if (isset($_POST['submit'])) {
-    if (!include 'includes/addStandingOrder.inc.php') {
-        echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
-        exit();
-    }
-} elseif ($_POST['tableContent'] == 'standingOrder') {
+// Tabellen-Reihe löschen
+if ($_POST['trValueDelete']) {
     if (!include 'includes/deleteStandingOrder.inc.php') {
         echo date('H:i:s') . ' Datei einbinden fehlgeschlagen';
         exit();
@@ -98,7 +93,8 @@ include 'includes/standingOrderCheck.inc.php';
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">
-                <form action="standingOrder.php" method="POST">
+                <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
+                <form action="includes/addStandingOrder.inc.php" method="POST">
                     <p>Daueraufträge basieren auf einer bereits erstellten <a href="templates.php#savedTemplates">Vorlage</a>.</p>
                     <div class="form-row">
                         <div class="form-group col-md-5"> <!-- Buchungsvorlage auswählen -->
@@ -281,7 +277,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                 <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="standingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

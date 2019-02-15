@@ -46,8 +46,8 @@ if (!$lsc) {
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="../standingOrder.php">Dauerauftrag</a>
                         <a class="dropdown-item disabled" href="#">Konto</a>
-                        <a class="dropdown-item disabled" href="#">Empfänger</a>
-                        <a class="dropdown-item disabled" href="#">Klassifikation</a>
+                        <a class="dropdown-item" href="../recipient.php">Empfänger</a>
+                        <a class="dropdown-item" href="../classification.php">Klassifikation</a>
                     </div>
                 </li>
                 <li class="nav-item">
@@ -99,8 +99,12 @@ Accounting/
 │   │   ├── <a href="../standingOrder.php#addStandingOrder">Dauerauftrag erfassen</a>
 │   │   └── <a href="../standingOrder.php#savedStandingOrder">Erfasste Daueraufträge</a>
 │   ├── <del>Konto</del>
-│   ├── <del>Empfänger</del>
-│   └── <del>Klassifikation</del>
+|   ├── <a href="../recipient.php">Empfänger/</a>
+│   │   ├── <a href="../recipient.php#addRecipient">Empfänger erfassen</a>
+│   │   └── <a href="../recipient.php#savedRecipient">Erfasste Empfänger</a>
+|   ├── <a href="../classification.php">Klassifikation/</a>
+│   │   ├── <a href="../classification.php#addClassification">Klassifikation erfassen</a>
+│   │   └── <a href="../classification.php#savedClassification">Erfasste Klassifikationen</a>
 ├── <a href="../templates.php">Vorlagen/</a>
 │   └── <a href="../templates.php#savedTemplates">Gespeicherte Vorlagen</a>
 └── Benutzername/

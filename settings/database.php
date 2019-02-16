@@ -103,15 +103,15 @@ if ($_POST['trValueDelete']) {
                 <form method="POST" action="../includes/addDatabase.inc.php">
                     <div class="form-group">
                         <label for="dbHost">Server IP oder Hostname</label>
-                        <input type="text" class="form-control" name="dbHost" id="dbHost" value="<?php echo $_GET['dbHost']; ?>" required>
+                        <input type="text" class="form-control" name="dbHost" id="dbHost" value="<?php echo htmlentities($_GET['dbHost'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="dbPort">Port</label>
-                        <input type="number" class="form-control" name="dbPort" id="dbPort" min="0" value="<?php echo $_GET['dbPort']; ?>" required>
+                        <input type="number" class="form-control" name="dbPort" id="dbPort" min="0" value="<?php echo intval($_GET['dbPort']); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="dbUsername">Benutzername</label>
-                        <input type="text" class="form-control" name="dbUsername" id="dbUsername" value="<?php echo $_GET['dbUsername']; ?>" required>
+                        <input type="text" class="form-control" name="dbUsername" id="dbUsername" value="<?php echo htmlentities($_GET['dbUsername'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="dbPassword">Passwort</label>
@@ -120,7 +120,7 @@ if ($_POST['trValueDelete']) {
                     </div>
                     <div class="form-group">
                         <label for="dbName">Datenbankname</label>
-                        <input type="text" class="form-control" name="dbName" id="dbName" value="<?php echo $_GET['dbName']; ?>" required>
+                        <input type="text" class="form-control" name="dbName" id="dbName" value="<?php echo htmlentities($_GET['dbName'], ENT_QUOTES, 'UTF-8'); ?>" required>
                     </div>
                     <div class="row">
                         <div class="col-6 col-md-3">
@@ -157,11 +157,11 @@ if ($_POST['trValueDelete']) {
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr>
-                                <td><?php echo $row['dbHost']; ?></td>
-                                <td><?php echo $row['dbPort']; ?></td>
-                                <td><?php echo $row['dbUsername']; ?></td>
-                                <td><?php echo $row['dbName']; ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Database-<?php echo $row['dbID']; ?>">Löschen</button></td>
+                                <td><?php echo htmlentities($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo intval($row['dbPort']); ?></td>
+                                <td><?php echo htmlentities($row['dbUsername'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlentities($row['dbName'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Database-<?php echo intval($row['dbID']); ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>
@@ -200,10 +200,10 @@ if ($_POST['trValueDelete']) {
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr>
-                                <td><?php echo $row['dbHost']; ?></td>
-                                <td><?php echo $row['dbPort']; ?></td>
-                                <td><?php echo $row['dbUsername']; ?></td>
-                                <td><?php echo $row['dbName']; ?></td>
+                                <td><?php echo htmlentities($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo intval($row['dbPort']); ?></td>
+                                <td><?php echo htmlentities($row['dbUsername'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlentities($row['dbName'], ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

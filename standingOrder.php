@@ -112,7 +112,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <select class="form-control" id="template" name="template" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo intval($row['templateID']); ?>"<?php echo ($_GET['template'] == $row['templateID'] ? ' selected' : ''); ?>><?php echo htmlentities($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                <option value="<?php echo intval($row['templateID']); ?>"<?php echo ($_GET['template'] == $row['templateID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
@@ -269,8 +269,8 @@ include 'includes/standingOrderCheck.inc.php';
                             ?>
                             <tr>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><?php echo htmlentities($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlentities($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                                 <td><?php echo 'Alle ' . $row['periodicityValue'] . ' ' . $row['periodicityType']; ?></td>
                                 <td><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
                                 <td><?php echo intval($row['handledEvents']); ?></td>

@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.x.x-beta (xxx.xx.xx)
+## v2.5.0-beta (xxx.xx.xx)
+### Added
+- Eingabeformular um neue Empfänger zu erfassen.
+- Eingabeformular um neue Klassifikation zu erfassen.
 ### Changed
 - Alle Eingabeformulare werden nun direkt aufgerufen, es wird damit verhindert, dass durch ein Neuladen der Seite das Formular erneut gesendet wird.
 - Systemdateien (includes/*.inc.php) können nurnoch durch eine Anfrage der Applikation aufgerufen werden und geben sonst einen Fehler aus.
+- Das Auswahlfeld der Buchungsreferenz auf der Seite "buchung.php" zeigt nun nur noch Buchungen an bei welchen das Haben-Konto zur Abstimmung markiert ist.
 
 ---
 

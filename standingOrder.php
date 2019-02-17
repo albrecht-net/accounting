@@ -252,7 +252,7 @@ include 'includes/standingOrderCheck.inc.php';
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
-                                switch ($row['periodicityType']) {
+                                switch (intval($row['periodicityType'])) {
                                     case '1':
                                         $row['periodicityType'] = 'Tage';
                                         break;
@@ -271,10 +271,10 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                 <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                <td><?php echo 'Alle ' . $row['periodicityValue'] . ' ' . $row['periodicityType']; ?></td>
+                                <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
                                 <td><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
                                 <td><?php echo intval($row['handledEvents']); ?></td>
-                                <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
+                                <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                 <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>

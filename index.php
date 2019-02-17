@@ -65,7 +65,7 @@ include 'includes/standingOrderCheck.inc.php';
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
                         <a class="dropdown-item" href="settings/account.php">Einstellungen</a>
                         <div class="dropdown-divider"></div>

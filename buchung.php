@@ -92,7 +92,7 @@ if (isset($_GET['standingOrder'])) {
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['username']; ?>
+                        <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
@@ -126,7 +126,7 @@ if (isset($_GET['standingOrder'])) {
                         <div class="list-group">
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' active' : ''); ?>">
-                                <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel']); ?></h6>
+                                <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></h6>
                                 <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
                             </a>
                             <?php endwhile; ?>
@@ -163,7 +163,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="period" name="period">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['periodID']; ?>"<?php echo ($_GET['period'] == $row['periodID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                        <option value="<?php echo intval($row['periodID']); ?>"<?php echo ($_GET['period'] == $row['periodID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>
@@ -183,7 +183,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="recipient" name="recipient">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['recipientID']; ?>"<?php echo ($_GET['recipient'] == $row['recipientID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                        <option value="<?php echo intval($row['recipientID']); ?>"<?php echo ($_GET['recipient'] == $row['recipientID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>
@@ -196,7 +196,7 @@ if (isset($_GET['standingOrder'])) {
                                 </div>
                                 <div class="form-group col-md-7"> <!-- Beschreibung -->
                                     <label for="entryText">Beschreibung</label>
-                                    <input class="form-control" type="text" id="entryText" name="entryText" value="<?php echo $_GET['entryText']; ?>">
+                                    <input class="form-control" type="text" id="entryText" name="entryText" value="<?php echo htmlspecialchars($_GET['entryText'], ENT_QUOTES, 'UTF-8'); ?>">
                                 </div>  
                             </div>
                             <div class="form-row">
@@ -230,9 +230,9 @@ if (isset($_GET['standingOrder'])) {
         
                                         // Array in Dropdown ausgeben
                                         foreach ($valueArray as $key => $row1): ?>
-                                            <optgroup label="<?php echo $key; ?>">
+                                            <optgroup label="<?php echo htmlspecialchars($key, ENT_QUOTES, 'UTF-8'); ?>">
                                             <?php foreach ($row1 as $key => $row2): ?>
-                                                <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['debitAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountLabel']; ?></option>
+                                                <option value="<?php echo intval($row2['accountID']); ?>"<?php echo ($_GET['debitAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo intval($row2['accountID']) . ' ' . htmlspecialchars($row2['accountLabel'], ENT_QUOTES, 'UTF-8'); ?></option>
                                             <?php endforeach;
                                         endforeach;
                                     endif; ?>
@@ -268,9 +268,9 @@ if (isset($_GET['standingOrder'])) {
         
                                         // Array in Dropdown ausgeben
                                         foreach ($valueArray as $key => $row1): ?>
-                                            <optgroup label="<?php echo $key; ?>">
+                                            <optgroup label="<?php echo htmlspecialchars($key, ENT_QUOTES, 'UTF-8'); ?>">
                                             <?php foreach ($row1 as $key => $row2): ?>
-                                                <option value="<?php echo $row2['accountID']; ?>"<?php echo ($_GET['creditAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo $row2['accountID'] . ' ' . $row2['accountLabel']; ?></option>
+                                                <option value="<?php echo intval($row2['accountID']); ?>"<?php echo ($_GET['creditAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo intval($row2['accountID']) . ' ' . htmlspecialchars($row2['accountLabel'], ENT_QUOTES, 'UTF-8'); ?></option>
                                             <?php endforeach;
                                         endforeach;
                                     endif; ?>
@@ -278,7 +278,7 @@ if (isset($_GET['standingOrder'])) {
                                 </div>
                                 <div class="form-group col-md-2"> <!-- Betrag -->
                                     <label for="grandTotal">Betrag</label>
-                                    <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.01" lang="en" value="<?php echo $_GET['grandTotal']; ?>" required>
+                                    <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.01" lang="en" value="<?php echo floatval($_GET['grandTotal']); ?>" required>
                                 </div>
                             </div>
                             <div class="form-row">
@@ -297,7 +297,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="classification1" name="classification1">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification1'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                        <option value="<?php echo intval($row['classificationID']); ?>"<?php echo ($_GET['classification1'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>
@@ -317,7 +317,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="2" name="classification2">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification2'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                        <option value="<?php echo intval($row['classificationID']); ?>"<?php echo ($_GET['classification2'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>
@@ -337,7 +337,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="classification3" name="classification3">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['classificationID']; ?>"<?php echo ($_GET['classification3'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                        <option value="<?php echo intval($row['classificationID']); ?>"<?php echo ($_GET['classification3'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>
@@ -358,7 +358,7 @@ if (isset($_GET['standingOrder'])) {
                                     <?php else: ?>
                                     <select class="form-control chk-toggle-dis-invert-slave" id="entryReference" name="entryReference[]" multiple>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo $row['entryID']; ?>"><?php echo $row['date'] . ', ' . $row['recipient'] . ', CHF ' . $row['grandTotal']; ?></option>
+                                        <option value="<?php echo intval($row['entryID']); ?>"><?php echo htmlspecialchars($row['date'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8') . ', CHF ' . floatval($row['grandTotal']); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>

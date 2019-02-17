@@ -74,7 +74,7 @@ include 'includes/standingOrderCheck.inc.php';
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['username']; ?>
+                        <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
@@ -126,9 +126,9 @@ include 'includes/standingOrderCheck.inc.php';
                             <tr>
                             <?php endif; ?>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo $row['label']; ?></a></td>
+                                <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo $row['templateID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

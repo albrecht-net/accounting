@@ -46,7 +46,7 @@ if (!$lsc) {
                         <select class="form-control" id="dbID" name="dbID">
                             <option disabled selected>Datenbank auswählen</option>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <option value="<?php echo $row['dbID']; ?>"><?php echo $row['dbName'] . ', ' . $row['dbHost']; ?></option>
+                            <option value="<?php echo intval($row['dbID']); ?>"><?php echo htmlspecialchars($row['dbName'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></option>
                             <?php endwhile; ?>
                         </select>
                     </div>

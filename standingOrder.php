@@ -74,7 +74,7 @@ include 'includes/standingOrderCheck.inc.php';
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['username']; ?>
+                        <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
@@ -112,7 +112,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <select class="form-control" id="template" name="template" required>
                                 <option></option>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                <option value="<?php echo $row['templateID']; ?>"<?php echo ($_GET['template'] == $row['templateID'] ? ' selected' : ''); ?>><?php echo $row['label']; ?></option>
+                                <option value="<?php echo intval($row['templateID']); ?>"<?php echo ($_GET['template'] == $row['templateID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                 <?php endwhile;
                             endif; ?>
                             </select>
@@ -252,7 +252,7 @@ include 'includes/standingOrderCheck.inc.php';
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
-                                switch ($row['periodicityType']) {
+                                switch (intval($row['periodicityType'])) {
                                     case '1':
                                         $row['periodicityType'] = 'Tage';
                                         break;
@@ -269,15 +269,15 @@ include 'includes/standingOrderCheck.inc.php';
                             ?>
                             <tr>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><?php echo $row['standingOrderLabel']; ?></td>
-                                <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo $row['templateLabel']; ?></a></td>
-                                <td><?php echo 'Alle ' . $row['periodicityValue'] . ' ' . $row['periodicityType']; ?></td>
+                                <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
                                 <td><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
-                                <td><?php echo $row['handledEvents']; ?></td>
-                                <td><?php echo ($row['remainingEvents'] == NULL ? '-' : $row['remainingEvents']); ?></td>
+                                <td><?php echo intval($row['handledEvents']); ?></td>
+                                <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
                                 <td><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                 <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo $row['standingOrderID']; ?>">Löschen</button></td>
+                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

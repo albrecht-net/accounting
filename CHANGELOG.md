@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Alle Eingabeformulare werden nun direkt aufgerufen, es wird damit verhindert, dass durch ein Neuladen der Seite das Formular erneut gesendet wird.
 - Systemdateien (includes/*.inc.php) können nurnoch durch eine Anfrage der Applikation aufgerufen werden und geben sonst einen Fehler aus.
 - Das Auswahlfeld der Buchungsreferenz auf der Seite "buchung.php" zeigt nun nur noch Buchungen an bei welchen das Haben-Konto zur Abstimmung markiert ist.
+### Fixed
+- Das rechte Auswahlfeld in der Navigationsleiste ist nun rechtsbündig und sommit immer vollständig sichtbar.
 
 ---
 

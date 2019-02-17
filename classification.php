@@ -137,7 +137,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <tr>
                                 <td><?php echo intval($row['classificationID']); ?></td>
                                 <td><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo $row['active']; ?></td>
+                                <td><?php echo htmlspecialchars($row['active'], ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

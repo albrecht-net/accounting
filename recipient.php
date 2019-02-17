@@ -143,7 +143,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <td><?php echo intval($row['recipientID']); ?></td>
                                 <td><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo ($row['customerNumber'] == NULL ? '-' : htmlspecialchars($row['customerNumber'], ENT_QUOTES, 'UTF-8')); ?></td>
-                                <td><?php echo $row['active']; ?></td>
+                                <td><?php echo htmlspecialchars($row['active'], ENT_QUOTES, 'UTF-8'); ?></td>
                             </tr>
                             <?php endwhile; ?>
                         </tbody>

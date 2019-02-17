@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (mysqli_num_rows($result) >= 1) {
             $_SESSION['response']['message']['message'] = "Es wurden folgende Tabellen in der Datenbank gefunden:<ul class=\"list-unstyled\">";
             while ($row = mysqli_fetch_row($result)) {
-                $_SESSION['response']['message']['message'] .= "<li>" . $row[0] . "</li>";
+                $_SESSION['response']['message']['message'] .= "<li>" . htmlspecialchars($row[0], ENT_QUOTES, 'UTF-8') . "</li>";
             }
             $_SESSION['response']['message']['message'] .= "</ul>";
         } else {

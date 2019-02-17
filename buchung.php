@@ -314,7 +314,7 @@ if (isset($_GET['standingOrder'])) {
                                     <select class="form-control" id="classification2" name="classification2">
                                         <option disabled>Keine Datensätze vorhanden</option>
                                     <?php else: ?>
-                                    <select class="form-control" id="2" name="classification2">
+                                    <select class="form-control" id="classification2" name="classification2">
                                         <option></option>
                                         <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                         <option value="<?php echo intval($row['classificationID']); ?>"<?php echo ($_GET['classification2'] == $row['classificationID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>

@@ -120,7 +120,7 @@ include 'includes/standingOrderCheck.inc.php';
                             // Leere Felder aus valueTemplate Array entfernen
                             $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
 
-                            if (intval($_GET['template'] == $row['templateID'])): ?>
+                            if (intval($_GET['template']) == $row['templateID']): ?>
                             <tr class="table-warning">
                             <?php else: ?>
                             <tr>

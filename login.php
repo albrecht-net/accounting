@@ -60,7 +60,7 @@ if ($dataInputGet['loggedout']) {
         <form action="includes/login.inc.php?<?php echo http_build_query($dataInputGet); ?>" method="POST">
         <?php endif; ?>
             <div class="form-group">
-                <input type="text" class="form-control" name="inputUsername" id="inputUsername" value="<?php echo $dataInput['username']; ?>" placeholder="Benutzername" required>
+                <input type="text" class="form-control" name="inputUsername" id="inputUsername" placeholder="Benutzername" required>
                 <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Passwort" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block" name="submit">Anmelden</button>

@@ -1,4 +1,4 @@
-# Changelog
+# Changelog (accounting application)
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Systemdateien (includes/*.inc.php) können nurnoch durch eine Anfrage der Applikation aufgerufen werden und geben sonst einen Fehler aus.
 - Das Auswahlfeld der Buchungsreferenz auf der Seite "buchung.php" zeigt nun nur noch Buchungen an bei welchen das Haben-Konto zur Abstimmung markiert ist.
 - Verhinderung von Cross Site Scripting (XSS).
+- Alle Datenbank-Vorlagen (/sources) wurden in eine eigene Repository ([albrecht-net/accounting-database](https://github.com/albrecht-net/accounting-database)) verschoben. Dies erleichtert die Versionierung der Datenbank.
 ### Fixed
 - Das rechte Auswahlfeld in der Navigationsleiste ist nun rechtsbündig und sommit immer vollständig sichtbar.
 

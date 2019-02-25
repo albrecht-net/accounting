@@ -68,6 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['userID'] = intval($dataDb['userID']);
             $_SESSION['username'] = $dataDb['username'];
 
+            // Reponse-Data aus Session löschen
+            unset($_SESSION['response'], $response);
+
             // Überprüfen ob Benutzer eine Standarddatenbank hat
             if (!$dataInputGet['forceDatabaseSelect']) {
                 // SQL-Query bereitstellen

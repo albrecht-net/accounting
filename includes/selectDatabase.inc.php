@@ -76,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             include 'standingOrderCheck.inc.php';
         }
 
+        // Reponse-Data aus Session löschen
+        unset($_SESSION['response'], $response);
+
         // Weiterleitung
         if (empty($dataInputGet['rd'])) {
             header('Location: ../index.php');

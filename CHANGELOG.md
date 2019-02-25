@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.7.2-beta (2019.02.25)
+### Fixed
+- Nach erfolgreichem Anmelden wird kein Leerer Alarm mehr angezeigt.
+
+---
+
 ## v2.7.1-beta (2019.02.25)
 ### Added
 - Eingabeformular um neue Empfänger zu erfassen.

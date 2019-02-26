@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.8.0-beta (2019.02.26)
+### Changed
+- Im Eingabeformular um eine neue Buchung zu erfassen wird nun automatisch das letzte Jahr, welches im Feld "active" der Tabelle "period" auf Y gesetzt ist, ausgewählt.
+
+---
+
 ## v2.7.2-beta (2019.02.25)
 ### Fixed
 - Nach erfolgreichem Anmelden wird kein Leerer Alarm mehr angezeigt.

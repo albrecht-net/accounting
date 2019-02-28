@@ -162,6 +162,7 @@ include 'includes/standingOrderCheck.inc.php';
                                         <option value="2">Woche(n)</option>
                                         <option value="4" selected>Monat(e)</option>
                                         <option value="8">Jahr(e)</option>
+                                        <option value="16">Jeden Montag bis Freitag</option>
                                     </select>
                                 </div>
                             </div>

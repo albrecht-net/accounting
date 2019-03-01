@@ -54,6 +54,9 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
                             $dataUpdate['nextExecutionDate'] = date_format(date_modify(date_create(date_format(date_create($dataDb['nextExecutionDate']), 'Y-m')), $dataDb['periodicityValue'] . ' year'), 'Y-m-t');
                         }
                         break;
+                    case 16: // Montag - Freitag
+                        $dataUpdate['nextExecutionDate'] = date_format(date_modify(date_create($dataDb['nextExecutionDate']), $dataDb['periodicityValue'] . ' weekday'), 'Y-m-d');
+                        break;
                 }
                 
                 // Auf Abschluss prüfen, wenn gültig bis Widerruf dann keine Überprüfung

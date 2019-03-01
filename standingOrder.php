@@ -254,18 +254,20 @@ include 'includes/standingOrderCheck.inc.php';
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
                                 switch (intval($row['periodicityType'])) {
-                                    case '1':
+                                    case 1:
                                         $row['periodicityType'] = 'Tage';
                                         break;
-                                    case '2':
+                                    case 2:
                                         $row['periodicityType'] = 'Wochen';
                                         break;
-                                    case '4':
+                                    case 4:
                                         $row['periodicityType'] = 'Monate';
                                         break;
-                                    case '8':
+                                    case 8:
                                         $row['periodicityType'] = 'Jahre';
                                         break;
+                                    case 16:
+                                        $row['periodicityType'] = 'Arbeitstage';
                                 }
                             ?>
                             <tr>
@@ -319,7 +321,36 @@ include 'includes/standingOrderCheck.inc.php';
                 $(".radio-toggle-4").prop('disabled', false);
                 break;
         }
-    })
+    });
+
+    $("#periodicityType").change(function() {
+        switch ($(this).val()) {
+            case '1':
+                $("#validFromType1").prop('checked', true);
+                $("#validFromType2").prop('disabled', true);
+                $("#periodicityValue").prop('disabled', false);
+                break;
+            case '2':
+                $("#validFromType1").prop('checked', true);
+                $("#validFromType2").prop('disabled', true);
+                $("#periodicityValue").prop('disabled', false);
+                break;
+            case '4':
+                $("#validFromType2").prop('disabled', false);
+                $("#periodicityValue").prop('disabled', false);
+                break;
+            case '8':
+                $("#validFromType2").prop('disabled', false);
+                $("#periodicityValue").prop('disabled', false);
+                break;
+            case '16':
+                $("#validFromType1").prop('checked', true);
+                $("#validFromType2").prop('disabled', true);
+                $("#periodicityValue").prop('value', 1);
+                $("#periodicityValue").prop('disabled', true);
+                break;
+        }
+    });
     </script>
     <!-- Eintrag löschen -->
     <script src="js/trValueDelete.js"></script>

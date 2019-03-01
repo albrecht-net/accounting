@@ -193,7 +193,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     </div>
                                 </div>
                                 <div class="col-7 col-md-3"> <!-- Enddatum -->
-                                    <input class="form-control radio-toggle-2" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required disabled>
+                                    <input class="form-control radio-toggle-2" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
                                 </div>
                             </div>
                             <div class="form-group form-row"> <!-- Gültig n mal -->
@@ -206,7 +206,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     </div>
                                 </div>
                                 <div class="col-3 col-md-2"> <!-- Value n -->
-                                    <input class="form-control radio-toggle-4" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1" required disabled>
+                                    <input class="form-control radio-toggle-4" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1" required>
                                 </div>
                                 <div class="col-4 pl-0">
                                     <input class="form-control-plaintext" type="text" disabled value="Termin(en)">

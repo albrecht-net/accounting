@@ -1,6 +1,8 @@
+// 
 // Radiobutton Toggle
-$("input[name=validToType]").change(function() {
-    switch ($(this).val()) {
+// 
+function rbtntoggle(val) {
+    switch (val) {
         case '1':
             $(".radio-toggle-2").prop('disabled', true);
             $(".radio-toggle-4").prop('disabled', true);
@@ -14,9 +16,21 @@ $("input[name=validToType]").change(function() {
             $(".radio-toggle-4").prop('disabled', false);
             break;
     }
+};
+
+// Radiobuttons beim Laden der Seite sperren
+$(document).ready(function() {
+    rbtntoggle($("input[name=validToType]").val());
 });
 
+// Radiobuttons bei Änderung der Auswahl sperren
+$("input[name=validToType]").change(function() {
+    rbtntoggle($(this).val());
+});
+
+// 
 // Begrenzung der Auswahl durch Periodizitättyp
+// 
 $("#periodicityType").change(function() {
     switch ($(this).val()) {
         case '1':

@@ -438,19 +438,7 @@ if (isset($_GET['standingOrder'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!-- Checkbox Toggle -->
-    <script>
-        $(".chk-toggle-master").on('click', function() {
-            if($(this).prop('checked')) {
-                $(".chk-toggle-dis-slave").prop('disabled', false);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', true);
-                $(".chk-toggle-req-slave").prop('required', false);
-            } else {
-                $(".chk-toggle-dis-slave").prop('disabled', true);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', false);
-                $(".chk-toggle-req-slave").prop('required', true);
-            }
-        })
-    </script>
+    <!-- BuchungHelper -->
+    <script src="js/buchungHelper.js"></script>
 </body>
 </html>

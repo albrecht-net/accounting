@@ -395,26 +395,26 @@ if (isset($_GET['standingOrder'])) {
                         </dl>
                         <div class="form-group form-check"> <!-- Als Vorlage -->
                             <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
-                            <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1" disabled>
+                            <input class="form-check-input" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1" disabled>
                             <?php else: ?>
-                            <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
+                            <input class="form-check-input" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
                             <?php endif; ?>
                             <label class="form-check-label" for="chkAddTemplate">Als Vorlage hinzufügen</label>
                         </div>
                         <div class="row">
                             <div class="form-group col-12"> <!-- Beschreibung -->
                                 <label for="nameTemplate">Beschreibung</label>
-                                <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate" required disabled>
+                                <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate">
                             </div>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked disabled>
+                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked>
                             <label class="form-check-label" for="radioTemplate1">
                                 In der Applikation
                             </label>
                         </div>
                         <div class="form-group form-check">
-                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2" disabled>
+                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2">
                             <label class="form-check-label" for="radioTemplate2">
                                 Als Lesezeichen
                             </label>
@@ -438,19 +438,7 @@ if (isset($_GET['standingOrder'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!-- Checkbox Toggle -->
-    <script>
-        $(".chk-toggle-master").on('click', function() {
-            if($(this).prop('checked')) {
-                $(".chk-toggle-dis-slave").prop('disabled', false);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', true);
-                $(".chk-toggle-req-slave").prop('required', false);
-            } else {
-                $(".chk-toggle-dis-slave").prop('disabled', true);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', false);
-                $(".chk-toggle-req-slave").prop('required', true);
-            }
-        })
-    </script>
+    <!-- BuchungHelper -->
+    <script src="js/buchungHelper.js"></script>
 </body>
 </html>

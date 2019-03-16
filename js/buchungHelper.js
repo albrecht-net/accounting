@@ -34,3 +34,50 @@ $(document).ready(function() {
 $("#chkAddTemplate").change(function() {
     chktoggle($(this).prop('checked'));
 });
+
+//
+// Skip standing-order
+//
+function getURLParameter(par) {
+    var pageURL = window.location.search.substring(1),
+        URLVar = pageURL.split('&'),
+        result = undefined;
+    for (var i = 0; i < URLVar.length; i++) {
+        var URLParameter = URLVar[i].split('=');
+        if (URLParameter[0] == par) {
+            result = URLParameter[1];
+            break;
+        };
+    };
+    return result;
+};
+
+$('.skip-standingOrder').click(function() {
+    // Variables
+    var so = this,
+        skipID = so.value,
+        numrows = $(so).parents('#accordionStandingOrder').find('.card').length;
+
+    // AJAX Request
+    $.ajax({
+        type: 'POST',
+        data: {skipStandingOrder: true, skipID: skipID},
+        cache: false,
+        success: function(response) {
+            if (response == 1) {
+                if (getURLParameter('standingOrder') == skipID) {
+                    // Seite ohne Parameter neuladen wenn zu überspringender Dauerauftrag ausgewählt ist
+                    location = location.pathname;
+                } else {
+                    if (numrows > 1) {
+                        $(so).parents('div.card').remove();
+                    } else {
+                        // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
+                        location.reload();  
+                    }
+                    console.log('Deleted record with ID: ' + skipID);
+                }
+            }
+        }
+    });
+});

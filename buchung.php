@@ -123,12 +123,26 @@ if (isset($_GET['standingOrder'])) {
                         $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
                         $result = mysqli_query($userLink, $sqlquery);
                         ?>
-                        <div class="list-group">
+                        <div class="accordion" id="accordionStandingOrder">
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' active' : ''); ?>">
-                                <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></h6>
-                                <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
-                            </a>
+                            <!-- Card for standingOrder: <?php echo intval($row['standingOrderID']); ?> -->
+                            <div class="card<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' bg-light' : ''); ?>">
+                                <div class="card-body">
+                                    <h6 class="card-title m-0">
+                                        <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="true" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
+                                            <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
+                                        </button>
+                                    </h6>
+                                    <small class="card-text">Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
+                                </div>
+
+                                <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#accordionStandingOrder">
+                                    <div class="card-body pt-0">
+                                        <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
+                                        <button type="button" class="btn btn-secondary btn-sm btn-block">Einmalig überspringen</button>
+                                    </div>
+                                </div>
+                            </div>
                             <?php endwhile; ?>
                         </div>
                         <?php endif; ?>

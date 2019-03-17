@@ -60,8 +60,9 @@ $('.skip-standingOrder').click(function() {
 
     // AJAX Request
     $.ajax({
+        url: './includes/skipStandingOrder.inc.php',
         type: 'POST',
-        data: {skipStandingOrder: true, skipID: skipID},
+        data: {skipID: skipID},
         cache: false,
         success: function(response) {
             if (response == 1) {
@@ -74,10 +75,10 @@ $('.skip-standingOrder').click(function() {
                     } else {
                         // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
                         location.reload();  
-                    }
-                    console.log('Deleted record with ID: ' + skipID);
-                }
-            }
+                    };
+                };
+                console.log('Deleted record with ID: ' + skipID);
+            };
         }
     });
 });

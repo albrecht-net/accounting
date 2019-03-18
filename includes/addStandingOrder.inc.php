@@ -108,7 +108,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Erstes (nächstes) Ausführdatum festlegen
         if ($dataInput['validFromType'] == 1) { // Nutze Startdatum
-            $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+            if ($dataInput['periodicityType'] == 16) { // Wenn Montag - Freitag Startdatum auf Wochentag verschieben
+                if (date('N', strtotime($dataInput['validFromValue'])) > 5) {
+                    $dataInput['nextExecutionDate'] = date_format(date_modify(date_create($dataInput['validFromValue']), 'next monday'), 'Y-m-d');
+                } else {
+                    $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+                }
+            } else {
+                $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+            }
         } elseif ($dataInput['validFromType'] == 2) { // Nutze Monatsende
             $dataInput['nextExecutionDate'] = date_format(date_create($dataInput['validFromValue']), 'Y-m-t');
         }

@@ -58,6 +58,9 @@ $('.skip-standingOrder').click(function() {
         skipID = so.value,
         numrows = $(so).parents('#accordionStandingOrder').find('.card').length;
 
+    // Button "Dauerauftrag auswählen" deaktivieren
+    $('#chStOrBtn' + skipID).addClass('disabled');
+
     // AJAX Request
     $.ajax({
         url: './includes/skipStandingOrder.inc.php',
@@ -79,7 +82,17 @@ $('.skip-standingOrder').click(function() {
                     location.reload();
                 }
                 console.log('Skipped record with ID: ' + skipID);
+            } else {
+                console.log('Failed to skip record with ID: ' + skipID);
             }
+        },
+        error: function() {
+            console.log('Failed to skip record with ID: ' + skipID);
+        },
+        complete: function() {
+            // Button "Dauerauftrag auswählen" aktivieren
+            $('#chStOrBtn' + skipID).removeClass('disabled');
         }
+        
     });
 });

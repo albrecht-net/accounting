@@ -82,6 +82,8 @@ $('.skip-standingOrder').click(function() {
                     location.reload();
                 }
                 console.log('Skipped record with ID: ' + skipID);
+            } else {
+                console.log('Failed to skip record with ID: ' + skipID);
             }
         },
         error: function() {

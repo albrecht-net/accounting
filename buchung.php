@@ -166,7 +166,7 @@ if (isset($_GET['standingOrder'])) {
                                     <label for="period">Periode</label>
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `periodID`, `label` FROM `period` WHERE `active` = 'Y' ORDER BY `label` ASC";
+                                    $sqlquery = "SELECT p.periodID, p.label, p.active, (CASE WHEN p.periodID = p._current THEN 'Y' ELSE 'N' END) AS current FROM (SELECT period.*, (SELECT period.periodID FROM period WHERE period.active = 'Y' ORDER BY period.periodID ASC LIMIT 1 ) AS _current FROM period) p WHERE p.active = 'Y' ORDER BY p.label ASC";
                                     $result = mysqli_query($userLink, $sqlquery);
                 
                                     // Prüfen ob Datensätze vorhanden
@@ -176,8 +176,21 @@ if (isset($_GET['standingOrder'])) {
                                     <?php else: ?>
                                     <select class="form-control" id="period" name="period">
                                         <option></option>
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <option value="<?php echo intval($row['periodID']); ?>"<?php echo ($_GET['period'] == $row['periodID'] ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                        <?php while ($row = mysqli_fetch_assoc($result)):
+
+                                            if (isset($_GET['period'])) {
+                                                if ($_GET['period'] == $row['periodID']) {
+                                                    $isSelected = true;
+                                                } else {
+                                                    $isSelected = false;
+                                                }
+                                            } elseif ($row['current'] == 'Y') {
+                                                $isSelected = true;
+                                            } else {
+                                                $isSelected = false;
+                                            } ?>
+
+                                        <option value="<?php echo intval($row['periodID']); ?>"<?php echo ($isSelected ? ' selected' : ''); ?>><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
                                         <?php endwhile;
                                     endif; ?>
                                     </select>

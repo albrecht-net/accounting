@@ -6,14 +6,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.x.x-beta (xxx.xx.xx)
+## v2.10.0-beta (xxx.xx.xx)
 ### Added
 - Für Daueraufträge ist nun der Wiederholungstyp Montag - Freitag möglich.
 - Daueraufträge können übersprungen werden, sodass für das aktuell fällige Datum keine Buchung erstellt werden muss. Die Anzahl der ausgeführten Buchungen eines Dauerauftrags wird aber trotzdem erhöht.
 
 ---
 
-## v2.5.0-beta (xxx.xx.xx)
+## v2.8.0-beta (2019.02.26)
+### Changed
+- Im Eingabeformular um eine neue Buchung zu erfassen wird nun automatisch das letzte Jahr, welches im Feld "active" der Tabelle "period" auf Y gesetzt ist, ausgewählt.
+
+---
+
+## v2.7.2-beta (2019.02.25)
+### Fixed
+- Nach erfolgreichem Anmelden wird kein Leerer Alarm mehr angezeigt.
+
+---
+
+## v2.7.1-beta (2019.02.25)
 ### Added
 - Eingabeformular um neue Empfänger zu erfassen.
 - Eingabeformular um neue Klassifikation zu erfassen.

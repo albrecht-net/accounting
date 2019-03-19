@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'initialEvents' => intval($_POST['initialEvents']),
         'remainingEvents' => intval($_POST['initialEvents'])
     );
-
     // Leere Felder aus Eingabe Array entfernen
     $dataInput = array_diff($dataInput, array(NULL, '', 0));
 
@@ -51,17 +50,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'updated' => 'NOW()'
         );
 
+        // Eingabe-Kombinationen prüfen nach Wiederholungstyp
+        switch ($dataInput['periodicityType']) {
+            case 1: // Tag
+                if (!in_array($dataInput['validFromType'], array(1)) || $dataInput['periodicityValue'] < 1) {
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe1.';
+                    header('Location: ../standingOrder.php');
+                    exit();
+                }
+                break;
+            case 2: // Monat
+                if (!in_array($dataInput['validFromType'], array(1)) || $dataInput['periodicityValue'] < 1) {
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                    header('Location: ../standingOrder.php');
+                    exit();
+                }
+                break;
+            case 4: // Monat
+                if (!in_array($dataInput['validFromType'], array(1, 2)) || $dataInput['periodicityValue'] < 1) {
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                    header('Location: ../standingOrder.php');
+                    exit();
+                }
+                break;
+            case 8: // Jahr
+                if (!in_array($dataInput['validFromType'], array(1, 2)) || $dataInput['periodicityValue'] < 1) {
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                    header('Location: ../standingOrder.php');
+                    exit();
+                }
+                break;
+            case 16: // Montag - Freitag
+                $dataInput['periodicityValue'] = 1;
+                if (!in_array($dataInput['validFromType'], array(1))) {
+                    // Rückmeldung und Weiterleitung
+                    $_SESSION['response']['alert']['alertType'] = 'warning';
+                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                    header('Location: ../standingOrder.php');
+                    exit();
+                }
+                break;
+            default:
+                // Rückmeldung und Weiterleitung
+                $_SESSION['response']['alert']['alertType'] = 'warning';
+                $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
+                header('Location: ../standingOrder.php');
+                exit();
+        }
+
         // Erstes (nächstes) Ausführdatum festlegen
         if ($dataInput['validFromType'] == 1) { // Nutze Startdatum
-            $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+            if ($dataInput['periodicityType'] == 16) { // Wenn Montag - Freitag Startdatum auf Wochentag verschieben
+                if (date('N', strtotime($dataInput['validFromValue'])) > 5) {
+                    $dataInput['nextExecutionDate'] = date_format(date_modify(date_create($dataInput['validFromValue']), 'next monday'), 'Y-m-d');
+                } else {
+                    $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+                }
+            } else {
+                $dataInput['nextExecutionDate'] = $dataInput['validFromValue'];
+            }
         } elseif ($dataInput['validFromType'] == 2) { // Nutze Monatsende
             $dataInput['nextExecutionDate'] = date_format(date_create($dataInput['validFromValue']), 'Y-m-t');
-        } else {
-            // Rückmeldung und Weiterleitung
-            $_SESSION['response']['alert']['alertType'] = 'danger';
-            $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
-            header('Location: ../standingOrder.php');
-            exit();
         }
 
         // Enddatum festlegen
@@ -97,12 +154,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $dataInput['validToValue'] = date_format(date_modify(date_create(date_format(date_create($dataInput['nextExecutionDate']), 'Y-m')), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' year'), 'Y-m-t');
                     }
                     break;
-                default:
-                    // Rückmeldung und Weiterleitung
-                    $_SESSION['response']['alert']['alertType'] = 'warning';
-                    $_SESSION['response']['message']['message'] = 'Ungültige Eingabe';
-                    header('Location: ../standingOrder.php');
-                    exit();
+                case 16: // Montag - Freitag
+                    $dataInput['validToValue'] = date_format(date_modify(date_create($dataInput['nextExecutionDate']), $dataInput['periodicityValue'] * ($dataInput['initialEvents'] - 1) . ' weekday'), 'Y-m-d');
+                    break;
             }
         } else {
             // Rückmeldung und Weiterleitung

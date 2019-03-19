@@ -123,12 +123,26 @@ if (isset($_GET['standingOrder'])) {
                         $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
                         $result = mysqli_query($userLink, $sqlquery);
                         ?>
-                        <div class="list-group">
+                        <div class="accordion" id="accordionStandingOrder">
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <a href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" class="list-group-item list-group-item-action<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' active' : ''); ?>">
-                                <h6 class="mb-0"><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></h6>
-                                <small>Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
-                            </a>
+                            <!-- Card for standingOrder: <?php echo intval($row['standingOrderID']); ?> -->
+                            <div class="card<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' bg-light' : ''); ?>">
+                                <div class="card-body">
+                                    <h6 class="card-title m-0">
+                                        <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="true" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
+                                            <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
+                                        </button>
+                                    </h6>
+                                    <small class="card-text">Fällig seit: <span id="dueDate<?php echo intval($row['standingOrderID']); ?>"><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></span></small>
+                                </div>
+
+                                <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#accordionStandingOrder">
+                                    <div class="card-body pt-0">
+                                        <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
+                                        <button type="button" class="btn btn-secondary btn-sm btn-block skip-standingOrder" value="<?php echo intval($row['standingOrderID']); ?>">Einmalig überspringen</button>
+                                    </div>
+                                </div>
+                            </div>
                             <?php endwhile; ?>
                         </div>
                         <?php endif; ?>
@@ -408,26 +422,26 @@ if (isset($_GET['standingOrder'])) {
                         </dl>
                         <div class="form-group form-check"> <!-- Als Vorlage -->
                             <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
-                            <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1" disabled>
+                            <input class="form-check-input" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1" disabled>
                             <?php else: ?>
-                            <input class="form-check-input chk-toggle-master" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
+                            <input class="form-check-input" type="checkbox" id="chkAddTemplate" name="chkAddTemplate" value="1">
                             <?php endif; ?>
                             <label class="form-check-label" for="chkAddTemplate">Als Vorlage hinzufügen</label>
                         </div>
                         <div class="row">
                             <div class="form-group col-12"> <!-- Beschreibung -->
                                 <label for="nameTemplate">Beschreibung</label>
-                                <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate" required disabled>
+                                <input class="form-control chk-toggle-dis-slave" type="text" id="nameTemplate" name="nameTemplate">
                             </div>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked disabled>
+                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate1" value="1" checked>
                             <label class="form-check-label" for="radioTemplate1">
                                 In der Applikation
                             </label>
                         </div>
                         <div class="form-group form-check">
-                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2" disabled>
+                            <input class="form-check-input chk-toggle-dis-slave" type="radio" name="radioTemplate" id="radioTemplate2" value="2">
                             <label class="form-check-label" for="radioTemplate2">
                                 Als Lesezeichen
                             </label>
@@ -451,19 +465,7 @@ if (isset($_GET['standingOrder'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!-- Checkbox Toggle -->
-    <script>
-        $(".chk-toggle-master").on('click', function() {
-            if($(this).prop('checked')) {
-                $(".chk-toggle-dis-slave").prop('disabled', false);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', true);
-                $(".chk-toggle-req-slave").prop('required', false);
-            } else {
-                $(".chk-toggle-dis-slave").prop('disabled', true);
-                $(".chk-toggle-dis-invert-slave").prop('disabled', false);
-                $(".chk-toggle-req-slave").prop('required', true);
-            }
-        })
-    </script>
+    <!-- BuchungHelper -->
+    <script src="js/buchungHelper.js"></script>
 </body>
 </html>

@@ -162,6 +162,7 @@ include 'includes/standingOrderCheck.inc.php';
                                         <option value="2">Woche(n)</option>
                                         <option value="4" selected>Monat(e)</option>
                                         <option value="8">Jahr(e)</option>
+                                        <option value="16">Jeden Montag bis Freitag</option>
                                     </select>
                                 </div>
                             </div>
@@ -192,7 +193,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     </div>
                                 </div>
                                 <div class="col-7 col-md-3"> <!-- Enddatum -->
-                                    <input class="form-control radio-toggle-2" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required disabled>
+                                    <input class="form-control radio-toggle-2" type="date" id="validToValue" name="validToValue" min="<?php echo date_format(date_modify(date_create('now'), '+1 day'), 'Y-m-d'); ?>" required>
                                 </div>
                             </div>
                             <div class="form-group form-row"> <!-- Gültig n mal -->
@@ -205,7 +206,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     </div>
                                 </div>
                                 <div class="col-3 col-md-2"> <!-- Value n -->
-                                    <input class="form-control radio-toggle-4" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1" required disabled>
+                                    <input class="form-control radio-toggle-4" type="number" id="initialEvents" name="initialEvents" step="1" lang="en" min="1" required>
                                 </div>
                                 <div class="col-4 pl-0">
                                     <input class="form-control-plaintext" type="text" disabled value="Termin(en)">
@@ -253,18 +254,20 @@ include 'includes/standingOrderCheck.inc.php';
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)):
                                 switch (intval($row['periodicityType'])) {
-                                    case '1':
+                                    case 1:
                                         $row['periodicityType'] = 'Tage';
                                         break;
-                                    case '2':
+                                    case 2:
                                         $row['periodicityType'] = 'Wochen';
                                         break;
-                                    case '4':
+                                    case 4:
                                         $row['periodicityType'] = 'Monate';
                                         break;
-                                    case '8':
+                                    case 8:
                                         $row['periodicityType'] = 'Jahre';
                                         break;
+                                    case 16:
+                                        $row['periodicityType'] = 'Arbeitstage';
                                 }
                             ?>
                             <tr>
@@ -301,25 +304,8 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <!-- Radiobutton Toggle -->
-    <script>
-    $("input[name=validToType]").change(function() {
-        switch ($(this).val()) {
-            case '1':
-                $(".radio-toggle-2").prop('disabled', true);
-                $(".radio-toggle-4").prop('disabled', true);
-                break;
-            case '2':
-                $(".radio-toggle-2").prop('disabled', false);
-                $(".radio-toggle-4").prop('disabled', true);
-                break;
-            case '4':
-                $(".radio-toggle-2").prop('disabled', true);
-                $(".radio-toggle-4").prop('disabled', false);
-                break;
-        }
-    })
-    </script>
+    <!-- StandingOrderHelper -->
+    <script src="js/standingOrderHelper.js"></script>
     <!-- Eintrag löschen -->
     <script src="js/trValueDelete.js"></script>
 </body>

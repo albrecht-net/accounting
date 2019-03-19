@@ -14,6 +14,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mit Ziel Datenbank verbinden
     require_once 'userDbConnect.inc.php';
 
+    // Response-header
+    header('Content-Type: application/json');
+
+    // Array Response
+    $jsResponse = array(
+        'success' => false,
+        'removeRow' => false,
+        'nextExecutionDate' => NULL
+    );
+
     // Array Eingabe
     $dataInput = array(
         'skipID' => intval($_POST['skipID'])
@@ -26,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Prüfen ob Datensätze vorhanden
     if (mysqli_num_rows($result) < 1) {
         unset($_SESSION['standingOrder']);
-        echo 0;
+        echo json_encode($jsResponse, JSON_NUMERIC_CHECK | CHECK_UNESCAPED_UNICODE);
         exit();
     } else {
         // Abfrage in Array schreiben
@@ -102,12 +112,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // SQL-Query ausführen und überprüfen
         if (!mysqli_query($userLink, $sqlquery)) {
             unset($_SESSION['standingOrder']);
-            echo 0;
+            echo json_encode($jsResponse, JSON_NUMERIC_CHECK | CHECK_UNESCAPED_UNICODE);
             exit();
         } else {
             unset($_SESSION['standingOrder']);
             // Dauerauftrag erfolgreich gespeichert
-            echo 1;
+            $jsResponse['success'] = true;
+            if (date('Y-m-d', strtotime('now')) >= $dataUpdate['nextExecutionDate'] && $dataUpdate['closed'] != 'Y') {
+                $jsResponse['nextExecutionDate'] = date_format(date_create($dataUpdate['nextExecutionDate']), 'd.m.Y');
+            } else {
+                $jsResponse['removeRow'] = true;
+            }
+            echo json_encode($jsResponse, JSON_NUMERIC_CHECK | CHECK_UNESCAPED_UNICODE);
         }
     }
 } else {

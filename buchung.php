@@ -133,7 +133,7 @@ if (isset($_GET['standingOrder'])) {
                                             <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
                                         </button>
                                     </h6>
-                                    <small class="card-text">Fällig seit: <?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></small>
+                                    <small class="card-text">Fällig seit: <span id="dueDate<?php echo intval($row['standingOrderID']); ?>"><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></span></small>
                                 </div>
 
                                 <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#accordionStandingOrder">

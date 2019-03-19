@@ -47,8 +47,8 @@ function getURLParameter(par) {
         if (URLParameter[0] == par) {
             result = URLParameter[1];
             break;
-        };
-    };
+        }
+    }
     return result;
 };
 
@@ -63,22 +63,23 @@ $('.skip-standingOrder').click(function() {
         url: './includes/skipStandingOrder.inc.php',
         type: 'POST',
         data: {skipID: skipID},
+        dataType: 'json',
         cache: false,
         success: function(response) {
-            if (response == 1) {
+            if (response.success) {
                 if (getURLParameter('standingOrder') == skipID) {
                     // Seite ohne Parameter neuladen wenn zu überspringender Dauerauftrag ausgewählt ist
                     location = location.pathname;
+                } else if (numrows > 1 && response.removeRow) {
+                    $(so).parents('div.card').remove();
+                } else if (!response.removeRow) {
+                    $('#dueDate' + skipID).text(response.nextExecutionDate);
                 } else {
-                    if (numrows > 1) {
-                        $(so).parents('div.card').remove();
-                    } else {
-                        // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
-                        location.reload();  
-                    };
-                };
-                console.log('Deleted record with ID: ' + skipID);
-            };
+                    // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
+                    location.reload();
+                }
+                console.log('Skipped record with ID: ' + skipID);
+            }
         }
     });
 });

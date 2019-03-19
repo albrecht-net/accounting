@@ -219,7 +219,7 @@ if (isset($_GET['standingOrder'])) {
                             <div class="form-row">
                                 <div class="form-group col-md-5"> <!-- Rechnungsummer -->
                                     <label for="invoiceNo">Rechnungsnummer</label>
-                                    <input class="form-control" type="text" id="invoiceNo" name="invoiceNo">
+                                    <input class="form-control" type="text" id="invoiceNo" name="invoiceNo" value="<?php echo htmlspecialchars($_GET['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?>">
                                 </div>
                                 <div class="form-group col-md-7"> <!-- Beschreibung -->
                                     <label for="entryText">Beschreibung</label>

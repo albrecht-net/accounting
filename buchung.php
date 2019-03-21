@@ -57,53 +57,10 @@ if (isset($_GET['standingOrder'])) {
     <title>Buchung erfassen</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Buchhaltung</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse" id="navbarCollapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php">Home</a>
-                </li>
-                <li class="nav-item active">
-                    <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
-                    <a class="nav-link" href="buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span><span class="sr-only">(current)</span></a>
-                    <?php else: ?>
-                    <a class="nav-link" href="buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
-                    <?php endif; ?>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Weitere erfassen
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="standingOrder.php">Dauerauftrag</a>
-                        <a class="dropdown-item disabled" href="#">Konto</a>
-                        <a class="dropdown-item" href="recipient.php">Empfänger</a>
-                        <a class="dropdown-item" href="classification.php">Klassifikation</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="templates.php">Vorlagen</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav navbar-right">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8'); ?>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item disabled" href="#">Mein Profil</a>
-                        <a class="dropdown-item" href="settings/account.php">Einstellungen</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="logout.php">Abmelden</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <?php
+    // Navigation einbinden
+    include_once 'core/navigation.php';
+    ?>
 
     <div class="container">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>

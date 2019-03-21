@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.11.1-beta (xxx.xx.xx)
+## v2.11.1-beta (2019.03.21)
 ### Added
 - Für Daueraufträge ist nun der Wiederholungstyp Montag - Freitag möglich.
 - Daueraufträge können übersprungen werden, sodass für das aktuell fällige Datum keine Buchung erstellt werden muss. Die Anzahl der ausgeführten Buchungen eines Dauerauftrags wird aber trotzdem erhöht.

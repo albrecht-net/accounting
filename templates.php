@@ -83,7 +83,7 @@ include 'includes/standingOrderCheck.inc.php';
                             <tr>
                             <?php endif; ?>
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><a href="buchung.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                                 <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
                             </tr>
@@ -93,7 +93,7 @@ include 'includes/standingOrderCheck.inc.php';
                 </div>
                 <?php else: ?>
                 <p class="lead">Keine Vorlage gefunden</p>
-                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="buchung.php#addTemplate">hier</a>.</p>
+                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="entry.php#addTemplate">hier</a>.</p>
                 <?php endif; ?>
                 </div>
             </div>

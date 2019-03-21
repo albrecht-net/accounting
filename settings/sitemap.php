@@ -48,9 +48,9 @@ if (!$lsc) {
             <pre lang="text">
 Accounting/
 ├── <a href="../index.php">Index</a>
-├── <a href="../buchung.php">Neue Buchung/</a>
-|   ├── <a href="../buchung.php#newEntry">Neue Buchung erfassen</a>
-│   └── <a href="../buchung.php#addTemplate">Als Vorlage speichern</a>
+├── <a href="../entry.php">Neue Buchung/</a>
+|   ├── <a href="../entry.php#newEntry">Neue Buchung erfassen</a>
+│   └── <a href="../entry.php#addTemplate">Als Vorlage speichern</a>
 ├── Weitere erfassen/
 |   ├── <a href="../standingOrder.php">Dauerauftrag/</a>
 │   │   ├── <a href="../standingOrder.php#addStandingOrder">Dauerauftrag erfassen</a>

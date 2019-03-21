@@ -2,7 +2,7 @@
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
     // Cookie Reload auf folgenden Seiten erzwingen
     $sites = array(
-        'buchung.php'
+        'entry.php'
     );
 
     $forceReload = in_array(end(explode('/', $_SERVER['PHP_SELF'])), $sites);

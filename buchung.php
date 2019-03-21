@@ -5,7 +5,7 @@ require_once 'config.php';
 // Prüfen ob Benutzer angemeldet
 require 'includes/loginSessionCheck.inc.php';
 if (!$lsc) {
-    header('Location: login.php?rd=' . urlencode('buchung.php'));
+    header('Location: login.php?rd=' . urlencode('entry.php'));
     exit();
 }
 
@@ -95,7 +95,7 @@ if (isset($_GET['standingOrder'])) {
 
                                 <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#accordionStandingOrder">
                                     <div class="card-body pt-0">
-                                        <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" id="chStOrBtn<?php echo intval($row['standingOrderID']); ?>" href="buchung.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
+                                        <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" id="chStOrBtn<?php echo intval($row['standingOrderID']); ?>" href="entry.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
                                         <button type="button" class="btn btn-secondary btn-sm btn-block skip-standingOrder" value="<?php echo intval($row['standingOrderID']); ?>">Einmalig überspringen</button>
                                     </div>
                                 </div>

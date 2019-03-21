@@ -22,11 +22,11 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
                 <li class="nav-item<?php echo ($bn == 'index.php' ? ' active' : ''); ?>">
                     <a class="nav-link" href="<?php echo $bf; ?>/index.php">Home <?php echo ($bn == 'index.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
                 </li>
-                <li class="nav-item<?php echo ($bn == 'buchung.php' ? ' active' : ''); ?>">
+                <li class="nav-item<?php echo ($bn == 'entry.php' ? ' active' : ''); ?>">
                     <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
-                    <a class="nav-link" href="<?php echo $bf; ?>/buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span> <?php echo ($bn == 'buchung.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
+                    <a class="nav-link" href="<?php echo $bf; ?>/entry.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span> <?php echo ($bn == 'entry.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
                     <?php else: ?>
-                    <a class="nav-link" href="<?php echo $bf; ?>/buchung.php">Neue Buchung <?php echo ($bn == 'buchung.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
+                    <a class="nav-link" href="<?php echo $bf; ?>/entry.php">Neue Buchung <?php echo ($bn == 'entry.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
                     <?php endif; ?>
                 </li>
                 <li class="nav-item dropdown">

@@ -6,6 +6,9 @@ if (substr($curPath, 0, strlen($docRoot)) == $docRoot) {
     $curPath = substr($curPath, strlen($docRoot));
 }
 $basedir = substr($curPath, 0, -strlen('/core'));
+
+// Dateiname wenn eingebunden
+$bn = pathinfo($_SERVER['PHP_SELF'], PATHINFO_BASENAME);
 ?>
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -15,14 +18,14 @@ $basedir = substr($curPath, 0, -strlen('/core'));
     </button>
     <div class="navbar-collapse collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $basedir; ?>/index.php">Home</a>
+            <li class="nav-item<?php echo ($bn == 'index.php' ? ' active' : ''); ?>">
+                <a class="nav-link" href="<?php echo $basedir; ?>/index.php">Home <?php echo ($bn == 'index.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item<?php echo ($bn == 'buchung.php' ? ' active' : ''); ?>">
                 <?php if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) > 0): ?>
-                <a class="nav-link" href="<?php echo $basedir; ?>/buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span><span class="sr-only">pending booking</span><span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?php echo $basedir; ?>/buchung.php">Neue Buchung <span class="badge badge-warning"><?php echo intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']); ?></span> <?php echo ($bn == 'buchung.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
                 <?php else: ?>
-                <a class="nav-link" href="<?php echo $basedir; ?>/buchung.php">Neue Buchung<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="<?php echo $basedir; ?>/buchung.php">Neue Buchung <?php echo ($bn == 'buchung.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
                 <?php endif; ?>
             </li>
             <li class="nav-item dropdown">
@@ -36,8 +39,8 @@ $basedir = substr($curPath, 0, -strlen('/core'));
                     <a class="dropdown-item" href="<?php echo $basedir; ?>/classification.php">Klassifikation</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo $basedir; ?>/templates.php">Vorlagen</a>
+            <li class="nav-item<?php echo ($bn == 'templates.php' ? ' active' : ''); ?>">
+                <a class="nav-link" href="<?php echo $basedir; ?>/templates.php">Vorlagen <?php echo ($bn == 'templates.php' ? '<span class="sr-only">(current)</span>' : ''); ?></a>
             </li>
         </ul>
         <ul class="navbar-nav navbar-right">

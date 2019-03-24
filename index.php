@@ -33,6 +33,48 @@ include 'includes/standingOrderCheck.inc.php';
     include_once 'core/navigation.php';
     ?>
 
+    <div class="container">
+        <div class="col-12">
+            <?php
+            // SQL-Query bereitstellen
+            $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
+            $result = mysqli_query($userLink, $sqlquery);
+
+
+            // Resulat in 1 Array schreiben, sortiert nach Kategorie
+            $dataEntries = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                $dataEntries[] = $row;
+            }
+
+
+            echo "<div class=\"table-responsive\"><table class=\"table table-striped\">";
+            foreach ($dataEntries as $rowIndex => $row) {
+                if ($rowIndex == 0) {
+                    echo "<thead><tr>";
+                    foreach ($row as $columnNameHead => $cellHead) {
+                        echo "<th scope=\"col\">$columnNameHead</th>";
+                    }
+                    echo "</tr></thead><tbody>";
+                }
+
+                echo "<tr>";
+                foreach ($row as $columnNameBody => $cellBody) {
+                    echo "<td>$cellBody</td>";
+                }
+                echo "</tr>";
+
+                if ($rowIndex == count($dataEntries)-1) {
+                    echo "</tbody>";
+                }
+
+            }
+            echo "</table></div>";
+            ?>
+        </div>
+
+    <!-- /container -->
+    </div>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->

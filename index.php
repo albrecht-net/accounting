@@ -35,42 +35,53 @@ include 'includes/standingOrderCheck.inc.php';
 
     <div class="container">
         <div class="col-12">
-            <?php
-            // SQL-Query bereitstellen
-            $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
-            $result = mysqli_query($userLink, $sqlquery);
+            <h3 class="mt-3" id="standingOrder">Zuletzt erfasst Buchungen</h3>
+            <hr class="mb-4">
+            <div class="row">
+                <div class="col-12 mb-5">
+                    <?php
+                    // SQL-Query bereitstellen
+                    $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
+                    $result = mysqli_query($userLink, $sqlquery);
 
 
-            // Resulat in 1 Array schreiben, sortiert nach Kategorie
-            $dataEntries = [];
-            while ($row = mysqli_fetch_assoc($result)) {
-                $dataEntries[] = $row;
-            }
-
-
-            echo "<div class=\"table-responsive\"><table class=\"table table-striped\">";
-            foreach ($dataEntries as $rowIndex => $row) {
-                if ($rowIndex == 0) {
-                    echo "<thead><tr>";
-                    foreach ($row as $columnNameHead => $cellHead) {
-                        echo "<th scope=\"col\">$columnNameHead</th>";
+                    // Resulat in 1 Array schreiben, sortiert nach Kategorie
+                    $dataEntries = [];
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $dataEntries[] = $row;
                     }
-                    echo "</tr></thead><tbody>";
-                }
+                    ?>
 
-                echo "<tr>";
-                foreach ($row as $columnNameBody => $cellBody) {
-                    echo "<td>$cellBody</td>";
-                }
-                echo "</tr>";
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped table-bordered">
+                            <?php
+                            foreach ($dataEntries as $rowIndex => $row):
+                                if ($rowIndex == 0): ?>
+                                    <thead>
+                                        <tr>
+                                        <?php foreach ($row as $columnNameHead => $cellHead): ?>
+                                            <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
+                                        <?php endforeach; ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <?php endif; ?>
+                                <tr class="text-nowrap">
 
-                if ($rowIndex == count($dataEntries)-1) {
-                    echo "</tbody>";
-                }
+                                <?php foreach ($row as $columnNameBody => $cellBody): ?>
+                                    <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <?php endforeach; ?>
 
-            }
-            echo "</table></div>";
-            ?>
+                                </tr>
+
+                                <?php if ($rowIndex == count($dataEntries)-1): ?>
+                                    </tbody>
+                                <?php endif; 
+                            endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
     <!-- /container -->

@@ -24,6 +24,8 @@ include 'includes/standingOrderCheck.inc.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
 
     <title>Buchhaltung</title>
 </head>
@@ -52,34 +54,32 @@ include 'includes/standingOrderCheck.inc.php';
                     }
                     ?>
 
-                    <div class="table-responsive">
-                        <table class="table table-sm table-striped table-bordered">
-                            <?php
-                            foreach ($dataEntries as $rowIndex => $row):
-                                if ($rowIndex == 0): ?>
-                                    <thead>
-                                        <tr>
-                                        <?php foreach ($row as $columnNameHead => $cellHead): ?>
-                                            <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
-                                        <?php endforeach; ?>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                <?php endif; ?>
-                                <tr class="text-nowrap">
+                    <table id="last10Entries" class="table table-sm table-striped table-bordered">
+                        <?php
+                        foreach ($dataEntries as $rowIndex => $row):
+                            if ($rowIndex == 0): ?>
+                                <thead>
+                                    <tr>
+                                    <?php foreach ($row as $columnNameHead => $cellHead): ?>
+                                        <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
+                                    <?php endforeach; ?>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            <?php endif; ?>
+                            <tr class="text-nowrap">
 
-                                <?php foreach ($row as $columnNameBody => $cellBody): ?>
-                                    <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
-                                <?php endforeach; ?>
+                            <?php foreach ($row as $columnNameBody => $cellBody): ?>
+                                <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
+                            <?php endforeach; ?>
 
-                                </tr>
+                            </tr>
 
-                                <?php if ($rowIndex == count($dataEntries)-1): ?>
-                                    </tbody>
-                                <?php endif; 
-                            endforeach; ?>
-                        </table>
-                    </div>
+                            <?php if ($rowIndex == count($dataEntries)-1): ?>
+                                </tbody>
+                            <?php endif; 
+                        endforeach; ?>
+                    </table>
                 </div>
             </div>
         </div>
@@ -90,5 +90,24 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+
+    <!-- Datatable last10Entries -->
+    <script>
+        $(document).ready(function (){
+            $('#last10Entries').DataTable({
+                paging: false,
+                searching: true,
+                info: false,
+                ordering: true,
+                'order': [
+                    1, 'desc'
+                ],
+                scrollX: true,
+                "dom": '<"float-right"f>t'
+            });
+        });
+    </script>
 </body>
 </html>

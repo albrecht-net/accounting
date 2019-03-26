@@ -54,7 +54,7 @@ include 'includes/standingOrderCheck.inc.php';
                     }
                     ?>
 
-                    <table id="last10Entries" class="table table-sm table-striped table-bordered">
+                    <table id="last10Entries" class="table table-sm table-striped">
                         <?php
                         foreach ($dataEntries as $rowIndex => $row):
                             if ($rowIndex == 0): ?>

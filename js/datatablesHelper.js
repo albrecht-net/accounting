@@ -2,7 +2,7 @@
 // last10Entries, index.php
 //
 $(document).ready(function (){
-    $('#last10Entries').DataTable({
+    $('#dTableLastEntries').DataTable({
         paging: false,
         searching: true,
         info: false,

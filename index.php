@@ -54,7 +54,7 @@ include 'includes/standingOrderCheck.inc.php';
                     }
                     ?>
 
-                    <table id="last10Entries" class="table table-sm table-striped">
+                    <table id="dTableLastEntries" class="table table-sm table-striped">
                         <?php
                         foreach ($dataEntries as $rowIndex => $row):
                             if ($rowIndex == 0): ?>
@@ -92,7 +92,6 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- Datatables JS -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
-
     <!-- Datatables-Helper -->
     <script src="js/datatablesHelper.js"></script>
     

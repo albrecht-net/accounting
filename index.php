@@ -59,7 +59,7 @@ include 'includes/standingOrderCheck.inc.php';
                         foreach ($dataEntries as $rowIndex => $row):
                             if ($rowIndex == 0): ?>
                                 <thead>
-                                    <tr>
+                                    <tr class="text-nowrap">
                                     <?php foreach ($row as $columnNameHead => $cellHead): ?>
                                         <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
                                     <?php endforeach; ?>

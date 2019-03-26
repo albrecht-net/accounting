@@ -32,7 +32,8 @@ include 'includes/standingOrderCheck.inc.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/mainSite.css">
 
@@ -57,40 +58,38 @@ include 'includes/standingOrderCheck.inc.php';
 
                 // Prüfen ob Datensätze vorhanden
                 if (mysqli_num_rows($result) >= 1):
-                ?>
-                <div class="table-responsive">                    
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Erstelldatum</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Definierte Werte</th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = mysqli_fetch_assoc($result)):
+                ?>                
+                <table id="dTableTemplates" class="table table-striped">
+                    <thead>
+                        <tr class="text-nowrap">
+                            <th scope="col">Erstelldatum</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Definierte Werte</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($row = mysqli_fetch_assoc($result)):
 
-                            // Vorlage-Werte in neues Array schreiben
-                            $valueTemplate = array_slice($row, 3);
-                            
-                            // Leere Felder aus valueTemplate Array entfernen
-                            $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
+                        // Vorlage-Werte in neues Array schreiben
+                        $valueTemplate = array_slice($row, 3);
+                        
+                        // Leere Felder aus valueTemplate Array entfernen
+                        $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
 
-                            if (intval($_GET['template']) == $row['templateID']): ?>
-                            <tr class="table-warning">
-                            <?php else: ?>
-                            <tr>
-                            <?php endif; ?>
-                                <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
-                                <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
+                        if (intval($_GET['template']) == $row['templateID']): ?>
+                        <tr class="text-nowrap table-warning">
+                        <?php else: ?>
+                        <tr class="text-nowrap">
+                        <?php endif; ?>
+                            <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                            <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                            <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
+                            <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
                 <?php else: ?>
                 <p class="lead">Keine Vorlage gefunden</p>
                 <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="entry.php#addTemplate">hier</a>.</p>
@@ -109,6 +108,10 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- Datatables-Helper -->
+    <script src="js/datatablesHelper.js"></script>
     <!-- Eintrag löschen -->
     <script src="js/trValueDelete.js"></script>
 </body>

@@ -93,21 +93,8 @@ include 'includes/standingOrderCheck.inc.php';
     <!-- Datatables JS -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
 
-    <!-- Datatable last10Entries -->
-    <script>
-        $(document).ready(function (){
-            $('#last10Entries').DataTable({
-                paging: false,
-                searching: true,
-                info: false,
-                ordering: true,
-                'order': [
-                    1, 'desc'
-                ],
-                scrollX: true,
-                "dom": '<"float-right"f>t'
-            });
-        });
-    </script>
+    <!-- Datatables-Helper -->
+    <script src="js/datatablesHelper.js"></script>
+    
 </body>
 </html>

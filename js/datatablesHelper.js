@@ -55,4 +55,15 @@ $('#dTableClassification').DataTable({
     "dom": '<"float-right"f><t><"float-left"i>'
 });
 
+//
+// database, settings/database.php
+//
+$('#dTableDatabase').DataTable({
+    paging: false,
+    searching: false,
+    info: false,
+    ordering: false,
+    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+});
+
 });

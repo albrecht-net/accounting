@@ -26,7 +26,8 @@ if ($_POST['trValueDelete']) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/mainSite.css">
 
@@ -98,17 +99,15 @@ if ($_POST['trValueDelete']) {
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) >= 1):
-                ?>
-                <div class="table-responsive">                    
-                    <table class="table table-striped">
+                if (mysqli_num_rows($result) >= 1): ?>
+                    <table id="dTableDatabase" class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">IP / Hostname</th>
                                 <th scope="col">Port</th>
                                 <th scope="col">Benutzername</th>
                                 <th scope="col">Datenbankname</th>
-                                <th scope="cold"></th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -123,11 +122,10 @@ if ($_POST['trValueDelete']) {
                             <?php endwhile; ?>
                         </tbody>
                     </table>
-                </div>
-                <p>Beim Löschen einer Datenbank werden alle damit verknüpften Vorlagen auch entfernt!</p>
+                    <p>Beim Löschen einer Datenbank werden alle damit verknüpften Vorlagen auch entfernt!</p>
                 <?php else: ?>
-                <p class="lead">Keine Datenbank gefunden</p>
-                <p>Es wurde noch keine Datenbank mit Ihrem Benutzer verlinkt. Fügen Sie Ihre erste Ziel-Datenbank gleich <a href="#addDatabase">hier</a> hinzu.</p>
+                    <p class="lead">Keine Datenbank gefunden</p>
+                    <p>Es wurde noch keine Datenbank mit Ihrem Benutzer verlinkt. Fügen Sie Ihre erste Ziel-Datenbank gleich <a href="#addDatabase">hier</a> hinzu.</p>
                 <?php endif; ?>
             </div>
         </div>
@@ -142,8 +140,7 @@ if ($_POST['trValueDelete']) {
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) == 1):
-                ?>
+                if (mysqli_num_rows($result) == 1): ?>
                 <div class="table-responsive">                    
                     <table class="table table-striped">
                         <thead>
@@ -188,6 +185,10 @@ if ($_POST['trValueDelete']) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- Datatables-Helper -->
+    <script src="../js/datatablesHelper.js"></script>
     <!-- Eintrag löschen -->
     <script src="../js/trValueDelete.js"></script>
 </body>

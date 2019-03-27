@@ -32,7 +32,8 @@ include 'includes/standingOrderCheck.inc.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/mainSite.css">
 
@@ -190,10 +191,8 @@ include 'includes/standingOrderCheck.inc.php';
                 $result = mysqli_query($userLink, $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) >= 1):
-                ?>
-                <div class="table-responsive">                    
-                    <table class="table table-striped">
+                if (mysqli_num_rows($result) >= 1): ?>                
+                    <table id="dTableSavedSo" class="table table-striped">
                         <thead>
                             <tr>
                                 <th scope="col">Erstelldatum</th>
@@ -242,10 +241,9 @@ include 'includes/standingOrderCheck.inc.php';
                             <?php endwhile; ?>
                         </tbody>
                     </table>
-                </div>
                 <?php else: ?>
-                <p class="lead">Keine Einträge gefunden</p>
-                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keinen Dauerauftrag erstellt. Erstellen Sie Ihren ersten Dauerauftrag gleich <a href="standingOrder.php#addStandingOrder">hier</a>.</p>
+                    <p class="lead">Keine Einträge gefunden</p>
+                    <p>Sie haben für die ausgewählte Ziel-Datenbank noch keinen Dauerauftrag erstellt. Erstellen Sie Ihren ersten Dauerauftrag gleich <a href="standingOrder.php#addStandingOrder">hier</a>.</p>
                 <?php endif; ?>
                 </div>
             </div>
@@ -261,6 +259,10 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- Datatables-Helper -->
+    <script src="js/datatablesHelper.js"></script>
     <!-- StandingOrderHelper -->
     <script src="js/standingOrderHelper.js"></script>
     <!-- Eintrag löschen -->

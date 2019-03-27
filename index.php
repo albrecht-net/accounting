@@ -24,6 +24,8 @@ include 'includes/standingOrderCheck.inc.php';
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
 
     <title>Buchhaltung</title>
 </head>
@@ -44,43 +46,41 @@ include 'includes/standingOrderCheck.inc.php';
                         // SQL-Query bereitstellen
                         $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
                         $result = mysqli_query($userLink, $sqlquery);
-    
-    
+
+
                         // Resulat in 1 Array schreiben, sortiert nach Kategorie
                         $dataEntries = [];
                         while ($row = mysqli_fetch_assoc($result)) {
                             $dataEntries[] = $row;
                         }
                         ?>
-    
-                        <div class="table-responsive">
-                            <table class="table table-sm table-striped table-bordered">
-                                <?php
-                                foreach ($dataEntries as $rowIndex => $row):
-                                    if ($rowIndex == 0): ?>
-                                        <thead>
-                                            <tr>
-                                            <?php foreach ($row as $columnNameHead => $cellHead): ?>
-                                                <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
-                                            <?php endforeach; ?>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                    <?php endif; ?>
-                                    <tr class="text-nowrap">
-    
-                                    <?php foreach ($row as $columnNameBody => $cellBody): ?>
-                                        <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <?php endforeach; ?>
-    
-                                    </tr>
-    
-                                    <?php if ($rowIndex == count($dataEntries)-1): ?>
-                                        </tbody>
-                                    <?php endif; 
-                                endforeach; ?>
-                            </table>
-                        </div>
+
+                        <table id="dTableLastEntries" class="table table-sm table-striped">
+                            <?php
+                            foreach ($dataEntries as $rowIndex => $row):
+                                if ($rowIndex == 0): ?>
+                                    <thead>
+                                        <tr class="text-nowrap">
+                                        <?php foreach ($row as $columnNameHead => $cellHead): ?>
+                                            <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
+                                        <?php endforeach; ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <?php endif; ?>
+                                <tr class="text-nowrap">
+
+                                <?php foreach ($row as $columnNameBody => $cellBody): ?>
+                                    <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <?php endforeach; ?>
+
+                                </tr>
+
+                                <?php if ($rowIndex == count($dataEntries)-1): ?>
+                                    </tbody>
+                                <?php endif; 
+                            endforeach; ?>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -92,5 +92,10 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <!-- Datatables JS -->
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- Datatables-Helper -->
+    <script src="js/datatablesHelper.js"></script>
+    
 </body>
 </html>

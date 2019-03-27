@@ -47,4 +47,12 @@ $('#dTableRecipient').DataTable({
     "dom": '<"float-right"f><t><"float-left"i>'
 });
 
+//
+// classification, classification.php
+//
+$('#dTableClassification').DataTable({
+    paging: false,
+    "dom": '<"float-right"f><t><"float-left"i>'
+});
+
 });

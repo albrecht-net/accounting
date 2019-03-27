@@ -27,4 +27,16 @@ $('#dTableTemplates').DataTable({
     "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
 });
 
+//
+// standingOrder, standingOrder.php
+//
+$('#dTableSavedSo').DataTable({
+    paging: false,
+    'columnDefs': [
+        {'targets': [5, 6, 9], 'searchable': false},
+        {'targets': 9, 'orderable': false}
+    ],
+    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+});
+
 });

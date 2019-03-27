@@ -36,50 +36,52 @@ include 'includes/standingOrderCheck.inc.php';
     ?>
 
     <div class="container">
-        <div class="col-12">
-            <h3 class="mt-3" id="standingOrder">Zuletzt erfasste Buchungen</h3>
-            <hr class="mb-4">
-            <div class="row">
-                <div class="col-12 mb-5">
-                    <?php
-                    // SQL-Query bereitstellen
-                    $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
-                    $result = mysqli_query($userLink, $sqlquery);
-
-
-                    // Resulat in 1 Array schreiben, sortiert nach Kategorie
-                    $dataEntries = [];
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        $dataEntries[] = $row;
-                    }
-                    ?>
-
-                    <table id="dTableLastEntries" class="table table-sm table-striped">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mt-3" id="standingOrder">Zuletzt erfasste Buchungen</h3>
+                <hr class="mb-4">
+                <div class="row">
+                    <div class="col-12 mb-5">
                         <?php
-                        foreach ($dataEntries as $rowIndex => $row):
-                            if ($rowIndex == 0): ?>
-                                <thead>
-                                    <tr class="text-nowrap">
-                                    <?php foreach ($row as $columnNameHead => $cellHead): ?>
-                                        <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
-                                    <?php endforeach; ?>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                            <?php endif; ?>
-                            <tr class="text-nowrap">
+                        // SQL-Query bereitstellen
+                        $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
+                        $result = mysqli_query($userLink, $sqlquery);
 
-                            <?php foreach ($row as $columnNameBody => $cellBody): ?>
-                                <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
-                            <?php endforeach; ?>
 
-                            </tr>
+                        // Resulat in 1 Array schreiben, sortiert nach Kategorie
+                        $dataEntries = [];
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $dataEntries[] = $row;
+                        }
+                        ?>
 
-                            <?php if ($rowIndex == count($dataEntries)-1): ?>
-                                </tbody>
-                            <?php endif; 
-                        endforeach; ?>
-                    </table>
+                        <table id="dTableLastEntries" class="table table-sm table-striped">
+                            <?php
+                            foreach ($dataEntries as $rowIndex => $row):
+                                if ($rowIndex == 0): ?>
+                                    <thead>
+                                        <tr class="text-nowrap">
+                                        <?php foreach ($row as $columnNameHead => $cellHead): ?>
+                                            <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
+                                        <?php endforeach; ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                <?php endif; ?>
+                                <tr class="text-nowrap">
+
+                                <?php foreach ($row as $columnNameBody => $cellBody): ?>
+                                    <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <?php endforeach; ?>
+
+                                </tr>
+
+                                <?php if ($rowIndex == count($dataEntries)-1): ?>
+                                    </tbody>
+                                <?php endif; 
+                            endforeach; ?>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -39,4 +39,12 @@ $('#dTableSavedSo').DataTable({
     "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
 });
 
+//
+// recipient, recipient.php
+//
+$('#dTableRecipient').DataTable({
+    paging: false,
+    "dom": '<"float-right"f><t><"float-left"i>'
+});
+
 });

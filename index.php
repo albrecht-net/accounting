@@ -47,40 +47,54 @@ include 'includes/standingOrderCheck.inc.php';
                         $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
                         $result = mysqli_query($userLink, $sqlquery);
 
-
-                        // Resulat in 1 Array schreiben, sortiert nach Kategorie
-                        $dataEntries = [];
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $dataEntries[] = $row;
-                        }
-                        ?>
-
-                        <table id="dTableLastEntries" class="table table-sm table-striped">
-                            <?php
-                            foreach ($dataEntries as $rowIndex => $row):
-                                if ($rowIndex == 0): ?>
-                                    <thead>
+                        // Prüfen ob Datensätze vorhanden
+                        if (mysqli_num_rows($result) >= 1): ?>
+                            <table id="dTableLastEntries" class="table table-sm table-striped">
+                                <thead>
+                                    <tr class="text-nowrap">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Erstelldatum</th>
+                                        <th scope="col">Buchungsdatum</th>
+                                        <th scope="col">Periode</th>
+                                        <th scope="col">Empfänger</th>
+                                        <th scope="col">Rechnungsnummer</th>
+                                        <th scope="col">Beschreibung</th>
+                                        <th scope="col">Konto Soll</th>
+                                        <th scope="col">Konto Haben</th>
+                                        <th scope="col">Betrag</th>
+                                        <th scope="col">Klassifikation 1</th>
+                                        <th scope="col">Klassifikation 2</th>
+                                        <th scope="col">Klassifikation 3</th>
+                                        <th scope="col">Buchungsreferenz</th>
+                                        <th scope="col">Abgeglichen</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                         <tr class="text-nowrap">
-                                        <?php foreach ($row as $columnNameHead => $cellHead): ?>
-                                            <th scope="col"><?php echo htmlspecialchars($columnNameHead, ENT_QUOTES, 'UTF-8'); ?></th>
-                                        <?php endforeach; ?>
+                                            <td><?php echo intval($row['entryID']); ?></td>
+                                            <td><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
+                                            <td><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['period'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['entryText'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo intval($row['debitAccountID']) . ' ' . htmlspecialchars($row['debitAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo intval($row['creditAccountID']) . ' ' . htmlspecialchars($row['creditAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td class="text-right"><?php echo 'CHF ' . floatval($row['grandTotal']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['classification1'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['classification2'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($row['classification3'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo intval($row['entryReference']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['reconcilation'], ENT_QUOTES, 'UTF-8'); ?></td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                <?php endif; ?>
-                                <tr class="text-nowrap">
-
-                                <?php foreach ($row as $columnNameBody => $cellBody): ?>
-                                    <td><?php echo htmlspecialchars($cellBody, ENT_QUOTES, 'UTF-8'); ?></td>
-                                <?php endforeach; ?>
-
-                                </tr>
-
-                                <?php if ($rowIndex == count($dataEntries)-1): ?>
-                                    </tbody>
-                                <?php endif; 
-                            endforeach; ?>
-                        </table>
+                                    <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                        <?php else: ?>
+                            <p class="lead">Keine Einträge gefunden</p>
+                            <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Buchungen erfasst. Erfassen Sie Ihre erste Buchung gleich <a href="entry.php#newEntry">hier</a>.</p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

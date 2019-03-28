@@ -124,59 +124,16 @@ if ($_POST['trValueDelete']) {
                             <?php endwhile; ?>
                         </tbody>
                     </table>
-                    <p>Beim Löschen einer Datenbank werden alle damit verknüpften Vorlagen auch entfernt!</p>
+                    <p>Beim Löschen einer Datenbank wird nur deren Verknüpfung zu Applikation aufgehoben. Es werden keine Datensätze in der Zieldatenbank gelöscht!</p>
+                    <p>Sie können hier Ihre standard Datenbank ändern.
+                    <div class="row">
+                        <div class="col-6 col-md-3">
+                            <a class="btn btn-primary btn-block" href="../logout.php?forceDatabaseSelect=1" role="button">Ändern</a>
+                        </div>
+                    </div>
                 <?php else: ?>
                     <p class="lead">Keine Datenbank gefunden</p>
                     <p>Es wurde noch keine Datenbank mit Ihrem Benutzer verlinkt. Fügen Sie Ihre erste Ziel-Datenbank gleich <a href="#addDatabase">hier</a> hinzu.</p>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <h3 id="defaultDatabase">Standard Datenbank</h3>
-        <hr class="mb-4">
-        <div class="row">
-            <div class="col-12 mb-5">
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `dbID` = (SELECT `defaultDb` FROM `userconfig` WHERE `userID` = " . intval($_SESSION['userID']) . ")";
-                $result = mysqli_query($config['link'], $sqlquery);
-
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) == 1): ?>
-                <div class="table-responsive">                    
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">IP / Hostname</th>
-                                <th scope="col">Port</th>
-                                <th scope="col">Benutzername</th>
-                                <th scope="col">Datenbankname</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <tr>
-                                <td><?php echo htmlspecialchars($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo intval($row['dbPort']); ?></td>
-                                <td><?php echo htmlspecialchars($row['dbUsername'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo htmlspecialchars($row['dbName'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <p>Sie können hier Ihre standard Datenbank entfernen oder ändern.
-                <div class="row">
-                    <div class="col-6 col-md-3">
-                        <button type="" class="btn btn-primary btn-block" name="" disabled="">Entfernen</button>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <a class="btn btn-primary btn-block" href="../logout.php?forceDatabaseSelect=1" role="button">Ändern</a>
-                    </div>
-                </div>
-                <?php else: ?>
-                <p class="lead">Keine standard Datenbank gefunden</p>
-                <p>Wählen Sie Ihre standard Datenbank beim Anmelden aus.</p>
                 <?php endif; ?>
             </div>
         </div>

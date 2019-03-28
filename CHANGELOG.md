@@ -6,15 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.17.0-beta (xxx.xx.xx)
+## v2.19.0-beta (xxx.xx.xx)
 ### Added
 - Grundlegendes Dashboard auf der Hauptseite (index.php) in welchem die 10 zuletzt erstellten Buchungen angezeigt werden.
 - [Datatables](https://datatables.net/) implementiert. Dies erlaubt erlaubt erweiterte Funktionen in ausgewählten Tabellen.
+- Das Löschen einer Datenbank-Verknüpfung muss nun bestätigt werden.
 ### Changed
 - Daten der Tabelle "Erfasste Daueraufträge" (standingOrder.php) können durchsucht und sortiert werden.
 - Daten der Tabelle "Erfasste Empfänger" (recipient.php) können durchsucht und sortiert werden.
 - Daten der Tabelle "Erfasste Klassifikationen" (classification.php) können durchsucht und sortiert werden.
 - Daten der Tabelle "Gespeicherte Vorlagen" (templates.php) können durchsucht und sortiert werden.
+- Die Ausgewählte Standard Datenbank wird nun in der Tabelle (settings/database.php#linkedDatabase) als solche gekennzeichnet.
 
 ---
 

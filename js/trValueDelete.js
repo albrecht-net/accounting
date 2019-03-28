@@ -1,10 +1,12 @@
 $('.tr-delete').click(function() {
     // Variables
     var row = this,
-        btnValue = row.value.split('-'),
-        tableContent = btnValue[0],
-        delID = btnValue[1],
-        numrows = $(row).parents('tbody').find('tr').length;
+        tableID = $(row).closest('table').attr('id'),
+        table = $('#' + tableID).DataTable(),
+        btnValue = row.value,
+        tableContent = btnValue.split('-')[0],
+        delID = btnValue.split('-')[1],
+        numrows = table.rows().count();
 
     // AJAX Request
     $.ajax({
@@ -14,7 +16,7 @@ $('.tr-delete').click(function() {
         success: function(response) {
             if (response == 1) {
                 if (numrows > 1) {
-                    $(row).parents('tr').remove();
+                    table.row('#' + btnValue).remove().draw(false);
                 } else {
                     // Seite neuladen wenn nur 1 Zeile in Tabelle damit Meldung angezeigt wird
                     location.reload();  

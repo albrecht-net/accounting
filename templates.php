@@ -78,9 +78,9 @@ include 'includes/standingOrderCheck.inc.php';
                         $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
 
                         if (intval($_GET['template']) == $row['templateID']): ?>
-                        <tr class="text-nowrap table-warning">
+                        <tr id="Template-<?php echo intval($row['templateID']); ?>" class="text-nowrap table-warning">
                         <?php else: ?>
-                        <tr class="text-nowrap">
+                        <tr id="Template-<?php echo intval($row['templateID']); ?>" class="text-nowrap">
                         <?php endif; ?>
                             <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                             <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>

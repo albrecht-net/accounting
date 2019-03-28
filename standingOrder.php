@@ -226,7 +226,7 @@ include 'includes/standingOrderCheck.inc.php';
                                         $row['periodicityType'] = 'Arbeitstage';
                                 }
                             ?>
-                            <tr>
+                            <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
                                 <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                 <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>

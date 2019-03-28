@@ -112,7 +112,7 @@ if ($_POST['trValueDelete']) {
                         </thead>
                         <tbody>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                            <tr>
+                            <tr id="Database-<?php echo intval($row['dbID']); ?>">
                                 <td><?php echo htmlspecialchars($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo intval($row['dbPort']); ?></td>
                                 <td><?php echo htmlspecialchars($row['dbUsername'], ENT_QUOTES, 'UTF-8'); ?></td>

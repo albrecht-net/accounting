@@ -48,6 +48,7 @@ if (!$lsc) {
             <pre lang="text">
 Accounting/
 ├── <a href="../index.php">Index</a>
+│   └── <a href="../index.php#lastEntries">Zuletzt erfasste Buchungen</a>
 ├── <a href="../entry.php">Neue Buchung/</a>
 |   ├── <a href="../entry.php#newEntry">Neue Buchung erfassen</a>
 │   └── <a href="../entry.php#addTemplate">Als Vorlage speichern</a>
@@ -71,8 +72,7 @@ Accounting/
     │   |   └── <a href="account.php#changePassword">Password ändern</a>
     |   ├── <a href="database.php">Datenbank/</a>
     │   |   ├── <a href="database.php#addDatabase">Datenbank hinzufügen</a>
-    |   |   ├── <a href="database.php#linkedDatabase">Gespeicherte Datenbanken</a>
-    │   |   └── <a href="database.php#defaultDatabase">Standard Datenbank</a>
+    |   |   └── <a href="database.php#linkedDatabase">Gespeicherte Datenbanken</a>
     │   └── <a href="sitemap.php">Sitemap</a>
     └── <a href="../logout.php">Abmelden</a>
             </pre>

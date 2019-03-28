@@ -8,6 +8,11 @@ $('.tr-delete').click(function() {
         delID = btnValue.split('-')[1],
         numrows = table.rows().count();
 
+    // Bestätigung beim Löschen einer Datenbank
+    if (tableContent == 'Database' && !window.confirm('Wollen Sie die Verknüpfung dieser Datenbank wirklich entfernen?')) {
+        return;
+    }
+
     // AJAX Request
     $.ajax({
         type: 'POST',

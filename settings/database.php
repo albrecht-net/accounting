@@ -95,7 +95,7 @@ if ($_POST['trValueDelete']) {
             <div class="col-12 mb-5">
                 <?php
                 // SQL-Query bereitstellen
-                $sqlquery = "SELECT `dbID`, `dbHost`, `dbPort`, `dbUsername`, `dbName` FROM `databases` WHERE `userID` = " . intval($_SESSION['userID']);
+                $sqlquery = "SELECT d.dbHost, d.dbPort, d.dbUsername, d.dbName, (SELECT CASE WHEN (SELECT userconfig.defaultDb FROM userconfig WHERE userconfig.userID = " . intval($_SESSION['userID']) . ") = dbID THEN 'Y' ELSE 'N' END) AS 'isDefaultDb' FROM `databases` d WHERE userID = " . intval($_SESSION['userID']);
                 $result = mysqli_query($config['link'], $sqlquery);
 
                 // Prüfen ob Datensätze vorhanden
@@ -107,6 +107,7 @@ if ($_POST['trValueDelete']) {
                                 <th scope="col">Port</th>
                                 <th scope="col">Benutzername</th>
                                 <th scope="col">Datenbankname</th>
+                                <th scope="col">Standard</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -117,6 +118,7 @@ if ($_POST['trValueDelete']) {
                                 <td><?php echo intval($row['dbPort']); ?></td>
                                 <td><?php echo htmlspecialchars($row['dbUsername'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($row['dbName'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo ($row['isDefaultDb'] == 'N' ? 'Nein' : 'Ja'); ?></td>
                                 <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Database-<?php echo intval($row['dbID']); ?>">Löschen</button></td>
                             </tr>
                             <?php endwhile; ?>

@@ -38,7 +38,7 @@ include 'includes/standingOrderCheck.inc.php';
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3 class="mt-3" id="standingOrder">Zuletzt erfasste Buchungen</h3>
+                <h3 class="mt-3" id="lastEntries">Zuletzt erfasste Buchungen</h3>
                 <hr class="mb-4">
                 <div class="row">
                     <div class="col-12 mb-5">

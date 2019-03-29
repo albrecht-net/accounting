@@ -82,7 +82,7 @@ include 'includes/standingOrderCheck.inc.php';
                         <?php else: ?>
                         <tr id="Template-<?php echo intval($row['templateID']); ?>" class="text-nowrap">
                         <?php endif; ?>
-                            <td><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                            <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                             <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                             <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
                             <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>

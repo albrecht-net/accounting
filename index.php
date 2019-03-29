@@ -73,8 +73,8 @@ include 'includes/standingOrderCheck.inc.php';
                                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                         <tr class="text-nowrap">
                                             <td><?php echo intval($row['entryID']); ?></td>
-                                            <td><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
-                                            <td><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
+                                            <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
+                                            <td data-order="<?php echo strtotime($row['date']); ?>"><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
                                             <td><?php echo htmlspecialchars($row['period'], ENT_QUOTES, 'UTF-8'); ?></td>
                                             <td><?php echo htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8'); ?></td>
                                             <td><?php echo htmlspecialchars($row['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?></td>

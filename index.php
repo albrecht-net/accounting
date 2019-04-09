@@ -36,69 +36,74 @@ include 'includes/standingOrderCheck.inc.php';
     ?>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="mt-3" id="lastEntries">Zuletzt erfasste Buchungen</h3>
-                <hr class="mb-4">
-                <div class="row">
-                    <div class="col-12 mb-5">
-                        <?php
-                        // SQL-Query bereitstellen
-                        $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
-                        $result = mysqli_query($userLink, $sqlquery);
+        <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="mt-3" id="lastEntries">Zuletzt erfasste Buchungen</h3>
+                    <hr class="mb-4">
+                    <div class="row">
+                        <div class="col-12 mb-5">
+                            <?php
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
+                            $result = mysqli_query($userLink, $sqlquery);
 
-                        // Prüfen ob Datensätze vorhanden
-                        if (mysqli_num_rows($result) >= 1): ?>
-                            <table id="dTableLastEntries" class="table table-sm table-striped">
-                                <thead>
-                                    <tr class="text-nowrap">
-                                        <th scope="col">#</th>
-                                        <th scope="col">Erstelldatum</th>
-                                        <th scope="col">Buchungsdatum</th>
-                                        <th scope="col">Periode</th>
-                                        <th scope="col">Empfänger</th>
-                                        <th scope="col">Rechnungsnummer</th>
-                                        <th scope="col">Beschreibung</th>
-                                        <th scope="col">Konto Soll</th>
-                                        <th scope="col">Konto Haben</th>
-                                        <th scope="col">Betrag</th>
-                                        <th scope="col">Klassifikation 1</th>
-                                        <th scope="col">Klassifikation 2</th>
-                                        <th scope="col">Klassifikation 3</th>
-                                        <th scope="col">Buchungsreferenz</th>
-                                        <th scope="col">Abgeglichen</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            // Prüfen ob Datensätze vorhanden
+                            if (mysqli_num_rows($result) >= 1): ?>
+                                <table id="dTableLastEntries" class="table table-sm table-striped">
+                                    <thead>
                                         <tr class="text-nowrap">
-                                            <td><?php echo intval($row['entryID']); ?></td>
-                                            <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
-                                            <td data-order="<?php echo strtotime($row['date']); ?>"><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['period'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['entryText'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo intval($row['debitAccountID']) . ' ' . htmlspecialchars($row['debitAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo intval($row['creditAccountID']) . ' ' . htmlspecialchars($row['creditAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td class="text-right"><?php echo 'CHF ' . floatval($row['grandTotal']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['classification1'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['classification2'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo htmlspecialchars($row['classification3'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            <td><?php echo intval($row['entryReference']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['reconcilation'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Erstelldatum</th>
+                                            <th scope="col">Buchungsdatum</th>
+                                            <th scope="col">Periode</th>
+                                            <th scope="col">Empfänger</th>
+                                            <th scope="col">Rechnungsnummer</th>
+                                            <th scope="col">Beschreibung</th>
+                                            <th scope="col">Konto Soll</th>
+                                            <th scope="col">Konto Haben</th>
+                                            <th scope="col">Betrag</th>
+                                            <th scope="col">Klassifikation 1</th>
+                                            <th scope="col">Klassifikation 2</th>
+                                            <th scope="col">Klassifikation 3</th>
+                                            <th scope="col">Buchungsreferenz</th>
+                                            <th scope="col">Abgeglichen</th>
                                         </tr>
-                                    <?php endwhile; ?>
-                                </tbody>
-                            </table>
-                        <?php else: ?>
-                            <p class="lead">Keine Einträge gefunden</p>
-                            <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Buchungen erfasst. Erfassen Sie Ihre erste Buchung gleich <a href="entry.php#newEntry">hier</a>.</p>
-                        <?php endif; ?>
+                                    </thead>
+                                    <tbody>
+                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                            <tr class="text-nowrap">
+                                                <td><?php echo intval($row['entryID']); ?></td>
+                                                <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
+                                                <td data-order="<?php echo strtotime($row['date']); ?>"><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['period'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['entryText'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo intval($row['debitAccountID']) . ' ' . htmlspecialchars($row['debitAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo intval($row['creditAccountID']) . ' ' . htmlspecialchars($row['creditAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td class="text-right"><?php echo 'CHF ' . floatval($row['grandTotal']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['classification1'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['classification2'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo htmlspecialchars($row['classification3'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                <td><?php echo intval($row['entryReference']); ?></td>
+                                                <td><?php echo htmlspecialchars($row['reconcilation'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                            <?php else: ?>
+                                <p class="lead">Keine Einträge gefunden</p>
+                                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Buchungen erfasst. Erfassen Sie Ihre erste Buchung gleich <a href="entry.php#newEntry">hier</a>.</p>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+        <?php else: ?>
+            <p class="lead">Für die aktuelle Sitzung wurde keine Datenbank ausgewählt. Sie können eine <a href="settings/database.php">neue Datenbank hinzufügen</a> oder sich <a href="logout.php">abmelden</a></p>
+        <?php endif ?>
 
     <!-- /container -->
     </div>

@@ -237,7 +237,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
                                     <td data-order="<?php echo ($row['validToValue'] == NULL ? '0' : strtotime($row['validToValue'])); ?>"><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
                                     <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                    <td><button type="button" class="btn btn-tr btn-block btn-primary">Vorziehen</button></td>
+                                    <td><a class="btn btn-tr btn-block btn-primary" href="" role="button">Vorziehen</a></td>
                                     <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
                                 </tr>
                                 <?php endwhile; ?>

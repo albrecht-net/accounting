@@ -4,6 +4,9 @@ session_start();
 // Konfiguration einbinden
 require_once 'config.php';
 
+// Versionsinformation einbinden
+include_once 'core/version.php';
+
 // Array GET-Variablen
 $dataInputGet = $_GET;
 
@@ -65,7 +68,10 @@ if ($dataInputGet['loggedout']) {
             </div>
             <button type="submit" class="btn btn-primary btn-block" name="submit">Anmelden</button>
         </form>
-        <p class="mt-5 mb-3 text-muted">© 2019 albrecht-net</p>
+        <div class="mt-5 mb-3">
+            <small class="text-muted"><?php echo $accountingVersion; ?></small>
+            <p class="text-muted">© 2019 albrecht-net</p>
+        </div>
     </div>
     
     <!-- jQuery -->

@@ -365,7 +365,7 @@ if (isset($_GET['standingOrder'])) {
                                     <div class="col-6 col-md-3">
                                         <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
                                     </div>
-                                    <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1 && $_SESSION['standingOrder']['standingOrderBeforeDueDate'] = 1): ?>
+                                    <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1 && $_SESSION['standingOrder']['standingOrderBeforeDueDate'] == 1): ?>
                                         <div class="col-12">
                                             <small>Der Aktuell ausgewählte Dauerauftrag ist noch nicht fällig und wird hiermit vorgezogen.</small>
                                         </div>

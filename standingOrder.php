@@ -233,7 +233,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     } elseif ($row['dateIsDue'] == 'Y') {
                                         $soURL = 'entry.php?standingOrder=' . intval($row['standingOrderID']) . '#newEntry';
                                     } elseif ($row['dateIsDue'] == 'N') {
-                                        $soURL = 'entry.php?standingOrder=' . intval($row['standingOrderID']) . '&isPrefered=1#newEntry';
+                                        $soURL = 'entry.php?standingOrder=' . intval($row['standingOrderID']) . '&beforeDueDate=1#newEntry';
                                     }
                                     ?>
 

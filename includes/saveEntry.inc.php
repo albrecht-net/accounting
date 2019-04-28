@@ -135,7 +135,7 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
             exit();
 
         // Prüfen ob Abstimmung gewählt
-        } elseif (count($dataUpdateAbst['entryReference']) > 0) {
+        } elseif ($dataUpdateAbst['entryReference'] != NULL && count($dataUpdateAbst['entryReference']) > 0) {
             // ID der erstellten Buchung abrufen
             $refID = mysqli_insert_id($userLink);
 

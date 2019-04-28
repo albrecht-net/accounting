@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             'reconcilation' => ($_POST['reconcilation'] == 1 ? 'Y' : 0)
         );
         $dataUpdateAbst = array(
-            'entryReference' => (isset($_POST['entryReference']) ? array_map(intval, $_POST['entryReference']) : NULL)
+            'entryReference' => (isset($_POST['entryReference']) ? array_map('intval', $_POST['entryReference']) : NULL)
         );
 
         // Buchung speichern

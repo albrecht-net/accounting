@@ -357,10 +357,6 @@ if (isset($_GET['standingOrder'])) {
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group form-check"> <!-- Abstimmung -->
-                                    <input class="form-check-input" type="checkbox" id="reconcilation" name="reconcilation" value="1" disabled>
-                                    <label class="form-check-label" for="reconcilation">Abstimmung</label>
-                                </div>
                                 <div class="row">
                                     <div class="col-6 col-md-3">
                                         <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>

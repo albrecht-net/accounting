@@ -6,15 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.21.2-beta (2019.04.28)
+## v2.23.2-beta (2019.04.28)
 ### Added
 - Daueraufträge können in der Übersicht (standingOrder.php) manuell ausgewählt werden, auch wenn das Fälligkeitsdatum noch nicht erreicht ist. Das Datum der nächsten Ausführung wird dabei nicht verändert.
-- Die Aktuelle Versionsbezeichnung von Accounting wird auf der Loginseite (login.php) angezeigt. In der Navigation ist eine Verlinkung zum dazugehörigen Changelog angehängt.
+- Die Aktuelle Versionsbezeichnung von Accounting wird auf der Loginseite (login.php) angezeigt.
+- In der Navigation sind Informationen sowie das Changelog der genutzten Version von Accounting verfügbar.
+- Ein Hinweis auf der Seite settings/database.php verlinkt zur Vorlage der Zieldatenbank.
 ### Fixed
 - Anpassungen um PHP-Warnungen beim Speichern einer neuen Buchung zu verhindern.
 ### Removed
 - Obsolete Checkbox "Abstimmung" im Eingabgeformular einer neue Buchung (entry.php#newEntry) wurde entfernt.
 - Die Seite "buchung.php" wurde entfernt und dient nun nicht mehr als Weiterleitung zu "entry.php".
+### Note
+- In der hinzugefügten Versionsübersicht ([versionOverview.xlsx](versionOverview.xlsx)) sind alle für Accounting benötigten Bibliotheken und Datenbanken mit deren Version aufgelistet. Die Kompabilität der unterschiedlichen Softwareversionen kann daraus gelesen werden. Da es sich bei dieser Übersicht um eine Repository übergreifende Liste handelt, ist diese kein Bestandteil der Veröffentlichungen der [albrecht-net/accounting](https://github.com/albrecht-net/accounting) Repository.
 
 ---
 

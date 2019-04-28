@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.20.0-beta (2019.04.28)
+### Added
+- Daueraufträge können in der Übersicht (standingOrder.php) manuell ausgewählt werden, auch wenn das Fälligkeitsdatum noch nicht erreicht ist. Das Datum der nächsten Ausführung wird dabei nicht verändert.
+
+---
+
 ## v2.19.0-beta (2019.03.29)
 ### Added
 - Grundlegendes Dashboard auf der Hauptseite (index.php) in welchem die 10 zuletzt erstellten Buchungen angezeigt werden.

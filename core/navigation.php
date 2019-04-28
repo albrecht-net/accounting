@@ -1,5 +1,8 @@
 <?php
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
+    // Versionsinformation einbinden
+    include_once 'core/version.php';
+
     // Applikation Basisordner definieren
     $docRoot = $_SERVER['DOCUMENT_ROOT'];
     $curPath = __DIR__;
@@ -12,6 +15,7 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
     $bn = pathinfo($_SERVER['PHP_SELF'], PATHINFO_BASENAME);
     ?>
 
+    <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Buchhaltung</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,6 +56,7 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item disabled" href="#">Mein Profil</a>
                         <a class="dropdown-item" href="<?php echo $bf; ?>/settings/account.php">Einstellungen</a>
+                        <button class="dropdown-item" data-toggle="modal" data-target="#versionInfoModal">Über Accounting</button>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo $bf; ?>/logout.php">Abmelden</a>
                     </div>
@@ -60,6 +65,27 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
         </div>
     </nav>
 
+    <!-- Version Information -->
+    <div class="modal fade" id="versionInfoModal" tabindex="-1" role="dialog" aria-labelledby="versionInfoModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="versionInfoModalTitle">Über Accounting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Version: <?php echo $accountingVersion; ?></p>
+                    <p class="mb-0">Datum: <?php echo $accountingReleaseDate; ?></p>
+                    <a target="_blank" rel="noopener noreferrer" href="https://github.com/albrecht-net/accounting/blob/<?php echo $accountingVersion; ?>/CHANGELOG.md">Was ist neu?</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php
 } else {
     http_response_code(204);

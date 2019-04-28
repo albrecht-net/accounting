@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.20.2-beta (2019.04.28)
+## v2.21.2-beta (2019.04.28)
 ### Added
 - Daueraufträge können in der Übersicht (standingOrder.php) manuell ausgewählt werden, auch wenn das Fälligkeitsdatum noch nicht erreicht ist. Das Datum der nächsten Ausführung wird dabei nicht verändert.
+- Die Aktuelle Versionsbezeichnung von Accounting wird auf der Loginseite (login.php) angezeigt. In der Navigation ist eine Verlinkung zum dazugehörigen Changelog angehängt.
 ### Fixed
 - Anpassungen um PHP-Warnungen beim Speichern einer neuen Buchung zu verhindern.
 ### Removed

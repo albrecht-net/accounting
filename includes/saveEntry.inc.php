@@ -11,9 +11,15 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
 
         // Prüfen ob Dauerauftrag aktiv
         if (intval($_SESSION['standingOrder']['standingOrderSet']) == 1) {
-            
-            // SQL-Query bereitstellen
-            $sqlquery = "SELECT `validFromType`, `periodicityType`, `periodicityValue`, `validToType`, `validToValue`, `remainingEvents`, `nextExecutionDate` FROM `standingOrder` WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `nextExecutionDate` <= NOW() AND `closed` = 'N'";
+
+            // Prüfen ob Dauerauftrag vor Fälligkeitsdatum gewählt
+            if (intval($_SESSION['standingOrder']['standingOrderBeforeDueDate'] == 0)) {
+                // SQL-Query bereitstellen
+                $sqlquery = "SELECT `validFromType`, `periodicityType`, `periodicityValue`, `validToType`, `validToValue`, `remainingEvents`, `nextExecutionDate` FROM `standingOrder` WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `nextExecutionDate` <= NOW() AND `closed` = 'N'";
+            } elseif (intval($_SESSION['standingOrder']['standingOrderBeforeDueDate'] == 1)) {
+                // SQL-Query bereitstellen
+                $sqlquery = "SELECT `validFromType`, `periodicityType`, `periodicityValue`, `validToType`, `validToValue`, `remainingEvents`, `nextExecutionDate` FROM `standingOrder` WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `closed` = 'N'";
+            }
             $result = mysqli_query($userLink, $sqlquery);
 
             // Prüfen ob Datensätze vorhanden

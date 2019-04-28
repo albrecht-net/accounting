@@ -98,7 +98,7 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
                 foreach ($dataUpdateFunctions as $column => $value) {
                     $set[] = "`" . $column . "` = " . $value;
                 }
-                $sqlquery = "UPDATE `standingOrder` SET " . implode(", ", $set) . " WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `nextExecutionDate` <= NOW() AND `closed` = 'N'";
+                $sqlquery = "UPDATE `standingOrder` SET " . implode(", ", $set) . " WHERE `standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `closed` = 'N'";
 
                 // SQL-Query ausführen und überprüfen
                 if (!mysqli_query($userLink, $sqlquery)) {

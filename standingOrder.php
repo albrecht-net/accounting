@@ -187,7 +187,7 @@ include 'includes/standingOrderCheck.inc.php';
                 <div class="col-12 mb-5">
                     <?php
                     // SQL-Query bereitstellen
-                    $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.created, standingOrder.label AS standingOrderLabel, standingOrder.template AS templateID, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate, standingOrder.closed FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
+                    $sqlquery = "SELECT standingOrder.standingOrderID, standingOrder.created, standingOrder.label AS standingOrderLabel, standingOrder.template AS templateID, template.label AS templateLabel, standingOrder.periodicityType, standingOrder.periodicityValue, standingOrder.validToValue, standingOrder.handledEvents, standingOrder.remainingEvents, standingOrder.nextExecutionDate, IF(standingOrder.nextExecutionDate <= NOW(), 'Y', 'N') AS dateIsDue, standingOrder.closed FROM standingOrder LEFT JOIN template ON standingOrder.template = template.templateID";
                     $result = mysqli_query($userLink, $sqlquery);
 
                     // Prüfen ob Datensätze vorhanden
@@ -204,6 +204,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     <th scope="col">Anzahl verbleibend</th>
                                     <th scope="col">Enddatum</th>
                                     <th scope="col">Abgeschlossen</th>
+                                    <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
@@ -225,19 +226,30 @@ include 'includes/standingOrderCheck.inc.php';
                                         case 16:
                                             $row['periodicityType'] = 'Arbeitstage';
                                     }
-                                ?>
-                                <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
-                                    <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                    <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                    <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
-                                    <td data-order="<?php echo ($row['nextExecutionDate'] == NULL ? '0' : strtotime($row['nextExecutionDate'])); ?>"><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
-                                    <td><?php echo intval($row['handledEvents']); ?></td>
-                                    <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
-                                    <td data-order="<?php echo ($row['validToValue'] == NULL ? '0' : strtotime($row['validToValue'])); ?>"><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
-                                    <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                    <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
-                                </tr>
+
+                                    // StandingOrder URL
+                                    if ($row['closed'] == 'Y') {
+                                        $soURL = '';
+                                    } elseif ($row['dateIsDue'] == 'Y') {
+                                        $soURL = 'entry.php?standingOrder=' . intval($row['standingOrderID']) . '#newEntry';
+                                    } elseif ($row['dateIsDue'] == 'N') {
+                                        $soURL = 'entry.php?standingOrder=' . intval($row['standingOrderID']) . '&beforeDueDate=1#newEntry';
+                                    }
+                                    ?>
+
+                                    <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
+                                        <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                                        <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                        <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
+                                        <td data-order="<?php echo ($row['nextExecutionDate'] == NULL ? '0' : strtotime($row['nextExecutionDate'])); ?>"><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
+                                        <td><?php echo intval($row['handledEvents']); ?></td>
+                                        <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
+                                        <td data-order="<?php echo ($row['validToValue'] == NULL ? '0' : strtotime($row['validToValue'])); ?>"><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
+                                        <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
+                                        <td><a class="btn btn-tr btn-block btn-primary<?php echo ($row['closed'] == 'Y' ? ' disabled' : ''); ?>" href="<?php echo $soURL; ?>" role="button">Jetzt ausführen</a></td>
+                                        <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
+                                    </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>

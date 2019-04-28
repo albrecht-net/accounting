@@ -33,8 +33,8 @@ $('#dTableTemplates').DataTable({
 $('#dTableSavedSo').DataTable({
     paging: false,
     'columnDefs': [
-        {'targets': [5, 6, 9], 'searchable': false},
-        {'targets': 9, 'orderable': false}
+        {'targets': [5, 6, 9, 10], 'searchable': false},
+        {'targets': [9, 10], 'orderable': false}
     ],
     "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
 });

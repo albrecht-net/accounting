@@ -71,6 +71,7 @@ Accounting/
     │   ├── <a href="account.php">Account/</a>
     │   |   └── <a href="account.php#changePassword">Password ändern</a>
     |   ├── <a href="database.php">Datenbank/</a>
+    │   |   ├── <a href="database.php#newDatabaseNotes">Hinweise für eine neue Datenbank</a>
     │   |   ├── <a href="database.php#addDatabase">Datenbank hinzufügen</a>
     |   |   └── <a href="database.php#linkedDatabase">Gespeicherte Datenbanken</a>
     │   └── <a href="sitemap.php">Sitemap</a>

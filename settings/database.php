@@ -53,7 +53,16 @@ if ($_POST['trValueDelete']) {
             </li>
         </ul>
 
-        <h3 class="mt-3" id="addDatabase">Datenbank hinzufügen</h3>
+        <h3 class="mt-3" id="newDatabaseNotes">Hinweise für eine neue Datenbank</h3>
+        <hr class="mb-4">
+        <div class="row">
+            <div class="col-12 mb-5">
+                <p>Um die Funktion zu gewährleisten, muss sichergestellt werden, dass die Struktur der Datenbank den Vorgaben entspricht. Verwenden Sie deshalb die gegebenen Datenbankvorlagen welche von der Github Repository <a target="_blank" rel="noopener"  href="https://github.com/albrecht-net/accounting-database-journal/releases">albrecht-net.ch/accounting-database-journal</a> abgerufen werden können.</p>
+                <p class="mb-0">Bitte beachten Sie dabei die <a rel="noopener" href="https://raw.githubusercontent.com/albrecht-net/accounting/master/versionOverview.xlsx">Versionsübersicht</a>.</p>
+            </div>
+        </div>
+
+        <h3 id="addDatabase">Datenbank hinzufügen</h3>
         <hr class="mb-4">
         <div class="row">
             <div class="col-12 mb-5">

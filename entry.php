@@ -367,11 +367,11 @@ if (isset($_GET['standingOrder'])) {
                                     </div>
                                     <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1 && $_SESSION['standingOrder']['standingOrderBeforeDueDate'] == 1): ?>
                                         <div class="col-12">
-                                            <small>Der Aktuell ausgewählte Dauerauftrag ist noch nicht fällig und wird hiermit vorgezogen.</small>
+                                            <small>Der aktuell ausgewählte Dauerauftrag ist noch nicht fällig und wird hiermit vorgezogen.</small>
                                         </div>
                                     <?php elseif ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
                                         <div class="col-12">
-                                            <small>Der Aktuell ausgewählte <a href="#standingOrder">Dauerauftrag</a> wird gespeichert und abgeschlossen.</small>
+                                            <small>Der aktuell ausgewählte <a href="#standingOrder">Dauerauftrag</a> wird gespeichert und abgeschlossen.</small>
                                         </div>
                                     <?php endif; ?>
                                 </div>

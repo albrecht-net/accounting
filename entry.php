@@ -18,8 +18,17 @@ if (isset($_GET['standingOrder'])) {
     $_SESSION['standingOrder']['standingOrderSet'] = 1;
     $_SESSION['standingOrder']['standingOrderID'] = intval($_GET['standingOrder']);
 
-    // SQL-Query bereitstellen
-    $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `standingOrder`.`nextExecutionDate` <= NOW() AND `closed` = 'N'";
+    // Prüfen ob Dauerauftrag vor Fälligkeitsdatum gewählt
+    if ($_GET['beforeDueDate'] == 1) {
+        $_SESSION['standingOrder']['standingOrderBeforeDueDate'] = 1;
+        // SQL-Query bereitstellen
+        $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `closed` = 'N'";
+    } else {
+        $_SESSION['standingOrder']['standingOrderBeforeDueDate'] = 0;
+        // SQL-Query bereitstellen
+        $sqlquery = "SELECT `template`.`recipient`, `template`.`invoiceNo`, `template`.`entryText`, `template`.`grandTotal`, `template`.`debitAccount`, `template`.`creditAccount`, `template`.`period`, `template`.`classification1`, `template`.`classification2`, `template`.`classification3` FROM `template` RIGHT JOIN `standingOrder` ON `template`.`templateID` = `standingOrder`.`template` WHERE `standingOrder`.`standingOrderID` = " . intval($_SESSION['standingOrder']['standingOrderID']) . " AND `standingOrder`.`nextExecutionDate` <= NOW() AND `closed` = 'N'";
+    }
+
     $result = mysqli_query($userLink, $sqlquery);
 
     // Prüfen ob Datensätze vorhanden
@@ -356,10 +365,14 @@ if (isset($_GET['standingOrder'])) {
                                     <div class="col-6 col-md-3">
                                         <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
                                     </div>
-                                    <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
-                                    <div class="col-12">
-                                        <small>Der Aktuell ausgewählte <a href="#standingOrder">Dauerauftrag</a> wird gespeichert und abgeschlossen.</small>
-                                    </div>
+                                    <?php if ($_SESSION['standingOrder']['standingOrderSet'] == 1 && $_SESSION['standingOrder']['standingOrderBeforeDueDate'] = 1): ?>
+                                        <div class="col-12">
+                                            <small>Der Aktuell ausgewählte Dauerauftrag ist noch nicht fällig und wird hiermit vorgezogen.</small>
+                                        </div>
+                                    <?php elseif ($_SESSION['standingOrder']['standingOrderSet'] == 1): ?>
+                                        <div class="col-12">
+                                            <small>Der Aktuell ausgewählte <a href="#standingOrder">Dauerauftrag</a> wird gespeichert und abgeschlossen.</small>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                         </div>

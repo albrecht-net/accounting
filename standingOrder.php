@@ -225,21 +225,20 @@ include 'includes/standingOrderCheck.inc.php';
                                             break;
                                         case 16:
                                             $row['periodicityType'] = 'Arbeitstage';
-                                    }
-                                ?>
-                                <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
-                                    <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
-                                    <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
-                                    <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
-                                    <td data-order="<?php echo ($row['nextExecutionDate'] == NULL ? '0' : strtotime($row['nextExecutionDate'])); ?>"><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
-                                    <td><?php echo intval($row['handledEvents']); ?></td>
-                                    <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
-                                    <td data-order="<?php echo ($row['validToValue'] == NULL ? '0' : strtotime($row['validToValue'])); ?>"><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
-                                    <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
-                                    <td><a class="btn btn-tr btn-block btn-primary<?php echo ($row['closed'] == 'Y' ? ' disabled' : ''); ?>" href="" role="button">Vorziehen</a></td>
-                                    <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
-                                </tr>
+                                    } ?>
+                                    <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
+                                        <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
+                                        <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
+                                        <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
+                                        <td data-order="<?php echo ($row['nextExecutionDate'] == NULL ? '0' : strtotime($row['nextExecutionDate'])); ?>"><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>
+                                        <td><?php echo intval($row['handledEvents']); ?></td>
+                                        <td><?php echo ($row['remainingEvents'] == NULL ? '-' : intval($row['remainingEvents'])); ?></td>
+                                        <td data-order="<?php echo ($row['validToValue'] == NULL ? '0' : strtotime($row['validToValue'])); ?>"><?php echo ($row['validToValue'] == NULL ? '-' : date_format(date_create($row['validToValue']), 'd.m.Y')); ?></td>
+                                        <td><?php echo ($row['closed'] == 'N' ? 'Nein' : 'Ja'); ?></td>
+                                        <td><a class="btn btn-tr btn-block btn-primary<?php echo ($row['closed'] == 'Y' ? ' disabled' : ''); ?>" href="" role="button">Vorziehen</a></td>
+                                        <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">Löschen</button></td>
+                                    </tr>
                                 <?php endwhile; ?>
                             </tbody>
                         </table>

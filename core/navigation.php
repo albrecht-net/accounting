@@ -1,8 +1,5 @@
 <?php
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
-    // Versionsinformation einbinden
-    include_once 'core/version.php';
-
     // Applikation Basisordner definieren
     $docRoot = $_SERVER['DOCUMENT_ROOT'];
     $curPath = __DIR__;
@@ -13,6 +10,9 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
 
     // Dateiname wenn eingebunden
     $bn = pathinfo($_SERVER['PHP_SELF'], PATHINFO_BASENAME);
+
+    // Versionsinformation einbinden
+    include_once $_SERVER['DOCUMENT_ROOT'] . $bf . '/core/version.php';
     ?>
 
     <!-- Navigation -->

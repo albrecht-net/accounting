@@ -26,6 +26,8 @@ include 'includes/standingOrderCheck.inc.php';
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <!-- Datatables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/mainSite.css">
 
     <title>Buchhaltung</title>
 </head>
@@ -35,7 +37,7 @@ include 'includes/standingOrderCheck.inc.php';
     include_once 'core/navigation.php';
     ?>
 
-    <div class="container">
+    <div class="container container-wide">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
             <div class="row">
                 <div class="col-12">

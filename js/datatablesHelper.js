@@ -4,15 +4,13 @@ $(document).ready(function (){
 // lastEntries, index.php
 //
 $('#dTableLastEntries').DataTable({
-    paging: false,
     searching: true,
-    info: false,
     ordering: true,
     'order': [
         1, 'desc'
     ],
     scrollX: true,
-    "dom": '<"float-right"f>t'
+    'dom': "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
 });
 
 //

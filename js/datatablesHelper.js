@@ -22,7 +22,7 @@ $('#dTableTemplates').DataTable({
     paging: false,
     'columnDefs': [
         {'targets': 3, 'searchable': false},
-        {'targets': 3, 'orderable': false}
+        {'targets': [2, 3], 'orderable': false}
     ],
     'order': [
         1, 'asc'

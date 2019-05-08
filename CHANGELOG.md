@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.25.0-beta (2019.05.08)
+### Changed
+- Die Tabelle der Gespeicherten Vorlagen (templates.php) wird nun standardmässig nach der Spalte "Name" sortiert.
+- Es kann nicht mehr nach der Spalte "Definierte Werte" in der Tabelle der Gespeicherten Vorlagen (templates.php) sortiert werden, da diese Daten nicht sortierbar sind.
+
+---
+
 ## v2.23.2-beta (2019.04.28)
 ### Added
 - Daueraufträge können in der Übersicht (standingOrder.php) manuell ausgewählt werden, auch wenn das Fälligkeitsdatum noch nicht erreicht ist. Das Datum der nächsten Ausführung wird dabei nicht verändert.

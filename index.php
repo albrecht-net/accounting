@@ -47,7 +47,7 @@ include 'includes/standingOrderCheck.inc.php';
                         <div class="col-12 mb-4">
                             <div class="form-row">
                                 <div class="form-group col-md-5"> <!-- Konto Auswahl -->
-                                    <label for="filterAccount">Konto Auswahl</label>
+                                    <label for="leSelAccount">Konto Auswahl</label>
                                     <?php
                                     // SQL-Query bereitstellen
                                     $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
@@ -55,10 +55,10 @@ include 'includes/standingOrderCheck.inc.php';
                 
                                     // Prüfen ob Datensätze vorhanden
                                     if (mysqli_num_rows($result) < 1): ?>
-                                    <select class="form-control" id="filterAccount" name="filterAccount" required>
+                                    <select class="form-control" id="leSelAccount" name="leSelAccount" required>
                                         <option disabled>Keine Datensätze vorhanden</option>
                                     <?php else: ?>
-                                    <select class="form-control" id="filterAccount" name="filterAccount" required>
+                                    <select class="form-control" id="leSelAccount" name="leSelAccount" required>
                                         <option>Alle anzeigen</option>
                                         <?php
                                         // Resulat in 1 Array schreiben, sortiert nach Kategorie
@@ -85,8 +85,8 @@ include 'includes/standingOrderCheck.inc.php';
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2"> <!-- Zeitraum -->
-                                    <label for="aeSelPeriodOfAE">Auswahl Zeitraum</label>
-                                    <select class="form-control" id="aeSelPeriodOfAE" name="aeSelPeriodOfAE" required>
+                                    <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
+                                    <select class="form-control" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
                                         <option value="1">Laufender Monat</option>
                                         <option value="2">Laufendes Quartal</option>
                                         <option value="4">Laufendes Jahr</option>
@@ -109,59 +109,27 @@ include 'includes/standingOrderCheck.inc.php';
                     </div>
                     <div class="row">
                         <div class="col-12 mb-5">
-                            <?php
-                            // SQL-Query bereitstellen
-                            $sqlquery = "SELECT * FROM viewJournal ORDER BY created DESC LIMIT 10";
-                            $result = mysqli_query($userLink, $sqlquery);
-
-                            // Prüfen ob Datensätze vorhanden
-                            if (mysqli_num_rows($result) >= 1): ?>
-                                <table id="dTableLastEntries" class="table table-sm table-striped">
-                                    <thead>
-                                        <tr class="text-nowrap">
-                                            <th scope="col">#</th>
-                                            <th scope="col">Erstelldatum</th>
-                                            <th scope="col">Buchungsdatum</th>
-                                            <th scope="col">Periode</th>
-                                            <th scope="col">Empfänger</th>
-                                            <th scope="col">Rechnungsnummer</th>
-                                            <th scope="col">Beschreibung</th>
-                                            <th scope="col">Konto Soll</th>
-                                            <th scope="col">Konto Haben</th>
-                                            <th scope="col">Betrag</th>
-                                            <th scope="col">Klassifikation 1</th>
-                                            <th scope="col">Klassifikation 2</th>
-                                            <th scope="col">Klassifikation 3</th>
-                                            <th scope="col">Buchungsreferenz</th>
-                                            <th scope="col">Abgeglichen</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                            <tr class="text-nowrap">
-                                                <td><?php echo intval($row['entryID']); ?></td>
-                                                <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y H:i:s'); ?></td>
-                                                <td data-order="<?php echo strtotime($row['date']); ?>"><?php echo date_format(date_create($row['date']), 'd.m.Y'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['period'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['invoiceNo'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['entryText'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo intval($row['debitAccountID']) . ' ' . htmlspecialchars($row['debitAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo intval($row['creditAccountID']) . ' ' . htmlspecialchars($row['creditAccount'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td class="text-right"><?php echo 'CHF ' . floatval($row['grandTotal']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['classification1'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['classification2'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo htmlspecialchars($row['classification3'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                                <td><?php echo intval($row['entryReference']); ?></td>
-                                                <td><?php echo htmlspecialchars($row['reconcilation'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                            </tr>
-                                        <?php endwhile; ?>
-                                    </tbody>
-                                </table>
-                            <?php else: ?>
-                                <p class="lead">Keine Einträge gefunden</p>
-                                <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Buchungen erfasst. Erfassen Sie Ihre erste Buchung gleich <a href="entry.php#newEntry">hier</a>.</p>
-                            <?php endif; ?>
+                            <table id="dTableLastEntries" class="table table-sm table-striped">
+                                <thead>
+                                    <tr class="text-nowrap">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Erstelldatum</th>
+                                        <th scope="col">Buchungsdatum</th>
+                                        <th scope="col">Periode</th>
+                                        <th scope="col">Empfänger</th>
+                                        <th scope="col">Rechnungsnummer</th>
+                                        <th scope="col">Beschreibung</th>
+                                        <th scope="col">Konto Soll</th>
+                                        <th scope="col">Konto Haben</th>
+                                        <th scope="col">Betrag</th>
+                                        <th scope="col">Klassifikation 1</th>
+                                        <th scope="col">Klassifikation 2</th>
+                                        <th scope="col">Klassifikation 3</th>
+                                        <th scope="col">Buchungsreferenz</th>
+                                        <th scope="col">Abgeglichen</th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
                 </div>

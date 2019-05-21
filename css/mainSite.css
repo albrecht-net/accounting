@@ -2,3 +2,7 @@
     padding: 0rem 0.5rem;
     vertical-align: baseline;
 }
+
+.container.container-wide {
+    max-width: 1430px;
+}

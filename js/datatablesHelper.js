@@ -3,16 +3,50 @@ $(document).ready(function (){
 //
 // lastEntries, index.php
 //
-$('#dTableLastEntries').DataTable({
-    paging: false,
+dTableLastEntries = $('#dTableLastEntries').DataTable({
     searching: true,
-    info: false,
     ordering: true,
     'order': [
         1, 'desc'
     ],
     scrollX: true,
-    "dom": '<"float-right"f>t'
+    "columns": [
+        {"data": "entryID"},
+        {"data": {
+            "_": "created.display",
+            "sort": "created.timestamp"
+        }},
+        {"data": {
+            "_": "date.display",
+            "sort": "date.timestamp"
+        }},
+        {"data": "period"},
+        {"data": "recipient"},
+        {"data": "invoiceNo"},
+        {"data": "entryText"},
+        {"data": "debitAccount.display"},
+        {"data": "creditAccount.display"},
+        {"data": "grandTotal.display"},
+        {"data": "classification1"},
+        {"data": "classification2"},
+        {"data": "classification3"},
+        {"data": "entryReference"},
+        {"data": "reconcilation"},
+    ],
+    "createdRow": function(row) {
+        $(row).addClass('text-nowrap');
+    },
+    "ajax": {
+        "url": "includes/fetchLastEntriesData.inc.php",
+        "type": "POST",
+        "data": function(data) {
+            return $.extend( {}, data, {
+                'account': $('#leSelAccount').val(),
+                'periodOfLE': $('#leSelPeriodOfLE').val()
+            });
+        }
+    },
+    'dom': "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
 });
 
 //

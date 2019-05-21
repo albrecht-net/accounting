@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.26.0-beta (2019.05.21)
+### Added
+- Die Einträge der Tabelle "Zuletzt erfasste Buchungen" (index.php) können mit Filter für das Konto und den Zeitraum eingeschränkt werden. Standard ist weiterhin die 10 Letzten Buchungen aller Konten.
+
+---
+
 ## v2.25.0-beta (2019.05.08)
 ### Changed
 - Die Tabelle der Gespeicherten Vorlagen (templates.php) wird nun standardmässig nach der Spalte "Name" sortiert.

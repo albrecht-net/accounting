@@ -3,7 +3,7 @@ $(document).ready(function (){
 //
 // lastEntries, index.php
 //
-$('#dTableLastEntries').DataTable({
+dTableLastEntries = $('#dTableLastEntries').DataTable({
     searching: true,
     ordering: true,
     'order': [
@@ -24,15 +24,18 @@ $('#dTableLastEntries').DataTable({
         {"data": "recipient"},
         {"data": "invoiceNo"},
         {"data": "entryText"},
-        {"data": "debitAccount"},
-        {"data": "creditAccount"},
-        {"data": "grandTotal"},
+        {"data": "debitAccount.display"},
+        {"data": "creditAccount.display"},
+        {"data": "grandTotal.display"},
         {"data": "classification1"},
         {"data": "classification2"},
         {"data": "classification3"},
         {"data": "entryReference"},
         {"data": "reconcilation"},
     ],
+    "createdRow": function(row) {
+        $(row).addClass('text-nowrap');
+    },
     "ajax": {
         "url": "includes/fetchLastEntriesData.inc.php",
         "type": "POST",

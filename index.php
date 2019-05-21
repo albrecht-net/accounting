@@ -84,7 +84,7 @@ include 'includes/standingOrderCheck.inc.php';
                                     endif; ?>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2"> <!-- Zeitraum -->
+                                <div class="form-group col-md-3 col-xl-2"> <!-- Zeitraum -->
                                     <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
                                     <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
                                         <option value="1">Laufender Monat</option>

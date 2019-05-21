@@ -10,6 +10,39 @@ $('#dTableLastEntries').DataTable({
         1, 'desc'
     ],
     scrollX: true,
+    "columns": [
+        {"data": "entryID"},
+        {"data": {
+            "_": "created.display",
+            "sort": "created.timestamp"
+        }},
+        {"data": {
+            "_": "date.display",
+            "sort": "date.timestamp"
+        }},
+        {"data": "period"},
+        {"data": "recipient"},
+        {"data": "invoiceNo"},
+        {"data": "entryText"},
+        {"data": "debitAccount"},
+        {"data": "creditAccount"},
+        {"data": "grandTotal"},
+        {"data": "classification1"},
+        {"data": "classification2"},
+        {"data": "classification3"},
+        {"data": "entryReference"},
+        {"data": "reconcilation"},
+    ],
+    "ajax": {
+        "url": "includes/fetchLastEntriesData.inc.php",
+        "type": "POST",
+        "data": function(data) {
+            return $.extend( {}, data, {
+                'account': $('#leSelAccount').val(),
+                'periodOfLE': $('#leSelPeriodOfLE').val()
+            });
+        }
+    },
     'dom': "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
 });
 

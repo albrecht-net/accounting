@@ -55,11 +55,11 @@ include 'includes/standingOrderCheck.inc.php';
                 
                                     // Prüfen ob Datensätze vorhanden
                                     if (mysqli_num_rows($result) < 1): ?>
-                                    <select class="form-control" id="leSelAccount" name="leSelAccount" required>
+                                    <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
                                         <option disabled>Keine Datensätze vorhanden</option>
                                     <?php else: ?>
-                                    <select class="form-control" id="leSelAccount" name="leSelAccount" required>
-                                        <option>Alle anzeigen</option>
+                                    <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
+                                        <option value="0">Alle anzeigen</option>
                                         <?php
                                         // Resulat in 1 Array schreiben, sortiert nach Kategorie
                                         $valueArray = [];
@@ -86,7 +86,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 </div>
                                 <div class="form-group col-md-2"> <!-- Zeitraum -->
                                     <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
-                                    <select class="form-control" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                    <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
                                         <option value="1">Laufender Monat</option>
                                         <option value="2">Laufendes Quartal</option>
                                         <option value="4">Laufendes Jahr</option>
@@ -149,6 +149,11 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <!-- Datatables-Helper -->
     <script src="js/datatablesHelper.js"></script>
+    <script>
+        $('.filter-input').change(function() {
+            dTableLastEntries.ajax.reload();
+        });
+    </script>
     
 </body>
 </html>

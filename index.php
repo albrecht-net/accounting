@@ -41,95 +41,98 @@ include 'includes/standingOrderCheck.inc.php';
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
             <div class="row">
                 <div class="col-12">
-                    <h3 class="mt-3" id="lastEntries">Zuletzt erfasste Buchungen</h3>
-                    <hr class="mb-4">
-                    <div class="row">
-                        <div class="col-12 mb-4">
-                            <div class="form-row">
-                                <div class="form-group col-md-5"> <!-- Konto Auswahl -->
-                                    <label for="leSelAccount">Konto Auswahl</label>
-                                    <?php
-                                    // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
-                                    $result = mysqli_query($userLink, $sqlquery);
+                    <div class="card mt-3">
+                        <h5 class="card-header" id="lastEntries">Zuletzt erfasste Buchungen</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-5"> <!-- Konto Auswahl -->
+                                            <label for="leSelAccount">Konto Auswahl</label>
+                                            <?php
+                                            // SQL-Query bereitstellen
+                                            $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
+                                            $result = mysqli_query($userLink, $sqlquery);
+                        
+                                            // Prüfen ob Datensätze vorhanden
+                                            if (mysqli_num_rows($result) < 1): ?>
+                                            <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
+                                                <option disabled>Keine Datensätze vorhanden</option>
+                                            <?php else: ?>
+                                            <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
+                                                <option value="0">Alle anzeigen</option>
+                                                <?php
+                                                // Resulat in 1 Array schreiben, sortiert nach Kategorie
+                                                $valueArray = [];
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    if ($row['categoryLabel'] != $category) {
+                                                        $i = 0;
+                                                    }
                 
-                                    // Prüfen ob Datensätze vorhanden
-                                    if (mysqli_num_rows($result) < 1): ?>
-                                    <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
-                                        <option disabled>Keine Datensätze vorhanden</option>
-                                    <?php else: ?>
-                                    <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
-                                        <option value="0">Alle anzeigen</option>
-                                        <?php
-                                        // Resulat in 1 Array schreiben, sortiert nach Kategorie
-                                        $valueArray = [];
-                                        while ($row = mysqli_fetch_assoc($result)) {
-                                            if ($row['categoryLabel'] != $category) {
-                                                $i = 0;
-                                            }
-        
-                                            $category = $row['categoryLabel'];
-        
-                                            $valueArray[$category][$i] = $row;
-                                            $i++;
-                                        }
-        
-                                        // Array in Dropdown ausgeben
-                                        foreach ($valueArray as $key => $row1): ?>
-                                            <optgroup label="<?php echo htmlspecialchars($key, ENT_QUOTES, 'UTF-8'); ?>">
-                                            <?php foreach ($row1 as $key => $row2): ?>
-                                                <option value="<?php echo intval($row2['accountID']); ?>"<?php echo ($_GET['filterAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo intval($row2['accountID']) . ' ' . htmlspecialchars($row2['accountLabel'], ENT_QUOTES, 'UTF-8'); ?></option>
-                                            <?php endforeach;
-                                        endforeach;
-                                    endif; ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-3 col-xl-2"> <!-- Zeitraum -->
-                                    <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
-                                    <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
-                                        <option value="1">Laufender Monat</option>
-                                        <option value="2">Laufendes Quartal</option>
-                                        <option value="4">Laufendes Jahr</option>
-                                        <option value="8">Letzter Monat</option>
-                                        <option disabled></option>
-                                        <option value="16">Letzte 30 Tage</option>
-                                        <option value="32">Letzte 90 Tage</option>
-                                        <option value="64">Letzte 180 Tage</option>
-                                        <option value="128">Letzte 360 Tage</option>
-                                        <option disabled></option>
-                                        <option value="256" selected>Letzte 10 Buchungen</option>
-                                        <option value="512">Letzte 20 Buchungen</option>
-                                        <option value="1024">Letzte 30 Buchungen</option>
-                                        <option value="2048">Letzte 100 Buchungen</option>
-                                        <option value="4096">Letzte 1000 Buchungen</option>
-                                    </select>
+                                                    $category = $row['categoryLabel'];
+                
+                                                    $valueArray[$category][$i] = $row;
+                                                    $i++;
+                                                }
+                
+                                                // Array in Dropdown ausgeben
+                                                foreach ($valueArray as $key => $row1): ?>
+                                                    <optgroup label="<?php echo htmlspecialchars($key, ENT_QUOTES, 'UTF-8'); ?>">
+                                                    <?php foreach ($row1 as $key => $row2): ?>
+                                                        <option value="<?php echo intval($row2['accountID']); ?>"<?php echo ($_GET['filterAccount'] == $row2['accountID'] ? ' selected' : ''); ?>><?php echo intval($row2['accountID']) . ' ' . htmlspecialchars($row2['accountLabel'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                                    <?php endforeach;
+                                                endforeach;
+                                            endif; ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3 col-xl-2"> <!-- Zeitraum -->
+                                            <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
+                                            <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                                <option value="1">Laufender Monat</option>
+                                                <option value="2">Laufendes Quartal</option>
+                                                <option value="4">Laufendes Jahr</option>
+                                                <option value="8">Letzter Monat</option>
+                                                <option disabled></option>
+                                                <option value="16">Letzte 30 Tage</option>
+                                                <option value="32">Letzte 90 Tage</option>
+                                                <option value="64">Letzte 180 Tage</option>
+                                                <option value="128">Letzte 360 Tage</option>
+                                                <option disabled></option>
+                                                <option value="256" selected>Letzte 10 Buchungen</option>
+                                                <option value="512">Letzte 20 Buchungen</option>
+                                                <option value="1024">Letzte 30 Buchungen</option>
+                                                <option value="2048">Letzte 100 Buchungen</option>
+                                                <option value="4096">Letzte 1000 Buchungen</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 mb-5">
-                            <table id="dTableLastEntries" class="table table-sm table-striped">
-                                <thead>
-                                    <tr class="text-nowrap">
-                                        <th scope="col">#</th>
-                                        <th scope="col">Erstelldatum</th>
-                                        <th scope="col">Buchungsdatum</th>
-                                        <th scope="col">Periode</th>
-                                        <th scope="col">Empfänger</th>
-                                        <th scope="col">Rechnungsnummer</th>
-                                        <th scope="col">Beschreibung</th>
-                                        <th scope="col">Konto Soll</th>
-                                        <th scope="col">Konto Haben</th>
-                                        <th scope="col">Betrag</th>
-                                        <th scope="col">Klassifikation 1</th>
-                                        <th scope="col">Klassifikation 2</th>
-                                        <th scope="col">Klassifikation 3</th>
-                                        <th scope="col">Buchungsreferenz</th>
-                                        <th scope="col">Abgeglichen</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div class="row">
+                                <div class="col-12">
+                                    <table id="dTableLastEntries" class="table table-sm table-striped">
+                                        <thead>
+                                            <tr class="text-nowrap">
+                                                <th scope="col">#</th>
+                                                <th scope="col">Erstelldatum</th>
+                                                <th scope="col">Buchungsdatum</th>
+                                                <th scope="col">Periode</th>
+                                                <th scope="col">Empfänger</th>
+                                                <th scope="col">Rechnungsnummer</th>
+                                                <th scope="col">Beschreibung</th>
+                                                <th scope="col">Konto Soll</th>
+                                                <th scope="col">Konto Haben</th>
+                                                <th scope="col">Betrag</th>
+                                                <th scope="col">Klassifikation 1</th>
+                                                <th scope="col">Klassifikation 2</th>
+                                                <th scope="col">Klassifikation 3</th>
+                                                <th scope="col">Buchungsreferenz</th>
+                                                <th scope="col">Abgeglichen</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

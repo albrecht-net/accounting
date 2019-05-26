@@ -39,81 +39,95 @@ include 'includes/standingOrderCheck.inc.php';
 
     <div class="container">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
-        <h3 class="mt-3" id="addRecipient">Empfänger erfassen</h3>
-        <hr class="mb-4">
-        <div class="row">
-            <div class="col-12 mb-5">
-                <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
-                <form action="includes/addRecipient.inc.php" method="POST">
-                    <div class="form-row">
-                        <div class="form-group col-md-7"> <!-- Empfänger -->
-                            <label for="label">Empfänger Bezeichnung</label>
-                            <input class="form-control" type="text" id="label" name="label" required>
-                        </div>
-                        <div class="form-group col-md-5"> <!-- Kundennummer -->
-                            <label for="customerNumber">Kundennummer</label>
-                            <input class="form-control" type="text" id="customerNumber" name="customerNumber">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mt-3">
+                        <h5 class="card-header" id="addRecipient">Empfänger erfassen</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <?php include_once 'includes/alertProvider.inc.php'; // Alert Provider ?>
+                                    <form action="includes/addRecipient.inc.php" method="POST">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-7"> <!-- Empfänger -->
+                                                <label for="label">Empfänger Bezeichnung</label>
+                                                <input class="form-control" type="text" id="label" name="label" required>
+                                            </div>
+                                            <div class="form-group col-md-5"> <!-- Kundennummer -->
+                                                <label for="customerNumber">Kundennummer</label>
+                                                <input class="form-control" type="text" id="customerNumber" name="customerNumber">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 col-md-3">
+                                                <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-6 col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block" name="submit">Speichern</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <h3 class="mt-3" id="savedRecipient">Erfasste Empfänger</h3>
-        <hr class="mb-4">
-        <div class="row">
-            <div class="col-12 mb-5">
-                <?php
-                // SQL-Query bereitstellen
-                $sqlquery = "SELECT * FROM recipient";
-                $result = mysqli_query($userLink, $sqlquery);
-
-                // Prüfen ob Datensätze vorhanden
-                if (mysqli_num_rows($result) >= 1): ?>              
-                    <table id="dTableRecipient" class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Bezeichnung</th>
-                                <th scope="col">Kundennummer</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php while ($row = mysqli_fetch_assoc($result)):
-                                switch ($row['active']) {
-                                    case 'Y':
-                                        $row['active'] = 'Aktiv';
-                                        break;
-                                    case 'N':
-                                        $row['active'] = 'Inaktiv';
-                                        break;
-                                }
-                            ?>
-                            <tr>
-                                <td><?php echo intval($row['recipientID']); ?></td>
-                                <td><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                <td><?php echo ($row['customerNumber'] == NULL ? '-' : htmlspecialchars($row['customerNumber'], ENT_QUOTES, 'UTF-8')); ?></td>
-                                <td><?php echo htmlspecialchars($row['active'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            </tr>
-                            <?php endwhile; ?>
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p class="lead">Keine Einträge gefunden</p>
-                    <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Empfänger erfasst. Erfassen Sie Ihren erste Empfänger gleich <a href="recipient.php#addRecipient">hier</a>.</p>
-                <?php endif; ?>
                 </div>
             </div>
-        </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mt-3">
+                        <h5 class="card-header" id="savedRecipient">Erfasste Empfänger</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <?php
+                                    // SQL-Query bereitstellen
+                                    $sqlquery = "SELECT * FROM recipient";
+                                    $result = mysqli_query($userLink, $sqlquery);
+                    
+                                    // Prüfen ob Datensätze vorhanden
+                                    if (mysqli_num_rows($result) >= 1): ?>              
+                                        <table id="dTableRecipient" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Bezeichnung</th>
+                                                    <th scope="col">Kundennummer</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php while ($row = mysqli_fetch_assoc($result)):
+                                                    switch ($row['active']) {
+                                                        case 'Y':
+                                                            $row['active'] = 'Aktiv';
+                                                            break;
+                                                        case 'N':
+                                                            $row['active'] = 'Inaktiv';
+                                                            break;
+                                                    }
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo intval($row['recipientID']); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                    <td><?php echo ($row['customerNumber'] == NULL ? '-' : htmlspecialchars($row['customerNumber'], ENT_QUOTES, 'UTF-8')); ?></td>
+                                                    <td><?php echo htmlspecialchars($row['active'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                </tr>
+                                                <?php endwhile; ?>
+                                            </tbody>
+                                        </table>
+                                    <?php else: ?>
+                                        <p class="lead">Keine Einträge gefunden</p>
+                                        <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Empfänger erfasst. Erfassen Sie Ihren erste Empfänger gleich <a href="recipient.php#addRecipient">hier</a>.</p>
+                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         <?php else: ?>
-        <p class="lead">Für die aktuelle Sitzung wurde keine Datenbank ausgewählt. Sie können eine <a href="settings/database.php">neue Datenbank hinzufügen</a> oder sich <a href="logout.php">abmelden</a></p>
+            <p class="lead">Für die aktuelle Sitzung wurde keine Datenbank ausgewählt. Sie können eine <a href="settings/database.php">neue Datenbank hinzufügen</a> oder sich <a href="logout.php">abmelden</a></p>
         <?php endif ?>
 
     <!-- /container -->

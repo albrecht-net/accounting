@@ -28,43 +28,54 @@ if (!$lsc) {
     ?>
 
     <div class="container">
-        <!-- Settings Navigation -->
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" href="account.php">Account</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="database.php">Datenbank</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="sitemap.php">Sitemap</a>
-            </li>
-        </ul>
-
-        <h3 class="mt-3" id="changePassword">Passwort ändern</h3>
-        <hr class="mb-4">
         <div class="row">
-            <div class="col-12 mb-5">
-                <?php include_once '../includes/alertProvider.inc.php'; // Alert Provider ?>
-                <form method="POST" action="../includes/changePassword.inc.php">
-                    <div class="form-group">
-                        <label for="inputOldPassword">Bisheriges Passwort</label>
-                        <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword1">Neues Passwort</label>
-                        <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="inputPassword2">Neues Passwort bestätigen</label>
-                        <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-6 col-md-3">
-                            <button type="submit" class="btn btn-primary btn-block" name="submitChangePassword">Passwort ändern</button>
+            <div class="col-12">
+                <!-- Settings Navigation -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="account.php">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="database.php">Datenbank</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sitemap.php">Sitemap</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-3">
+                    <h5 class="card-header" id="changePassword">Passwort ändern</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <?php include_once '../includes/alertProvider.inc.php'; // Alert Provider ?>
+                                <form method="POST" action="../includes/changePassword.inc.php">
+                                    <div class="form-group">
+                                        <label for="inputOldPassword">Bisheriges Passwort</label>
+                                        <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword1">Neues Passwort</label>
+                                        <input type="password" class="form-control" name="inputPassword1" id="inputPassword1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword2">Neues Passwort bestätigen</label>
+                                        <input type="password" class="form-control" name="inputPassword2" id="inputPassword2" required>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6 col-md-3">
+                                            <button type="submit" class="btn btn-primary btn-block" name="submitChangePassword">Passwort ändern</button>
+                                        </div>
+                                    <div>
+                                </form>
+                            </div>
                         </div>
-                    <div>
-                </form>
+                    </div>
+                </div>
             </div>
         </div>
 

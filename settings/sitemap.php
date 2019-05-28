@@ -28,24 +28,31 @@ if (!$lsc) {
     ?>
 
     <div class="container">
-        <!-- Settings Navigation -->
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link" href="account.php">Account</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="database.php">Datenbank</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="sitemap.php">Sitemap</a>
-            </li>
-        </ul>
-
-        <h3 class="mt-3" id="sitemap">Sitemap</h3>
-        <hr class="mb-4">
         <div class="row">
-            <div class="col-12 mb-5">
-            <pre lang="text">
+            <div class="col-12">
+                <!-- Settings Navigation -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="account.php">Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="database.php">Datenbank</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sitemap.php">Sitemap</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card mt-3">
+                    <h5 class="card-header" id="sitemap">Sitemap</h5>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <pre lang="text">
 Accounting/
 ├── <a href="../index.php">Index</a>
 │   └── <a href="../index.php#lastEntries">Zuletzt erfasste Buchungen</a>
@@ -76,7 +83,11 @@ Accounting/
     |   |   └── <a href="database.php#linkedDatabase">Gespeicherte Datenbanken</a>
     │   └── <a href="sitemap.php">Sitemap</a>
     └── <a href="../logout.php">Abmelden</a>
-            </pre>
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

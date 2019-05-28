@@ -345,7 +345,7 @@ if (isset($_GET['standingOrder'])) {
                                                 <label for="entryReference">Buchungsreferenz</label>
                                                 <?php
                                                 // SQL-Query bereitstellen
-                                                $sqlquery = "SELECT `journal`.`entryID`, `journal`.`date`, `recipient`.`label` AS `recipient`, `journal`.`grandTotal` FROM `journal` LEFT JOIN `recipient` ON `journal`.`recipient` = `recipient`.`recipientID` RIGHT JOIN `account` AS `creditAccount` ON `journal`.`creditAccount` = `creditAccount`.`accountID` RIGHT JOIN `account` AS `debitAccount` ON `journal`.`debitAccount` = `debitAccount`.`accountID` WHERE `journal`.`reconcilation` = 'N' AND `creditAccount`.`reconcilationAllow` = 'Y' ORDER BY `journal`.`created` ASC";
+                                                $sqlquery = "SELECT `journal`.`entryID`, `journal`.`date`, `recipient`.`label` AS `recipient`, `journal`.`grandTotal` FROM `journal` LEFT JOIN `recipient` ON `journal`.`recipient` = `recipient`.`recipientID` RIGHT JOIN `account` AS `creditAccount` ON `journal`.`creditAccount` = `creditAccount`.`accountID` RIGHT JOIN `account` AS `debitAccount` ON `journal`.`debitAccount` = `debitAccount`.`accountID` WHERE `journal`.`reconcilation` = 'N' AND `creditAccount`.`reconcilationAllow` = 'Y' ORDER BY `journal`.`date` ASC";
                                                 $result = mysqli_query($userLink, $sqlquery);
                     
                                                 // Prüfen ob Datensätze vorhanden

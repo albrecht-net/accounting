@@ -6,9 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.xx.x (2019.xx.xx)
+## v2.28.0-beta (2019.05.28)
 ### Changed
 - Alle Abschnitte der Applikation sind optisch durch Karten hervorgehoben.
+- Das Auswahlfeld für die Buchungsreferenz (entry.php) wird neu nach dem Buchungsdatum, und nicht mehr nach dem Erstelldatum sortiert.
 
 ---
 

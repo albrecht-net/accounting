@@ -147,7 +147,7 @@ include 'includes/standingOrderCheck.inc.php';
                                 <div class="col-12">
                                     <?php
                                     // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL";
+                                    $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL WHERE accountIsActive = 'Y'";
                                     $result = mysqli_query($userLink, $sqlquery);
 
                                     // Prüfen ob Datensätze vorhanden

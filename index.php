@@ -138,6 +138,41 @@ include 'includes/standingOrderCheck.inc.php';
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card mt-3">
+                        <h5 class="card-header" id="balanceOverview">Saldo Übersicht</h5>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <?php
+                                    // SQL-Query bereitstellen
+                                    $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL WHERE accountIsActive = 'Y'";
+                                    $result = mysqli_query($userLink, $sqlquery);
+
+                                    // Prüfen ob Datensätze vorhanden
+                                    if (mysqli_num_rows($result) >= 1): ?>
+                                        <table class="table table-borderless">
+                                            <tbody>
+                                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                                    <tr>
+                                                        <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
+                                                        <td class="p-0 text-nowrap"><?php echo 'CHF ' . floatval($row['balance']); ?></td>
+                                                    </tr>
+                                                <?php endwhile; ?>
+                                            </tbody>
+                                        </table>
+                                    <?php else: ?>
+                                        <p class="lead">Keine Einträge gefunden</p>
+                                        <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Konten erfasst.</p>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         <?php else: ?>
             <p class="lead">Für die aktuelle Sitzung wurde keine Datenbank ausgewählt. Sie können eine <a href="settings/database.php">neue Datenbank hinzufügen</a> oder sich <a href="logout.php">abmelden</a></p>
         <?php endif ?>

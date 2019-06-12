@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## v2.29.0-beta (xxx.xx.xx)
+### Added
+- In der Karte "Saldo Übersicht" auf der Startseite (index.php) werden die aktuellen Saldos aller aktiven Konten angezeigt.
+
+---
+
 ## v2.28.0-beta (2019.05.28)
 ### Changed
 - Alle Abschnitte der Applikation sind optisch durch Karten hervorgehoben.

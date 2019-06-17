@@ -81,7 +81,7 @@ $('#dTableSavedSo').DataTable({
 //
 $('#dTableRecipient').DataTable({
     paging: false,
-    "dom": '<"float-right"f><t><"float-left"i>'
+    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
 });
 
 //
@@ -89,7 +89,7 @@ $('#dTableRecipient').DataTable({
 //
 $('#dTableClassification').DataTable({
     paging: false,
-    "dom": '<"float-right"f><t><"float-left"i>'
+    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
 });
 
 //

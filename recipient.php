@@ -82,9 +82,9 @@ include 'includes/standingOrderCheck.inc.php';
                                     // SQL-Query bereitstellen
                                     $sqlquery = "SELECT * FROM recipient";
                                     $result = mysqli_query($userLink, $sqlquery);
-                    
+
                                     // Prüfen ob Datensätze vorhanden
-                                    if (mysqli_num_rows($result) >= 1): ?>              
+                                    if (mysqli_num_rows($result) >= 1): ?>
                                         <table id="dTableRecipient" class="table table-striped">
                                             <thead>
                                                 <tr>

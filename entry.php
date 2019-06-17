@@ -343,6 +343,7 @@ if (isset($_GET['standingOrder'])) {
                                         <div class="row">
                                             <div class="form-group col-12"> <!-- Buchungsreferenz -->
                                                 <label for="entryReference">Buchungsreferenz</label>
+                                                <p class="mb-0"><small>Zwischentotal der Auswahl: CHF <span id="entryReferenceSubtotal"></span></small></p>
                                                 <?php
                                                 // SQL-Query bereitstellen
                                                 $sqlquery = "SELECT `journal`.`entryID`, `journal`.`date`, `recipient`.`label` AS `recipient`, `journal`.`grandTotal` FROM `journal` LEFT JOIN `recipient` ON `journal`.`recipient` = `recipient`.`recipientID` RIGHT JOIN `account` AS `creditAccount` ON `journal`.`creditAccount` = `creditAccount`.`accountID` RIGHT JOIN `account` AS `debitAccount` ON `journal`.`debitAccount` = `debitAccount`.`accountID` WHERE `journal`.`reconcilation` = 'N' AND `creditAccount`.`reconcilationAllow` = 'Y' ORDER BY `journal`.`date` ASC";

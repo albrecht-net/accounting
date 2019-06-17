@@ -6,9 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.29.0-beta (xxx.xx.xx)
+## v2.29.1-beta (xxx.xx.xx)
 ### Added
 - In der Karte "Saldo Übersicht" auf der Startseite (index.php) werden die aktuellen Saldos aller aktiven Konten angezeigt.
+### Fixed
+- Die Tabellen "Erfasste Empfänger" (recipient.php) und "Erfasste Klassifikationen" (classification.php) überlaufen auf schmalen Displays (zB. Smartphone) rechtsseitig nicht mehr [IS #40](https://github.com/albrecht-net/accounting/issues/40).
 
 ---
 

@@ -96,3 +96,33 @@ $('.skip-standingOrder').click(function() {
         
     });
 });
+
+//
+// Subtotal entryReference
+//
+function entryReferenceSubtotal(prop, sumout) {
+    var values = $(prop).map(function() {
+        return parseFloat($(this).attr('data-grandTotal'));
+    }).get(),
+    sum = 0;
+
+    console.groupCollapsed('Values of selection');
+    console.log(values);
+    console.groupEnd();
+
+    values.forEach(function (item) {
+        sum += item;
+    });
+
+    $(sumout).text(sum.toFixed(2));
+};
+
+// Properties beim Laden der Seite anwenden
+$(document).ready(function() {
+    entryReferenceSubtotal($('#entryReference option:selected'), '#entryReferenceSubtotal')
+});
+
+// Properties bei Änderung der Auswahl anwendung
+$("#entryReference").change(function() {
+    entryReferenceSubtotal($('option:selected', this), '#entryReferenceSubtotal');
+});

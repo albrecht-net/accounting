@@ -100,7 +100,7 @@ $('.skip-standingOrder').click(function() {
 //
 // Subtotal entryReference
 //
-function entryReferenceSubtotal(prop, sumout) {
+function entryReferenceSubtotal(prop) {
     var values = $(prop).map(function() {
         return parseFloat($(this).attr('data-grandTotal'));
     }).get(),
@@ -114,15 +114,45 @@ function entryReferenceSubtotal(prop, sumout) {
         sum += item;
     });
 
-    $(sumout).text(sum.toFixed(2));
+    return sum;
 };
 
-// Properties beim Laden der Seite anwenden
+function entryReferenceDifference(sumEntryReference) {
+    if($('#entryReference option:selected').length == 0) {
+        $('#entryReferenceDifference').removeAttr('class');
+        $('#entryReferenceDifference').html('<i>Keine Buchungsreferenz gewählt</i>');
+    } else {
+        var sumEntryDifference = $('#grandTotal').val() - sumEntryReference;
+
+        if(sumEntryDifference == 0) {
+            $('#entryReferenceDifference').attr({
+                'class' : 'text-success'
+            });
+        } else {
+            $('#entryReferenceDifference').attr({
+                'class' : 'text-danger'
+            });
+        }
+        $('#entryReferenceDifference').text('CHF ' + sumEntryDifference.toFixed(2));
+    }
+}
+
+// On document ready
 $(document).ready(function() {
-    entryReferenceSubtotal($('#entryReference option:selected'), '#entryReferenceSubtotal')
+    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    entryReferenceDifference(sumEntryReference);
 });
 
-// Properties bei Änderung der Auswahl anwendung
+// On selection change
 $("#entryReference").change(function() {
-    entryReferenceSubtotal($('option:selected', this), '#entryReferenceSubtotal');
+    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    entryReferenceDifference(sumEntryReference);
+});
+
+// On input change of grandTotal
+$('#grandTotal').on('change paste keyup', function() {
+    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    entryReferenceDifference(sumEntryReference);
 });

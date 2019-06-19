@@ -360,7 +360,7 @@ if (isset($_GET['standingOrder'])) {
                                                 endif; ?>
                                                 </select>
                                                 <small id="entryReferenceHelp" class="form-text text-muted">
-                                                    Zwischentotal der Auswahl: CHF <span id="entryReferenceSubtotal"></span> / Differenz zum erfassten <a href="#grandTotal" class="text-muted">Betrag</a>: <span id="entryReferenceDifference"></span>
+                                                    Zwischentotal der Auswahl: CHF <span id="entryReferenceSubtotal"></span> / Differenz zum erfassten Betrag: <span id="entryReferenceDifference"></span>
                                                 </small>
                                             </div>
                                         </div>

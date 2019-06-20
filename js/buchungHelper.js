@@ -96,3 +96,63 @@ $('.skip-standingOrder').click(function() {
         
     });
 });
+
+//
+// Subtotal entryReference
+//
+function subtotalOfSelect(prop, attr) {
+    var values = $(prop).map(function() {
+        return parseFloat($(this).attr(attr));
+    }).get(),
+    sum = 0;
+
+    console.groupCollapsed('Values of selection');
+    console.log(values);
+    console.groupEnd();
+
+    values.forEach(function (item) {
+        sum += item;
+    });
+
+    return sum;
+};
+
+function entryReferenceDifference(sumEntryReference) {
+    if($('#entryReference option:selected').length == 0) {
+        $('#entryReferenceDifference').removeAttr('class');
+        $('#entryReferenceDifference').html('<i>Keine Buchungsreferenz gewählt</i>');
+    } else {
+        var sumEntryDifference = $('#grandTotal').val() - sumEntryReference;
+
+        if(sumEntryDifference == 0) {
+            $('#entryReferenceDifference').attr({
+                'class' : 'text-success'
+            });
+        } else {
+            $('#entryReferenceDifference').attr({
+                'class' : 'text-danger'
+            });
+        }
+        $('#entryReferenceDifference').text('CHF ' + sumEntryDifference.toFixed(2));
+    }
+}
+
+// On document ready
+$(document).ready(function() {
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
+    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    entryReferenceDifference(sumEntryReference);
+});
+
+// On selection change
+$("#entryReference").change(function() {
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
+    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    entryReferenceDifference(sumEntryReference);
+});
+
+// On input change of grandTotal
+$('#grandTotal').on('change paste keyup', function() {
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
+    entryReferenceDifference(sumEntryReference);
+});

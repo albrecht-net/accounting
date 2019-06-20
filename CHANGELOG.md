@@ -6,10 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.30.1-beta (xxx.xx.xx)
+## v2.31.1-beta (xxx.xx.xx)
 ### Added
 - In der Karte "Saldo Übersicht" auf der Startseite (index.php) werden die aktuellen Saldos aller aktiven Konten angezeigt.
 - Es wird die Summe aller ausgewählten Einträge der Buchungsreferenz, sowie die daraus resultierende Differenz zum Betrags-Eingabefeld, angezeigt [IS #42](https://github.com/albrecht-net/accounting/issues/42).
+### Changed
+- Design der Karte "Daueraufträge" (entry.php#standingOrder) verbessert.
 ### Fixed
 - Die Tabellen "Erfasste Empfänger" (recipient.php) und "Erfasste Klassifikationen" (classification.php) überlaufen auf schmalen Displays (zB. Smartphone) rechtsseitig nicht mehr [IS #40](https://github.com/albrecht-net/accounting/issues/40).
 

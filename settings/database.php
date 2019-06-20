@@ -97,7 +97,7 @@ if ($_POST['trValueDelete']) {
                                     <div class="form-group">
                                         <label for="dbPassword">Passwort</label>
                                         <input type="password" class="form-control" name="dbPassword" id="dbPassword" required>
-                                        <small id="dbPassword" class="form-text text-muted">Hinweis: Das Passwort wird in Klartext in der Datenbank gespeichert! Verwenden Sie einen Datenbank-Benutzer mit eingeschränkten Rechten.</small>
+                                        <small id="dbPasswordHelp" class="form-text text-muted">Hinweis: Das Passwort wird in Klartext in der Datenbank gespeichert! Verwenden Sie einen Datenbank-Benutzer mit eingeschränkten Rechten.</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="dbName">Datenbankname</label>

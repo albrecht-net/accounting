@@ -77,45 +77,43 @@ if (isset($_GET['standingOrder'])) {
                 <div class="col-md-4 order-md-2">
                     <div class="card mt-3">
                         <h5 class="card-header" id="standingOrder">Daueraufträge</h5>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <?php
-                                    // Prüfen ob Datensätze vorhanden
-                                    if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) < 1): ?>
-                                    <p>Keine anstehende Buchung.</p>
-                    
-                                    <?php else: 
-                                    // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
-                                    $result = mysqli_query($userLink, $sqlquery);
-                                    ?>
-                                    <div class="accordion" id="accordionStandingOrder">
-                                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                        <!-- Card for standingOrder: <?php echo intval($row['standingOrderID']); ?> -->
-                                        <div class="card<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' bg-light' : ''); ?>">
-                                            <div class="card-body">
-                                                <h6 class="card-title m-0">
-                                                    <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="true" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
-                                                        <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
-                                                    </button>
-                                                </h6>
-                                                <small class="card-text">Fällig seit: <span id="dueDate<?php echo intval($row['standingOrderID']); ?>"><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></span></small>
-                                            </div>
-        
-                                            <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#accordionStandingOrder">
-                                                <div class="card-body pt-0">
-                                                    <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" id="chStOrBtn<?php echo intval($row['standingOrderID']); ?>" href="entry.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
-                                                    <button type="button" class="btn btn-secondary btn-sm btn-block skip-standingOrder" value="<?php echo intval($row['standingOrderID']); ?>">Einmalig überspringen</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php endwhile; ?>
+                        <?php
+                        // Prüfen ob Datensätze vorhanden
+                        if (intval(json_decode($_COOKIE['standingOrder'], TRUE)['count']) < 1): ?>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <p class="mb-0">Keine anstehende Buchung.</p>
                                     </div>
-                                    <?php endif; ?>
                                 </div>
                             </div>
-                        </div>
+
+                        <?php else: 
+                            // SQL-Query bereitstellen
+                            $sqlquery = "SELECT `standingOrderID`, `label` AS `standingOrderLabel`, `nextExecutionDate` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
+                            $result = mysqli_query($userLink, $sqlquery); ?>
+
+                            <ul class="list-group list-group-flush" id="listgroupStandingOrder">
+                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                    <!-- Card for standingOrder: <?php echo intval($row['standingOrderID']); ?> -->
+                                    <li class="list-group-item<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' list-group-item-light' : ''); ?>">
+                                        <h6 class="m-0">
+                                            <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? 'true' : 'false'); ?>" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
+                                                <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
+                                            </button>
+                                        </h6>
+                                        <small>Fällig seit: <span id="dueDate<?php echo intval($row['standingOrderID']); ?>"><?php echo date_format(date_create($row['nextExecutionDate']), 'd.m.Y'); ?></span></small>
+
+                                        <div id="collapse<?php echo intval($row['standingOrderID']); ?>" class="mt-2 collapse<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' show' : ''); ?>" data-parent="#listgroupStandingOrder">
+                                            <a class="btn btn-primary btn-block<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' disabled' : ''); ?>" id="chStOrBtn<?php echo intval($row['standingOrderID']); ?>" href="entry.php?standingOrder=<?php echo intval($row['standingOrderID']); ?>#newEntry" role="button">Dauerauftrag auswählen</a>
+                                            <button type="button" class="btn btn-secondary btn-sm btn-block skip-standingOrder" value="<?php echo intval($row['standingOrderID']); ?>">Einmalig überspringen</button>
+                                        </div>
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php endif; ?>
+
+                        </ul>
                     </div>
                 </div>
 

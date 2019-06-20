@@ -100,9 +100,9 @@ $('.skip-standingOrder').click(function() {
 //
 // Subtotal entryReference
 //
-function entryReferenceSubtotal(prop) {
+function subtotalOfSelect(prop, attr) {
     var values = $(prop).map(function() {
-        return parseFloat($(this).attr('data-grandTotal'));
+        return parseFloat($(this).attr(attr));
     }).get(),
     sum = 0;
 
@@ -139,20 +139,20 @@ function entryReferenceDifference(sumEntryReference) {
 
 // On document ready
 $(document).ready(function() {
-    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
     $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
     entryReferenceDifference(sumEntryReference);
 });
 
 // On selection change
 $("#entryReference").change(function() {
-    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
     $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
     entryReferenceDifference(sumEntryReference);
 });
 
 // On input change of grandTotal
 $('#grandTotal').on('change paste keyup', function() {
-    var sumEntryReference = entryReferenceSubtotal($('#entryReference option:selected'));
+    var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
     entryReferenceDifference(sumEntryReference);
 });

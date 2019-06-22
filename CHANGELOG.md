@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.31.1-beta (xxx.xx.xx)
+## v2.31.1-beta (2019.06.22)
 ### Added
 - In der Karte "Saldo Übersicht" auf der Startseite (index.php) werden die aktuellen Saldos aller aktiven Konten angezeigt.
 - Es wird die Summe aller ausgewählten Einträge der Buchungsreferenz, sowie die daraus resultierende Differenz zum Betrags-Eingabefeld, angezeigt [IS #42](https://github.com/albrecht-net/accounting/issues/42).

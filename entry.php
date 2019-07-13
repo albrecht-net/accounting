@@ -115,6 +115,40 @@ if (isset($_GET['standingOrder'])) {
 
                         </ul>
                     </div>
+
+                    <div class="card mt-3 d-none d-md-block">
+                        <h5 class="card-header" id="templates">Vorlagen</h5>
+
+
+                        <?php
+                        // SQL-Query bereitstellen
+                        $sqlquery = "SELECT `templateID`, `created`, `label`, `recipient`, `invoiceNo`, `entryText`, `grandTotal`, `debitAccount`, `creditAccount`, `period`, `classification1`, `classification2`, `classification3` FROM `template` ORDER BY `label` ASC";
+                        $result = mysqli_query($userLink, $sqlquery);
+    
+                        // Prüfen ob Datensätze vorhanden
+                        if (mysqli_num_rows($result) >= 1): ?>                
+                            <ul class="list-group list-group-flush">
+                                <?php while ($row = mysqli_fetch_assoc($result)):
+                                    // Vorlage-Werte in neues Array schreiben
+                                    $valueTemplate = array_slice($row, 3);
+                                    
+                                    // Leere Felder aus valueTemplate Array entfernen
+                                    $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00')); ?>
+
+                                    <a href="entry.php?<?php echo http_build_query($valueTemplate); ?>" class="list-group-item list-group-item-action<?php echo (intval($_GET['template']) == $row['templateID'] ? ' active' : ''); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php else: ?>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p class="lead">Keine Vorlage gefunden</p>
+                                    <p class="mb-0">Sie haben für die ausgewählte Ziel-Datenbank noch keine Vorlage erstellt. Erstellen Sie Ihre erste Vorlage gleich <a href="entry.php#addTemplate">hier</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div class="col-md-8 order-md-1">

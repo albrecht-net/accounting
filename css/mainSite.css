@@ -7,6 +7,10 @@
     max-width: 1430px;
 }
 
+.btn.text-wrap {
+    white-space: normal;
+}
+
 @media (max-width: 991.98px) {
     .container {
         max-width: 960px;

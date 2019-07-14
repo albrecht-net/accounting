@@ -62,6 +62,8 @@ if (isset($_GET['standingOrder'])) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/mainSite.css">
 
     <title>Buchung erfassen</title>
 </head>
@@ -98,7 +100,7 @@ if (isset($_GET['standingOrder'])) {
                                     <!-- Card for standingOrder: <?php echo intval($row['standingOrderID']); ?> -->
                                     <li class="list-group-item<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? ' list-group-item-light' : ''); ?>">
                                         <h6 class="m-0">
-                                            <button class="btn btn-link btn-block text-left p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? 'true' : 'false'); ?>" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
+                                            <button class="btn btn-link btn-block text-left text-wrap p-0" type="button" data-toggle="collapse" data-target="#collapse<?php echo intval($row['standingOrderID']); ?>" aria-expanded="<?php echo (intval($_SESSION['standingOrder']['standingOrderID']) == $row['standingOrderID'] ? 'true' : 'false'); ?>" aria-controls="collapse<?php echo intval($row['standingOrderID']); ?>">
                                                 <?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?>
                                             </button>
                                         </h6>

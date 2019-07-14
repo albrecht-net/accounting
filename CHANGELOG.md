@@ -6,9 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.32.0-beta (2019.xx.xx)
+## v2.34.0-beta (2019.xx.xx)
 ### Added
 - Beim Eingabeformular einer neuen Buchung (entry.php) werden in einer eigenen Karte die Vorlagen verlinkt. Diese Karte ist auf Mobilgeräten zur besseren Übersicht ausgeblendet.
+### Changed
+- Die Containerbreite bei Displaygrössen bis md (992px) wurde erhöht.
+- Textumbrüche bei ausgewählten Schaltflächen (explizit: Linktext bei Dauerauftragsauswahl (entry.php)) hinzugefügt.
 
 ---
 

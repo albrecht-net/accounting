@@ -309,7 +309,7 @@ if (isset($_GET['standingOrder'])) {
                                             </div>
                                             <div class="form-group col-md-2"> <!-- Betrag -->
                                                 <label for="grandTotal">Betrag</label>
-                                                <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.01" lang="en" value="<?php echo floatval($_GET['grandTotal']); ?>" required>
+                                                <input class="form-control chk-toggle-req-slave" type="number" id="grandTotal" name="grandTotal" step="0.001" lang="de-CH" value="<?php echo floatval($_GET['grandTotal']); ?>" required>
                                             </div>
                                         </div>
                                         <div class="form-row">

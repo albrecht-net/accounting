@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Display für GrandTotal
                 $tmpGTVal = $row['grandTotal'];
                 $row['grandTotal'] = [];
-                $row['grandTotal']['display'] = 'CHF ' . $tmpGTVal;
+                $row['grandTotal']['display'] = 'CHF ' . number_format($tmpGTVal, 2, '.', '’');
 
                 // Datensatz im JSON-Format vorbereiten
                 $jsResponse['data'][] = $row;

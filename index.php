@@ -157,7 +157,7 @@ include 'includes/standingOrderCheck.inc.php';
                                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                                     <tr>
                                                         <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
-                                                        <td class="p-0 text-nowrap"><?php echo 'CHF ' . floatval($row['balance']); ?></td>
+                                                        <td class="p-0 text-nowrap"><?php echo 'CHF ' . number_format(floatval($row['balance']), 2, '.', '’'); ?></td>
                                                     </tr>
                                                 <?php endwhile; ?>
                                             </tbody>

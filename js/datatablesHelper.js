@@ -6,7 +6,7 @@ $(document).ready(function (){
 dTableLastEntries = $('#dTableLastEntries').DataTable({
     searching: true,
     ordering: true,
-    'order': [
+    "order": [
         1, 'desc'
     ],
     scrollX: true,
@@ -26,7 +26,10 @@ dTableLastEntries = $('#dTableLastEntries').DataTable({
         {"data": "entryText"},
         {"data": "debitAccount.display"},
         {"data": "creditAccount.display"},
-        {"data": "grandTotal.display"},
+        {"data": {
+            "_": "grandTotal.display",
+            "sort": "grandTotal.value"
+        }, "className": "text-right", "type": "num-fmt"},
         {"data": "classification1"},
         {"data": "classification2"},
         {"data": "classification3"},
@@ -46,7 +49,7 @@ dTableLastEntries = $('#dTableLastEntries').DataTable({
             });
         }
     },
-    'dom': "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
+    "dom": "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
 });
 
 //
@@ -54,14 +57,14 @@ dTableLastEntries = $('#dTableLastEntries').DataTable({
 //
 $('#dTableTemplates').DataTable({
     paging: false,
-    'columnDefs': [
+    "columnDefs": [
         {'targets': 3, 'searchable': false},
         {'targets': [2, 3], 'orderable': false}
     ],
-    'order': [
+    "order": [
         1, 'asc'
     ],
-    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+    "dom": "<'float-right'f><'table-responsive't><'float-left'i>"
 });
 
 //
@@ -69,11 +72,11 @@ $('#dTableTemplates').DataTable({
 //
 $('#dTableSavedSo').DataTable({
     paging: false,
-    'columnDefs': [
+    "columnDefs": [
         {'targets': [5, 6, 9, 10], 'searchable': false},
         {'targets': [9, 10], 'orderable': false}
     ],
-    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+    "dom": "<'float-right'f><'table-responsive't><'float-left'i>"
 });
 
 //
@@ -81,7 +84,7 @@ $('#dTableSavedSo').DataTable({
 //
 $('#dTableRecipient').DataTable({
     paging: false,
-    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+    "dom": "<'float-right'f><'table-responsive't><'float-left'i>"
 });
 
 //
@@ -89,7 +92,7 @@ $('#dTableRecipient').DataTable({
 //
 $('#dTableClassification').DataTable({
     paging: false,
-    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+    "dom": "<'float-right'f><'table-responsive't><'float-left'i>"
 });
 
 //
@@ -100,7 +103,7 @@ $('#dTableDatabase').DataTable({
     searching: false,
     info: false,
     ordering: false,
-    "dom": '<"float-right"f><"table-responsive"t><"float-left"i>'
+    "dom": "<'float-right'f><'table-responsive't><'float-left'i>"
 });
 
 });

@@ -14,6 +14,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Mit Ziel Datenbank verbinden
     require_once 'userDbConnect.inc.php';
 
+    // Nummer-Formatierung
+    require_once 'numberFormatter.inc.php';
+
     // Response-header
     header('Content-Type: application/json');
 
@@ -170,7 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Display für GrandTotal
                 $tmpGTVal = $row['grandTotal'];
                 $row['grandTotal'] = [];
-                $row['grandTotal']['display'] = 'CHF ' . number_format($tmpGTVal, 2, '.', '’');
+                $row['grandTotal']['display'] = 'CHF ' . numfmt_format($fmtD, $tmpGTVal);
+                $row['grandTotal']['value'] = numfmt_format($fmtV, $tmpGTVal);
 
                 // Datensatz im JSON-Format vorbereiten
                 $jsResponse['data'][] = $row;

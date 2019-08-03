@@ -52,10 +52,13 @@ if (isset($_GET['standingOrder'])) {
     // Fällige Daueraufträge prüfen
     include 'includes/standingOrderCheck.inc.php';
 }
+
+// Nummer-Formatierung
+require_once 'includes/numberFormatter.inc.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?php echo $config['lang']; ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
@@ -389,7 +392,7 @@ if (isset($_GET['standingOrder'])) {
                                                 <?php else: ?>
                                                 <select class="form-control chk-toggle-dis-invert-slave" id="entryReference" name="entryReference[]" multiple>
                                                     <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                                    <option value="<?php echo intval($row['entryID']); ?>" data-grandTotal="<?php echo floatval($row['grandTotal']); ?>"><?php echo htmlspecialchars($row['date'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8') . ', CHF ' . floatval($row['grandTotal']); ?></option>
+                                                    <option value="<?php echo intval($row['entryID']); ?>" data-grandTotal="<?php echo floatval($row['grandTotal']); ?>"><?php echo htmlspecialchars($row['date'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($row['recipient'], ENT_QUOTES, 'UTF-8') . ', CHF ' . numfmt_format($fmtD, floatval($row['grandTotal'])); ?></option>
                                                     <?php endwhile;
                                                 endif; ?>
                                                 </select>
@@ -478,6 +481,6 @@ if (isset($_GET['standingOrder'])) {
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- BuchungHelper -->
-    <script src="js/buchungHelper.js"></script>
+    <script src="js/entryHelper.js"></script>
 </body>
 </html>

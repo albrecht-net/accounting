@@ -23,6 +23,13 @@ $data = array(
     'dbName' => ''
 );
 
+// Standard Sprache / Region
+$config['lang'] = '';
+
+
+// Ab hier nicht mehr bearbeiten!
+
+
 // Datenbankverbindung
 $config['link'] = mysqli_connect($data['dbHost'] . ':' . $data['dbPort'], $data['dbUsername'], $data['dbPassword'], $data['dbName']);
 

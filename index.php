@@ -14,10 +14,13 @@ require_once 'includes/userDbConnect.inc.php';
 
 // Fällige Daueraufträge prüfen
 include 'includes/standingOrderCheck.inc.php';
+
+// Nummer-Formatierung
+require_once 'includes/numberFormatter.inc.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="de">
+<html lang="<?php echo $config['lang']; ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
@@ -157,7 +160,7 @@ include 'includes/standingOrderCheck.inc.php';
                                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                                     <tr>
                                                         <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
-                                                        <td class="p-0 text-nowrap"><?php echo 'CHF ' . floatval($row['balance']); ?></td>
+                                                        <td class="p-0 text-nowrap text-right"><?php echo 'CHF ' . numfmt_format($fmtD, floatval($row['balance'])); ?></td>
                                                     </tr>
                                                 <?php endwhile; ?>
                                             </tbody>

@@ -117,6 +117,11 @@ function subtotalOfSelect(prop, attr) {
     return sum;
 };
 
+// Format number to locale settings and 2 fixed-point notation
+function numfmt(num) {
+    return num.toLocaleString(document.documentElement.lang, {maximumFractionDigits: 2, minimumFractionDigits: 2});
+}
+
 function entryReferenceDifference(sumEntryReference) {
     if($('#entryReference option:selected').length == 0) {
         $('#entryReferenceDifference').removeAttr('class');
@@ -133,21 +138,21 @@ function entryReferenceDifference(sumEntryReference) {
                 'class' : 'text-danger'
             });
         }
-        $('#entryReferenceDifference').text('CHF ' + sumEntryDifference.toFixed(2));
+        $('#entryReferenceDifference').text('CHF ' + numfmt(sumEntryDifference));
     }
 }
 
 // On document ready
 $(document).ready(function() {
     var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
-    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    $('#entryReferenceSubtotal').text(numfmt(sumEntryReference));
     entryReferenceDifference(sumEntryReference);
 });
 
 // On selection change
 $("#entryReference").change(function() {
     var sumEntryReference = subtotalOfSelect($('#entryReference option:selected'), 'data-grandTotal');
-    $('#entryReferenceSubtotal').text(sumEntryReference.toFixed(2));
+    $('#entryReferenceSubtotal').text(numfmt(sumEntryReference));
     entryReferenceDifference(sumEntryReference);
 });
 

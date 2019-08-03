@@ -478,6 +478,6 @@ if (isset($_GET['standingOrder'])) {
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- BuchungHelper -->
-    <script src="js/buchungHelper.js"></script>
+    <script src="js/entryHelper.js"></script>
 </body>
 </html>

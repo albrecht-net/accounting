@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $tmpGTVal = $row['grandTotal'];
                 $row['grandTotal'] = [];
                 $row['grandTotal']['display'] = 'CHF ' . numfmt_format($fmtD, $tmpGTVal);
-                $row['grandTotal']['value'] = numfmt_format($fmtV, $tmpGTVal);
+                $row['grandTotal']['value'] = floatval($tmpGTVal);
 
                 // Datensatz im JSON-Format vorbereiten
                 $jsResponse['data'][] = $row;

@@ -6,9 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.34.1-beta ()
+## v2.37.0-beta (2019.08.03)
+###
+- In der Konfiguration (config.php) kann die Standard-Sprache und -Region mittels einem IETF BCP 47 Sprachtag festgelegt werden.
 ### Changed
 - Es ist nun möglich, Beträge einer neuen Buchung mit drei Dezimalstellen zu erfassen.
+- Währungsbeträge werden nun abhängig von der Sprache und Region mit den jewiligen Tausender- und Dezimaltrennzeichen dargestellt.
+### Note
+- Die Sprache und Region ist zur Zeit noch fix in der Konfiguration (config.php) festgelegt und kann nicht durch den Benutzer verändert werden.
 
 ---
 

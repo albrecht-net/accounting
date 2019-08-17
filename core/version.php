@@ -4,6 +4,7 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
     // Accounting version tag
     $accountingVersion = 'v2.37.0-beta';
 
+    // Repository Information von Github abrufen
     function fetchRepoInfo ($repo, $tagName, $latest = false) {
         $ch = curl_init();
         
@@ -34,13 +35,15 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
         curl_close($ch);
     };
 
-    $accountingInfo = fetchRepoInfo('accounting', $accountingVersion);
-    
     // Datum Zeitzone konvertieren
-    $accountingInfoPublishedAt = date_timezone_set(date_create($accountingInfo['published_at']), timezone_open(date_default_timezone_get()));
+    function setTimezone ($dateTime) {
+        return date_timezone_set(date_create($dateTime), timezone_open(date_default_timezone_get()));
+    };
+
+    $accountingInfo = fetchRepoInfo('accounting', $accountingVersion);
 
     // Accounting release date
-    $accountingReleaseDate = date_format($accountingInfoPublishedAt, 'd.m.Y H:i:s');
+    $accountingReleaseDate = date_format(setTimezone($accountingInfo['published_at']), 'd.m.Y H:i:s');
 } else {
     http_response_code(204);
 }

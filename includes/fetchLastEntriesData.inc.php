@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $dateFrom = date('Y-m-01', strtotime('apr'));
                     $dateTo = date('Y-m-t', strtotime('jun'));
                     break;
-                } elseif (in_array($curMonth, array('jul', 'sug', 'sep'))) {
+                } elseif (in_array($curMonth, array('jul', 'aug', 'sep'))) {
                     $dateFrom = date('Y-m-01', strtotime('jul'));
                     $dateTo = date('Y-m-t', strtotime('sep'));
                     break;

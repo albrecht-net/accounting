@@ -2,7 +2,25 @@
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
 
     // Accounting version tag
-    $accountingVersion = 'v2.37.0-beta';
+    $accVersion = 'v2.37.0-beta';
+
+    $verInfo = array (
+        'acc' => array (
+            'currentTmpInfo' => fetchRepoInfo('accounting', $accVersion),
+            'current' => $verInfo['currentTmpInfo'][''],
+            'currentDate' => ''
+        ),
+        'dbJour' => array (
+            'current' => '',
+            'currentDate' => '',
+            'latest' => '',
+            'latestDate' => '',
+        ),
+        'dbApp' => array (
+            'current' => '',
+            'currentDate' => ''
+        )
+    );
 
     // Repository Information von Github abrufen
     function fetchRepoInfo ($repo, $tagName, $latest = false) {
@@ -40,10 +58,10 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
         return date_timezone_set(date_create($dateTime), timezone_open(date_default_timezone_get()));
     };
 
-    $accountingInfo = fetchRepoInfo('accounting', $accountingVersion);
+    $accInfo = fetchRepoInfo('accounting', $accVersion);
 
     // Accounting release date
-    $accountingReleaseDate = date_format(setTimezone($accountingInfo['published_at']), 'd.m.Y H:i:s');
+    $accReleaseDate = date_format(setTimezone($accInfo['published_at']), 'd.m.Y H:i:s');
 } else {
     http_response_code(204);
 }

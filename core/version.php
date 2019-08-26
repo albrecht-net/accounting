@@ -4,19 +4,19 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
     // Accounting version tag
     $accVersion = 'v2.37.0-beta';
 
-    $verInfo = array (
-        'acc' => array (
+    $verInfo = array(
+        'acc' => array(
             'currentTmpInfo' => fetchRepoInfo('accounting', $accVersion),
             'current' => $verInfo['currentTmpInfo'][''],
             'currentDate' => ''
         ),
-        'dbJour' => array (
+        'dbJour' => array(
             'current' => '',
             'currentDate' => '',
             'latest' => '',
             'latestDate' => '',
         ),
-        'dbApp' => array (
+        'dbApp' => array(
             'current' => '',
             'currentDate' => ''
         )

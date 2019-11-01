@@ -142,33 +142,129 @@ require_once 'includes/numberFormatter.inc.php';
             </div>
 
             <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card mt-3">
-                        <h5 class="card-header" id="balanceOverview">Saldo Übersicht</h5>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <?php
-                                    // SQL-Query bereitstellen
-                                    $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL WHERE accountIsActive = 'Y'";
-                                    $result = mysqli_query($userLink, $sqlquery);
-
-                                    // Prüfen ob Datensätze vorhanden
-                                    if (mysqli_num_rows($result) >= 1): ?>
-                                        <table class="table table-borderless">
+                <div class="col-12">
+                    <div class="card-columns">
+                        <div class="card mt-3">
+                            <h5 class="card-header" id="balanceOverview">Saldo Übersicht</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <?php
+                                        // SQL-Query bereitstellen
+                                        $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL WHERE accountIsActive = 'Y'";
+                                        $result = mysqli_query($userLink, $sqlquery);
+        
+                                        // Prüfen ob Datensätze vorhanden
+                                        if (mysqli_num_rows($result) >= 1): ?>
+                                            <table class="table table-borderless">
+                                                <tbody>
+                                                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                                        <tr>
+                                                            <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
+                                                            <td class="p-0 text-nowrap text-right"><?php echo 'CHF ' . numfmt_format($fmtD, floatval($row['balance'])); ?></td>
+                                                        </tr>
+                                                    <?php endwhile; ?>
+                                                </tbody>
+                                            </table>
+                                        <?php else: ?>
+                                            <p class="lead">Keine Einträge gefunden</p>
+                                            <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Konten erfasst.</p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <h5 class="card-header" id="lossOverview">Übersicht Ausgaben</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-row">
+                                            <div class="form-group"> <!-- Zeitraum -->
+                                                <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
+                                                <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                                    <option value="1">Laufender Monat</option>
+                                                    <option value="2">Laufendes Quartal</option>
+                                                    <option value="4">Laufendes Jahr</option>
+                                                    <option value="8">Letzter Monat</option>
+                                                    <option disabled></option>
+                                                    <option value="16">Letzte 30 Tage</option>
+                                                    <option value="32">Letzte 90 Tage</option>
+                                                    <option value="64">Letzte 180 Tage</option>
+                                                    <option value="128">Letzte 360 Tage</option>
+                                                    <option disabled></option>
+                                                    <option value="256" selected>Letzte 10 Buchungen</option>
+                                                    <option value="512">Letzte 20 Buchungen</option>
+                                                    <option value="1024">Letzte 30 Buchungen</option>
+                                                    <option value="2048">Letzte 100 Buchungen</option>
+                                                    <option value="4096">Letzte 1000 Buchungen</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <table class="table table-borderless mb-0">
                                             <tbody>
-                                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                                    <tr>
-                                                        <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
-                                                        <td class="p-0 text-nowrap text-right"><?php echo 'CHF ' . numfmt_format($fmtD, floatval($row['balance'])); ?></td>
-                                                    </tr>
-                                                <?php endwhile; ?>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 239.65</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 0.35</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 141.98</td>
+                                                </tr>
                                             </tbody>
                                         </table>
-                                    <?php else: ?>
-                                        <p class="lead">Keine Einträge gefunden</p>
-                                        <p>Sie haben für die ausgewählte Ziel-Datenbank noch keine Konten erfasst.</p>
-                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <h5 class="card-header" id="profitOverview">Übersicht Einnahmen</h5>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-row">
+                                            <div class="form-group"> <!-- Zeitraum -->
+                                                <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
+                                                <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                                    <option value="1">Laufender Monat</option>
+                                                    <option value="2">Laufendes Quartal</option>
+                                                    <option value="4">Laufendes Jahr</option>
+                                                    <option value="8">Letzter Monat</option>
+                                                    <option disabled></option>
+                                                    <option value="16">Letzte 30 Tage</option>
+                                                    <option value="32">Letzte 90 Tage</option>
+                                                    <option value="64">Letzte 180 Tage</option>
+                                                    <option value="128">Letzte 360 Tage</option>
+                                                    <option disabled></option>
+                                                    <option value="256" selected>Letzte 10 Buchungen</option>
+                                                    <option value="512">Letzte 20 Buchungen</option>
+                                                    <option value="1024">Letzte 30 Buchungen</option>
+                                                    <option value="2048">Letzte 100 Buchungen</option>
+                                                    <option value="4096">Letzte 1000 Buchungen</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <table class="table table-borderless mb-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 239.65</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 0.35</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-0">### Samplecategory:</td>
+                                                    <td class="p-0 text-nowrap text-right">CHF 141.98</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>

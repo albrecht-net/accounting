@@ -90,7 +90,7 @@ require_once 'includes/numberFormatter.inc.php';
                                         </div>
                                         <div class="form-group col-md-3 col-xl-2"> <!-- Zeitraum -->
                                             <label for="selPeriodLastEntries">Auswahl Zeitraum</label>
-                                            <select class="form-control filter-input" id="selPeriodLastEntries" name="selPeriodLastEntries" required>
+                                            <select class="form-control filter-input" id="selPeriodLastEntries" name="selPeriodLastEntries" data-table="dTableLastEntries" required>
                                                 <option value="1">Laufender Monat</option>
                                                 <option value="2">Laufendes Quartal</option>
                                                 <option value="4">Laufendes Jahr</option>
@@ -222,20 +222,6 @@ require_once 'includes/numberFormatter.inc.php';
                                         <div class="row">
                                             <div class="col-12">
                                                 <table id="dTableLoss" class="table table-borderless mb-0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 239.65</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 0.35</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 141.98</td>
-                                                        </tr>
-                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -291,20 +277,6 @@ require_once 'includes/numberFormatter.inc.php';
                                         <div class="row">
                                             <div class="col-12">
                                                 <table id="dTableProfit" class="table table-borderless mb-0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 239.65</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 0.35</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="p-0">### Samplecategory:</td>
-                                                            <td class="p-0 text-nowrap text-right">CHF 141.98</td>
-                                                        </tr>
-                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>
@@ -333,11 +305,8 @@ require_once 'includes/numberFormatter.inc.php';
     <script>
         // Datatables reload
         $('.filter-input').change(function() {
-            // var table = new Object();
-            // $('#' + this.getAttribute('data-table')).DataTable();
-            // table.ajax.reload();
-            console.log(dTableLastEntries);
-            console.log(dTableLoss);
+            var table = $('#' + this.getAttribute('data-table')).DataTable();
+            table.ajax.reload();
         });
     </script>
     

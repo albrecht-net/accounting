@@ -44,13 +44,44 @@ dTableLastEntries = $('#dTableLastEntries').DataTable({
         "type": "POST",
         "data": function(data) {
             return $.extend( {}, data, {
-                'account': $('#leSelAccount').val(),
-                'periodOfLE': $('#leSelPeriodOfLE').val()
+                'account': $('#selAccountLastEntries').val(),
+                'period': $('#selPeriodLastEntries').val()
             });
         }
     },
     "dom": "<'row justify-content-between'<'col-auto'l><'col-auto'f>><'row'<'col-12'<'table-responsive't>>><'row'<'col-12'<'float-left'i><'float-right'p>>>"
 });
+
+//
+// Overview loss, index.php
+//
+dTableLoss = $('#dTableLoss').DataTable({
+    searching: false,
+    ordering: false,
+    "columns": [
+        {"data": "categoryLabel.display",
+        "className": "p-0"
+        },
+        {"data": {
+            "_": "balance.display",
+            "sort": "balance.value"
+            },
+            "className": "p-0 text-nowrap text-right",
+            "type": "num-fmt"
+        },
+    ],
+    "ajax": {
+        "url": "includes/fetchLossData.inc.php",
+        "type": "POST",
+        "data": function(data) {
+            return $.extend( {}, data, {
+                'period': $('#selPeriodLoss').val()
+            });
+        }
+    },
+    "dom": "<'row'<'col-12't>>"
+});
+
 
 //
 // templates, templates.php

@@ -51,7 +51,7 @@ require_once 'includes/numberFormatter.inc.php';
                                 <div class="col-12 mb-3">
                                     <div class="form-row">
                                         <div class="form-group col-md-5"> <!-- Konto Auswahl -->
-                                            <label for="leSelAccount">Konto Auswahl</label>
+                                            <label for="selAccountLastEntries">Konto Auswahl</label>
                                             <?php
                                             // SQL-Query bereitstellen
                                             $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
@@ -59,10 +59,10 @@ require_once 'includes/numberFormatter.inc.php';
                         
                                             // Prüfen ob Datensätze vorhanden
                                             if (mysqli_num_rows($result) < 1): ?>
-                                            <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
+                                            <select class="form-control filter-input" id="selAccountLastEntries" name="selAccountLastEntries" required>
                                                 <option disabled>Keine Datensätze vorhanden</option>
                                             <?php else: ?>
-                                            <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
+                                            <select class="form-control filter-input" id="selAccountLastEntries" name="selAccountLastEntries" required>
                                                 <option value="0">Alle anzeigen</option>
                                                 <?php
                                                 // Resulat in 1 Array schreiben, sortiert nach Kategorie
@@ -89,8 +89,8 @@ require_once 'includes/numberFormatter.inc.php';
                                             </select>
                                         </div>
                                         <div class="form-group col-md-3 col-xl-2"> <!-- Zeitraum -->
-                                            <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
-                                            <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                            <label for="selPeriodLastEntries">Auswahl Zeitraum</label>
+                                            <select class="form-control filter-input" id="selPeriodLastEntries" name="selPeriodLastEntries" required>
                                                 <option value="1">Laufender Monat</option>
                                                 <option value="2">Laufendes Quartal</option>
                                                 <option value="4">Laufendes Jahr</option>
@@ -180,12 +180,17 @@ require_once 'includes/numberFormatter.inc.php';
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-row">
-                                            <div class="form-group"> <!-- Zeitraum -->
-                                                <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
-                                                <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                            <div class="form-group col-md-9 col-xl-6"> <!-- Zeitraum -->
+                                                <label for="selPeriodLoss">Auswahl Zeitraum</label>
+                                                <?php
+                                                // SQL-Query bereitstellen
+                                                $sqlquery = "SELECT p.periodID, p.label FROM period p ORDER BY p.label ASC";
+                                                $result = mysqli_query($userLink, $sqlquery); ?>
+
+                                                <select class="form-control filter-input" id="selPeriodLoss" name="selPeriodLoss" data-table="dTableLoss" required>
                                                     <option value="1">Laufender Monat</option>
                                                     <option value="2">Laufendes Quartal</option>
-                                                    <option value="4">Laufendes Jahr</option>
+                                                    <option value="4" selected>Laufendes Jahr</option>
                                                     <option value="8">Letzter Monat</option>
                                                     <option disabled></option>
                                                     <option value="16">Letzte 30 Tage</option>
@@ -193,30 +198,47 @@ require_once 'includes/numberFormatter.inc.php';
                                                     <option value="64">Letzte 180 Tage</option>
                                                     <option value="128">Letzte 360 Tage</option>
                                                     <option disabled></option>
-                                                    <option value="256" selected>Letzte 10 Buchungen</option>
+                                                    <option value="256">Letzte 10 Buchungen</option>
                                                     <option value="512">Letzte 20 Buchungen</option>
                                                     <option value="1024">Letzte 30 Buchungen</option>
                                                     <option value="2048">Letzte 100 Buchungen</option>
                                                     <option value="4096">Letzte 1000 Buchungen</option>
+                                                    <option disabled></option>
+                                                    <optgroup label="Periode">
+
+                                                    <?php
+                                                    // Prüfen ob Datensätze vorhanden
+                                                    if (mysqli_num_rows($result) < 1): ?>
+                                                        <option disabled>Keine Datensätze vorhanden</option>
+                                                    <?php else: 
+                                                        while ($row = mysqli_fetch_assoc($result)): ?>
+                                                            <option value="-<?php echo intval($row['periodID']); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                                        <?php endwhile;
+                                                    endif; ?>
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <table class="table table-borderless mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 239.65</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 0.35</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 141.98</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table id="dTableLoss" class="table table-borderless mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 239.65</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 0.35</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 141.98</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -227,12 +249,17 @@ require_once 'includes/numberFormatter.inc.php';
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-row">
-                                            <div class="form-group"> <!-- Zeitraum -->
-                                                <label for="leSelPeriodOfLE">Auswahl Zeitraum</label>
-                                                <select class="form-control filter-input" id="leSelPeriodOfLE" name="leSelPeriodOfLE" required>
+                                            <div class="form-group col-md-9 col-xl-6"> <!-- Zeitraum -->
+                                                <label for="selPeriodProfit">Auswahl Zeitraum</label>
+                                                <?php
+                                                // SQL-Query bereitstellen
+                                                $sqlquery = "SELECT p.periodID, p.label FROM period p ORDER BY p.label ASC";
+                                                $result = mysqli_query($userLink, $sqlquery); ?>
+
+                                                <select class="form-control filter-input" id="selPeriodProfit" name="selPeriodProfit" data-table="dTableProfit" required>
                                                     <option value="1">Laufender Monat</option>
                                                     <option value="2">Laufendes Quartal</option>
-                                                    <option value="4">Laufendes Jahr</option>
+                                                    <option value="4" selected>Laufendes Jahr</option>
                                                     <option value="8">Letzter Monat</option>
                                                     <option disabled></option>
                                                     <option value="16">Letzte 30 Tage</option>
@@ -240,30 +267,47 @@ require_once 'includes/numberFormatter.inc.php';
                                                     <option value="64">Letzte 180 Tage</option>
                                                     <option value="128">Letzte 360 Tage</option>
                                                     <option disabled></option>
-                                                    <option value="256" selected>Letzte 10 Buchungen</option>
+                                                    <option value="256">Letzte 10 Buchungen</option>
                                                     <option value="512">Letzte 20 Buchungen</option>
                                                     <option value="1024">Letzte 30 Buchungen</option>
                                                     <option value="2048">Letzte 100 Buchungen</option>
                                                     <option value="4096">Letzte 1000 Buchungen</option>
+                                                    <option disabled></option>
+                                                    <optgroup label="Periode">
+
+                                                    <?php
+                                                    // Prüfen ob Datensätze vorhanden
+                                                    if (mysqli_num_rows($result) < 1): ?>
+                                                        <option disabled>Keine Datensätze vorhanden</option>
+                                                    <?php else: 
+                                                        while ($row = mysqli_fetch_assoc($result)): ?>
+                                                            <option value="-<?php echo intval($row['periodID']); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></option>
+                                                        <?php endwhile;
+                                                    endif; ?>
+
                                                 </select>
                                             </div>
                                         </div>
-                                        <table class="table table-borderless mb-0">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 239.65</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 0.35</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="p-0">### Samplecategory:</td>
-                                                    <td class="p-0 text-nowrap text-right">CHF 141.98</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table id="dTableProfit" class="table table-borderless mb-0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 239.65</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 0.35</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="p-0">### Samplecategory:</td>
+                                                            <td class="p-0 text-nowrap text-right">CHF 141.98</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -287,8 +331,13 @@ require_once 'includes/numberFormatter.inc.php';
     <!-- Datatables-Helper -->
     <script src="js/datatablesHelper.js"></script>
     <script>
+        // Datatables reload
         $('.filter-input').change(function() {
-            dTableLastEntries.ajax.reload();
+            // var table = new Object();
+            // $('#' + this.getAttribute('data-table')).DataTable();
+            // table.ajax.reload();
+            console.log(dTableLastEntries);
+            console.log(dTableLoss);
         });
     </script>
     

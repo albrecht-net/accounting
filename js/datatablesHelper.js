@@ -75,6 +75,7 @@ dTableLoss = $('#dTableLoss').DataTable({
         "type": "POST",
         "data": function(data) {
             return $.extend( {}, data, {
+                'type': 3,
                 'period': $('#selPeriodLoss').val()
             });
         }
@@ -105,6 +106,7 @@ dTableProfit = $('#dTableProfit').DataTable({
         "type": "POST",
         "data": function(data) {
             return $.extend( {}, data, {
+                'type': 4,
                 'period': $('#selPeriodProfit').val()
             });
         }

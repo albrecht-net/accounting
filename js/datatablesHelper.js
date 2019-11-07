@@ -71,7 +71,7 @@ dTableLoss = $('#dTableLoss').DataTable({
         },
     ],
     "ajax": {
-        "url": "includes/fetchLossData.inc.php",
+        "url": "includes/fetchPLData.inc.php",
         "type": "POST",
         "data": function(data) {
             return $.extend( {}, data, {
@@ -102,7 +102,7 @@ dTableProfit = $('#dTableProfit').DataTable({
         },
     ],
     "ajax": {
-        "url": "includes/fetchProfitData.inc.php",
+        "url": "includes/fetchPLData.inc.php",
         "type": "POST",
         "data": function(data) {
             return $.extend( {}, data, {

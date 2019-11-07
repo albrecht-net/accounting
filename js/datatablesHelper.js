@@ -82,6 +82,35 @@ dTableLoss = $('#dTableLoss').DataTable({
     "dom": "<'row'<'col-12't>>"
 });
 
+//
+// Overview profit, index.php
+//
+dTableProfit = $('#dTableProfit').DataTable({
+    searching: false,
+    ordering: false,
+    "columns": [
+        {"data": "categoryLabel.display",
+        "className": "p-0"
+        },
+        {"data": {
+            "_": "balance.display",
+            "sort": "balance.value"
+            },
+            "className": "p-0 text-nowrap text-right",
+            "type": "num-fmt"
+        },
+    ],
+    "ajax": {
+        "url": "includes/fetchProfitData.inc.php",
+        "type": "POST",
+        "data": function(data) {
+            return $.extend( {}, data, {
+                'period': $('#selPeriodProfit').val()
+            });
+        }
+    },
+    "dom": "<'row'<'col-12't>>"
+});
 
 //
 // templates, templates.php

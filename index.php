@@ -40,6 +40,41 @@ require_once 'includes/numberFormatter.inc.php';
     include_once 'core/navigation.php';
     ?>
 
+    <!-- Profit Loss Detail -->
+    <div class="modal" id="modalPL" tabindex="-1" role="dialog" aria-labelledby="modalPLTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPLTitle">Detail PL</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                            <td class="p-0">88888 Preview:</td>
+                            <td class="p-0 text-nowrap text-right">CHF 888.88</td>
+                            </tr>
+                            <tr>
+                            <td class="p-0">88888 Preview:</td>
+                            <td class="p-0 text-nowrap text-right">CHF 888.88</td>
+                            </tr>
+                            <tr>
+                            <td class="p-0">88888 Preview:</td>
+                            <td class="p-0 text-nowrap text-right">CHF 888.88</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container container-wide">
         <?php if ($_SESSION['userDb']['userDbSet']): // Überprüfen ob Benutzer Db ausgewählt wurde ?>
             <div class="row">
@@ -221,7 +256,7 @@ require_once 'includes/numberFormatter.inc.php';
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <table id="dTableLoss" class="table table-borderless mb-0">
+                                                <table id="dTableLoss" class="table table-borderless mb-0 tr-info">
                                                 </table>
                                             </div>
                                         </div>
@@ -276,7 +311,7 @@ require_once 'includes/numberFormatter.inc.php';
                                         </div>
                                         <div class="row">
                                             <div class="col-12">
-                                                <table id="dTableProfit" class="table table-borderless mb-0">
+                                                <table id="dTableProfit" class="table table-borderless mb-0 tr-info">
                                                 </table>
                                             </div>
                                         </div>
@@ -307,6 +342,14 @@ require_once 'includes/numberFormatter.inc.php';
         $('.filter-input').change(function() {
             var table = $('#' + this.getAttribute('data-table')).DataTable();
             table.ajax.reload();
+        });
+        $('.tr-info').on('click', 'tr.clickable', function() {
+            var tr = this,
+            value = tr.getAttribute('data-categoryID'),
+            period = tr.getAttribute('data-period');
+
+            console.info(value + ';' + period);
+            $('#modalPL').modal('show');
         });
     </script>
     

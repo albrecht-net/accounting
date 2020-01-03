@@ -70,6 +70,11 @@ dTableLoss = $('#dTableLoss').DataTable({
             "type": "num-fmt"
         },
     ],
+    "createdRow": function(row, data) {
+        $(row).addClass('clickable')
+        $(row).attr('data-categoryID', data.categoryID);
+        $(row).attr('data-period', $('#selPeriodLoss').val());
+    },
     "ajax": {
         "url": "includes/fetchPLData.inc.php",
         "type": "POST",
@@ -101,6 +106,11 @@ dTableProfit = $('#dTableProfit').DataTable({
             "type": "num-fmt"
         },
     ],
+    "createdRow": function(row, data) {
+        $(row).addClass('clickable')
+        $(row).attr('data-categoryID', data.categoryID);
+        $(row).attr('data-period', $('#selPeriodProfit').val());
+    },
     "ajax": {
         "url": "includes/fetchPLData.inc.php",
         "type": "POST",

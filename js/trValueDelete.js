@@ -3,7 +3,7 @@ $('.tr-delete').click(function() {
     var row = this,
         tableID = $(row).closest('table').attr('id'),
         table = $('#' + tableID).DataTable(),
-        btnValue = row.value,
+        btnValue = row.getAttribute('value'),
         tableContent = btnValue.split('-')[0],
         delID = btnValue.split('-')[1],
         numrows = table.rows().count();

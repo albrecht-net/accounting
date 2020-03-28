@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'delID' => intval($_POST['delID'])
     );
 
-    if ($dataInput['tableContent'] != 'Template' && empty($dataInput['delID'])) {
+    if ($dataInput['tableContent'] != 'template' && empty($dataInput['delID'])) {
         echo 0;
     } else {
         // SQL-Query bereitstellen

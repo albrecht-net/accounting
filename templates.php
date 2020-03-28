@@ -79,14 +79,14 @@ include 'includes/standingOrderCheck.inc.php';
                                                     $valueTemplate = array_diff($valueTemplate, array(NULL, '', 0, '0.00'));
                 
                                                     if (intval($_GET['template']) == $row['templateID']): ?>
-                                                        <tr id="Template-<?php echo intval($row['templateID']); ?>" class="text-nowrap table-warning">
+                                                        <tr id="template-<?php echo intval($row['templateID']); ?>" class="text-nowrap table-warning">
                                                     <?php else: ?>
-                                                        <tr id="Template-<?php echo intval($row['templateID']); ?>" class="text-nowrap">
+                                                        <tr id="template-<?php echo intval($row['templateID']); ?>" class="text-nowrap">
                                                     <?php endif; ?>
                                                         <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                                         <td><a href="entry.php?<?php echo http_build_query($valueTemplate); ?>"><?php echo htmlspecialchars($row['label'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                                                         <td><?php echo implode(', ', array_keys($valueTemplate)); ?></td>
-                                                        <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="Template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
+                                                        <td><button type="button" class="btn btn-tr btn-block btn-danger tr-delete" value="template-<?php echo intval($row['templateID']); ?>">Löschen</button></td>
                                                     </tr>
                                                 <?php endwhile; ?>
                                             </tbody>

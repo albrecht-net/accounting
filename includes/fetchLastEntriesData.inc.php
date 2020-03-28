@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Array Eingabe
     $dataInput = array(
         'account' => intval($_POST['account']),
-        'periodOfLE' => intval($_POST['periodOfLE'])
+        'period' => intval($_POST['period'])
     );
     // Leere Felder aus Eingabe Array entfernen
     $dataInput = array_diff($dataInput, array(NULL, ''));
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Prüfen ob Eingabe vorhanden
     if (count($dataInput) == 2) {
         // Zeitraum festlegen
-        switch ($dataInput['periodOfLE']) {
+        switch ($dataInput['period']) {
             case 1: // Laufender Monat
                 $queryUseDate = true;
                 $dateFrom = date('Y-m-01', strtotime('now'));

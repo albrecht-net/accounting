@@ -33,6 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'type' => intval($_POST['type']),
         'period' => intval($_POST['period'])
     );
+
+    // PL-Type Ausgabe in Array Response
+    $jsResponse['PL-Type'] = $dataInput['type'];
+
     // Leere Felder aus Eingabe Array entfernen
     $dataInput = array_diff($dataInput, array(NULL, '', 0));
 
@@ -127,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($queryUseDate) {
                 $sqlquery = "SELECT a.categoryID, a.categoryLabel, SUM(e.grandTotal) * a.classSign AS balance FROM viewAccount a LEFT JOIN viewEntries e ON e.accountID = a.accountID WHERE a.classID IN (" . $dataInput['type'] . ") AND a.accountIsActive = 'Y' AND e.date BETWEEN '" . $dateFrom . "' AND '" . $dateTo . "' GROUP BY a.categoryID ORDER BY a.accountID ASC";
             } elseif ($queryUseLimit) {
-                $sqlquery ="SELECT a.categoryID, a.categoryLabel, SUM(e.grandTotal) * a.classSign AS balance FROM viewAccount a LEFT JOIN (SELECT * FROM _viewEntries _e ORDER BY _e.created DESC LIMIT " . $limit * 2 . ") e ON e.accountID = a.accountID WHERE a.classID IN (" . $dataInput['type'] . ") AND a.accountIsActive = 'Y' GROUP BY a.categoryID HAVING balance IS NOT NULL ORDER BY a.accountID ASC";
+                $sqlquery ="SELECT a.categoryID, a.categoryLabel, SUM(e.grandTotal) * a.classSign AS balance FROM viewAccount a LEFT JOIN (SELECT * FROM viewEntries e ORDER BY e.created DESC LIMIT " . $limit * 2 . ") e ON e.accountID = a.accountID WHERE a.classID IN (" . $dataInput['type'] . ") AND a.accountIsActive = 'Y' GROUP BY a.categoryID HAVING balance IS NOT NULL ORDER BY a.accountID ASC";
             }
         } else {
             $periodID = $dataInput['period'] * -1;

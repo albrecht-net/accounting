@@ -34,6 +34,8 @@ include 'includes/standingOrderCheck.inc.php';
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <!-- Datatables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css">
+    <!-- Datatables FixedColumns CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/3.3.1/css/fixedColumns.bootstrap4.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/mainSite.css">
 
@@ -287,6 +289,8 @@ include 'includes/standingOrderCheck.inc.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <!-- Datatables JS -->
     <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- Datatables FixedColumns JS -->
+    <script src="https://cdn.datatables.net/fixedcolumns/3.3.1/js/dataTables.fixedColumns.min.js"></script>
     <!-- Datatables-Helper -->
     <script src="js/datatablesHelper.js"></script>
     <!-- StandingOrderHelper -->

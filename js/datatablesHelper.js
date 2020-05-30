@@ -72,6 +72,10 @@ $('#dTableTemplates').DataTable({
 //
 $('#dTableSavedSo').DataTable({
     paging: false,
+    scrollX: true,
+    fixedColumns: {
+        leftColumns: 2
+    },
     "columnDefs": [
         {'targets': [5, 6, 9, 10], 'searchable': false},
         {'targets': [9, 10], 'orderable': false}

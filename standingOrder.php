@@ -207,8 +207,8 @@ include 'includes/standingOrderCheck.inc.php';
                                         <table id="dTableSavedSo" class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">Erstelldatum</th>
                                                     <th scope="col">Name</th>
+                                                    <th scope="col">Erstelldatum</th>
                                                     <th scope="col">Vorlage</th>
                                                     <th scope="col">Wiederholung</th>
                                                     <th scope="col">Nächste Ausführung</th>
@@ -250,8 +250,8 @@ include 'includes/standingOrderCheck.inc.php';
                                                     ?>
                 
                                                     <tr id="StandingOrder-<?php echo intval($row['standingOrderID']); ?>">
-                                                        <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                                         <td><?php echo htmlspecialchars($row['standingOrderLabel'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                                        <td data-order="<?php echo strtotime($row['created']); ?>"><?php echo date_format(date_create($row['created']), 'd.m.Y'); ?></td>
                                                         <td><a href="templates.php?template=<?php echo intval($row['templateID']); ?>"><?php echo htmlspecialchars($row['templateLabel'], ENT_QUOTES, 'UTF-8'); ?></a></td>
                                                         <td><?php echo 'Alle ' . intval($row['periodicityValue']) . ' ' . $row['periodicityType']; ?></td>
                                                         <td data-order="<?php echo ($row['nextExecutionDate'] == NULL ? '0' : strtotime($row['nextExecutionDate'])); ?>"><?php echo ($row['nextExecutionDate'] == NULL ? '-' : date_format(date_create($row['nextExecutionDate']), 'd.m.Y')); ?></td>

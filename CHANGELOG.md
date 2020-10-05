@@ -6,14 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## v2.37.1-beta (xxx.xx.xx)
+## v2.39.1-beta (2020.05.31)
+### Changed
+- Die Spalten "Erstelldatum" und "Name" der Tabelle "Erfasste Daueraufträge" wurden getauscht.
+- Die erste Spalte der Tabelle "Erfasste Daueraufträge" ist nun am linken Rand fixiert.
 ### Fixed
 - Der Zeitraum "Laufendes Quartal" der Zuletzt erfassten Buchungen (index.php) liefert für den Monat August kein leeres Resulat mehr [IS #59](https://github.com/albrecht-net/accounting/issues/59).
 
 ---
 
 ## v2.37.0-beta (2019.08.03)
-###
+### Added
 - In der Konfiguration (config.php) kann die Standard-Sprache und -Region mittels einem IETF BCP 47 Sprachtag festgelegt werden.
 ### Changed
 - Es ist nun möglich, Beträge einer neuen Buchung mit drei Dezimalstellen zu erfassen.

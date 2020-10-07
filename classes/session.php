@@ -6,7 +6,7 @@ class session {
      * @see https://www.php.net/manual/en/session.configuration.php
      * @return bool Returns ture if session was successfully started, otherwise false.
      */
-    public static function start() {
+    public static function start($read_and_close = true) {
 
         // session.sid_length
         if (empty($sid_length = config::get('session.sid_length'))) {
@@ -44,7 +44,7 @@ class session {
             'name' => $name,
             'cookie_httponly' => true,
             'use_strict_mode' => true,
-            'read_and_close' => true
+            'read_and_close' => $read_and_close
         ]);
     }
 
@@ -57,7 +57,7 @@ class session {
      */
     public static function put($name, $value) {
         if (session_status() != PHP_SESSION_ACTIVE) {
-            self::start();
+            self::start(false);
         }
 
         $_SESSION[$name] = $value;
@@ -75,7 +75,7 @@ class session {
      */
     public static function get($name = null, $delete = false) {
         if (session_status() != PHP_SESSION_ACTIVE) {
-            self::start();
+            self::start(!$delete);
         }
 
         if ($name != null) {
@@ -105,7 +105,7 @@ class session {
      */
     public static function exists($name) {
         if (session_status() != PHP_SESSION_ACTIVE) {
-            self::start();
+            self::start(true);
         }
 
         return isset($_SESSION[$name]);
@@ -119,7 +119,7 @@ class session {
      */
     public static function delete($name) {
         if (session_status() != PHP_SESSION_ACTIVE) {
-            self::start();
+            self::start(false);
         }
 
         unset($_SESSION[$name]);

@@ -5,19 +5,12 @@ if (!defined('ROOT_PATH')) {
 
 require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
 
-
-// Konfiguration einbinden
-require_once 'config.php';
-
 // Prüfen ob Benutzer angemeldet
 require 'includes/loginSessionCheck.inc.php';
 if (!$lsc) {
     header('Location: login.php');
     exit();
 }
-
-// Mit Ziel Datenbank verbinden
-require_once 'includes/userDbConnect.inc.php';
 
 // Fällige Daueraufträge prüfen
 include 'includes/standingOrderCheck.inc.php';
@@ -62,10 +55,10 @@ require_once 'includes/numberFormatter.inc.php';
                                             <?php
                                             // SQL-Query bereitstellen
                                             $sqlquery = "SELECT `account`.`accountID`, `account`.`label` AS `accountLabel`, `accountCategory`.`label` AS `categoryLabel` FROM `account` LEFT JOIN `accountCategory` ON `account`.`category` = `accountCategory`.`categoryID` WHERE `account`.`active` = 'Y' ORDER BY `accountCategory`.`label` ASC, `account`.`label` ASC";
-                                            $result = mysqli_query($userLink, $sqlquery);
+                                            db::init(2)->query($sqlquery);
                         
                                             // Prüfen ob Datensätze vorhanden
-                                            if (mysqli_num_rows($result) < 1): ?>
+                                            if (db::init(2)->count() < 1): ?>
                                             <select class="form-control filter-input" id="leSelAccount" name="leSelAccount" required>
                                                 <option disabled>Keine Datensätze vorhanden</option>
                                             <?php else: ?>
@@ -74,7 +67,7 @@ require_once 'includes/numberFormatter.inc.php';
                                                 <?php
                                                 // Resulat in 1 Array schreiben, sortiert nach Kategorie
                                                 $valueArray = [];
-                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                while ($row = db::init(2)->fetchArray()) {
                                                     if ($row['categoryLabel'] != $category) {
                                                         $i = 0;
                                                     }
@@ -158,13 +151,13 @@ require_once 'includes/numberFormatter.inc.php';
                                     <?php
                                     // SQL-Query bereitstellen
                                     $sqlquery = "SELECT accountID, accountLabel, balance FROM viewBalanceAL WHERE accountIsActive = 'Y'";
-                                    $result = mysqli_query($userLink, $sqlquery);
+                                    db::init(2)->query($sqlquery);
 
                                     // Prüfen ob Datensätze vorhanden
-                                    if (mysqli_num_rows($result) >= 1): ?>
+                                    if (db::init(2)->count() >= 1): ?>
                                         <table class="table table-borderless">
                                             <tbody>
-                                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                                                <?php while ($row = db::init(2)->fetchArray()): ?>
                                                     <tr>
                                                         <td class="p-0"><?php echo intval($row['accountID']) . ' ' . htmlspecialchars($row['accountLabel'], ENT_QUOTES, 'UTF-8') . ':'; ?></td>
                                                         <td class="p-0 text-nowrap text-right"><?php echo 'CHF ' . numfmt_format($fmtD, floatval($row['balance'])); ?></td>

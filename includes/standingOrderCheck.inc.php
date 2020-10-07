@@ -11,16 +11,18 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
         'entry.php'
     );
 
-    $forceReload = in_array(end(explode('/', $_SERVER['PHP_SELF'])), $sites);
+    $forceReload = in_array(basename($_SERVER['PHP_SELF']), $sites);
 
     // Anzahl fälliger Daueraufträge ermitteln und in Cookie zwischenspeichern
-    if ($_SESSION['userDb']['userDbSet'] == 1 && (!isset($_COOKIE['standingOrder']) || $forceReload || (json_decode($_COOKIE['standingOrder'], TRUE)['userID'] != intval($_SESSION['userID'])) || (json_decode($_COOKIE['standingOrder'], TRUE)['dbID'] != intval($_SESSION['userDb']['dbID'])))) {
+    if (session::get('userDbSet') == 1 && (!isset($_COOKIE['standingOrder']) || $forceReload || (json_decode($_COOKIE['standingOrder'], TRUE)['userID'] != intval(session::get('userID'))) || (json_decode($_COOKIE['standingOrder'], TRUE)['dbID'] != intval(session::get('userDbID'))))) {
         $sqlquery = "SELECT `standingOrderID` FROM `standingOrder` WHERE `nextExecutionDate` <= NOW() AND `closed` = 'N'";
 
+        db::init(2)->query($sqlquery); 
+
         $values = array(
-            'userID' => intval($_SESSION['userID']),
-            'dbID' => intval($_SESSION['userDb']['dbID']),
-            'count' => mysqli_num_rows(mysqli_query($userLink, $sqlquery))
+            'userID' => intval(session::get('userID')),
+            'dbID' => intval(session::get('userDbID')),
+            'count' => db::init(2)->count()
         );
 
         $datePlus = strtotime('+8 hour');

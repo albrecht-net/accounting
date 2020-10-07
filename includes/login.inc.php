@@ -1,14 +1,10 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
     if (!defined('ROOT_PATH')) {
         define('ROOT_PATH', dirname(__FILE__, 2) . DIRECTORY_SEPARATOR);
     }
     
     require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
-
-    // Konfiguration einbinden
-    require_once '../config.php';
 
     // Array Response
     $_SESSION['response'] = array(
@@ -25,19 +21,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Array Eingabe
     $dataInput = array(
-        'username' => mysqli_real_escape_string($config['link'], $_POST['inputUsername']),
+        'username' => db::init(1)->escapeString($_POST['inputUsername']),
         'password' => $_POST['inputPassword']
     );
 
     // Array GET-Variablen
     $dataInputGet = $_GET;
 
-    // SQL-Query bereitstellen
     $sqlquery = "SELECT `username`, `password`, `userID` FROM `users` WHERE `username` = '" . $dataInput['username'] . "' AND `activation` = 'Y' AND `status` = 'Y'";
-    $result = mysqli_query($config['link'], $sqlquery);
+    db::init(1)->query($sqlquery);
 
     // Benutzer abfragen
-    if (mysqli_num_rows($result) != 1) {
+    if (db::init(1)->count() != 1) {
         // Rückmeldung und Weiterleitung
         $_SESSION['response']['alert']['alertType'] = 'danger';
         $_SESSION['response']['alert']['alertDismissible'] = false;
@@ -52,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     } else {
         // Abfrage in Array schreiben
-        $dataDb = mysqli_fetch_assoc($result);
+        $dataDb = db::init(1)->first();
 
         // Passwort validieren
         if (!password_verify($dataInput['password'], $dataDb['password'])) {
@@ -68,23 +63,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: ../login.php?' . http_build_query($dataInputGet));
             }
         } else {
-            // Benutzerdaten in Session schreiben
-            $_SESSION['userID'] = intval($dataDb['userID']);
-            $_SESSION['username'] = $dataDb['username'];
+            // Benutzerdaten in Session schreibenuser23rearID
+            session::put('userID', intval($dataDb['userID']));
+            session::put('username', $dataDb['username']);
 
             // Reponse-Data aus Session löschen
-            unset($_SESSION['response'], $response);
+            session::delete('response');
 
             // Überprüfen ob Benutzer eine Standarddatenbank hat
             if (!$dataInputGet['forceDatabaseSelect']) {
-                // SQL-Query bereitstellen
                 $sqlquery = "SELECT `defaultDb` FROM `userconfig` WHERE `userID` = " . $dataDb['userID'];
-                $result = mysqli_query($config['link'], $sqlquery);
+                db::init(1)->query($sqlquery);
 
-                if (mysqli_num_rows($result) == 1) {
+                if (db::init(1)->count() == 1) {
+                    
                     // Abfrage in Array schreiben
-                    $dataDb = mysqli_fetch_assoc($result);
-
+                    $dataDb = db::init(1)->first();
+                    
                     if (!empty($dataDb['defaultDb'])) {
                         // Datenbank ID in Session schreiben
                         $_SESSION['userDb']['dbID'] = intval($dataDb['defaultDb']);
@@ -108,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
             // Benutzerdatenbank
-            $_SESSION['userDb']['userDbSet'] = 0;
+            session::put('userDbSet', false);
 
             // Weiterleitung
             if (empty($dataInputGet['rd'])) {

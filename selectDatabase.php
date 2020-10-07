@@ -5,11 +5,8 @@ if (!defined('ROOT_PATH')) {
 
 require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
 
-// Konfiguration einbinden
-require_once 'config.php';
-
 // Prüfen ob Benutzer angemeldet
-require 'includes/loginSessionCheck.inc.php';
+require ROOT_PATH . 'includes' . DIRECTORY_SEPARATOR . 'loginSessionCheck.inc.php';
 if (!$lsc) {
     header('Location: login.php');
     exit();
@@ -39,8 +36,8 @@ if (!$lsc) {
             <?php
             // Prüfen ob eine Datenbank für den angemeldeten Benutzer verfügbar ist
             $sqlquery = "SELECT `dbID`, `dbHost`, `dbName` FROM `databases` WHERE `userID` = '" . intval($_SESSION['userID']) . "'";
-            $result = mysqli_query($config['link'], $sqlquery);
-            if (mysqli_num_rows($result) >= 1):
+            db::init(1)->query($sqlquery);
+            if (db::init(1)->count() >= 1):
 
                 if (empty($_GET['rd'])): ?>
                 <form action="includes/selectDatabase.inc.php" method="POST">
@@ -50,9 +47,10 @@ if (!$lsc) {
                     <div class="form-group"> <!-- Datenbank Select -->
                         <select class="form-control" id="dbID" name="dbID">
                             <option disabled selected>Datenbank auswählen</option>
-                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                            <?php print_r(db::init(1)->fetchArray()) ?>
+                            <?php foreach(db::init(1)->fetchArray() as $row): ?>
                             <option value="<?php echo intval($row['dbID']); ?>"><?php echo htmlspecialchars($row['dbName'], ENT_QUOTES, 'UTF-8') . ', ' . htmlspecialchars($row['dbHost'], ENT_QUOTES, 'UTF-8'); ?></option>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group"> <!-- Datenbank speichern -->

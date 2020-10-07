@@ -6,30 +6,29 @@ if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
     
     require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
 
-
 	// Array Sessiondata
 	$dataSession = array(
-		'userID' => intval($_SESSION['userID']),
-		'username' => mysqli_real_escape_string($config['link'], $_SESSION['username'])
+		'userID' => intval(session::get('userID')),
+		'username' => db::init(1)->escapeString(session::get('username'))
 	);
-
 	// Überprüft ob User-ID oder Benutzername in der Session leer sind (leer entspricht: kein Benutzer angemeldet)
 	if (empty($dataSession['userID']) || empty($dataSession['username'])) {
-		$lsc = FALSE;
+		$lsc = false;
 	} elseif (isset($dataSession['userID']) && isset($dataSession['username'])) {
 		// SQL-Query bereitstellen
 		$sqlquery = "SELECT * FROM `users` WHERE `userID` = '" . $dataSession['userID'] . "' AND `username` = '" . $dataSession['username'] . "' AND `activation` = 'Y' AND `status` = 'Y'";
-		
+		db::init(1)->query($sqlquery);
+
 		// Prüft ob Sessionangaben mit Datenbank übereinstimmt
-		if (mysqli_num_rows(mysqli_query($config['link'], $sqlquery)) != 1) {
-			unset($_SESSION['userID']);
-			unset($_SESSION['username']);
-			$lsc = FALSE;
+		if (db::init(1)->count() != 1) {
+			session::delete('userID');
+			session::delete('username');
+			$lsc = false;
 		} else {
-			$lsc = TRUE;
+			$lsc = true;
 		}
 	} else {
-		$lsc = FALSE;
+		$lsc = true;
 	}
 } else {
     http_response_code(204);

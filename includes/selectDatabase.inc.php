@@ -7,9 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
 
-    // Konfiguration einbinden
-    require_once '../config.php';
-
     // Prüfen ob Benutzer angemeldet
     require 'loginSessionCheck.inc.php';
     if (!$lsc) {
@@ -41,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // SQL-Query bereitstellen
     $sqlquery = "SELECT `dbID` FROM `databases` WHERE `dbID` = " . $dataInput['dbID'] . " AND `userID` = " . intval($_SESSION['userID']);
-    $result = mysqli_query($config['link'], $sqlquery);
+    db::init(1)->query($sqlquery);
 
     // Prüfen ob nur 1 Resultat
-    if (mysqli_num_rows($result) != 1) {
+    if (db::init(1)->count() != 1) {
         // Rückmeldung und Weiterleitung
         $_SESSION['response']['alert']['alertType'] = 'danger';
         $_SESSION['response']['alert']['alertDismissible'] = false;
@@ -59,25 +56,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     } else {
         // Abfrage in Array schreiben
-        $dataDb = mysqli_fetch_assoc($result);
+        $dataDb = db::init(1)->first();
 
         // Datenbank ID in Session schreiben
-        $_SESSION['userDb']['dbID'] = intval($dataDb['dbID']);
-        $_SESSION['userDb']['userDbSet'] = 1;
+        session::put('userDbID', intval($dataDb['dbID']));
+        session::put('userDbSet', true);
 
         // Datenbankauswahl speichern
         if ($dataInput['saveDbSelection']) {
             $sqlquery ="UPDATE `userconfig` SET `defaultDb` = " . $dataDb['dbID'] . " WHERE `userID` = " . intval($_SESSION['userID']);
             
             // SQL-Query ausführen und überprüfen
-            if (!mysqli_query($config['link'], $sqlquery)) {
+            if (!db::init(1)->query($sqlquery)) {
                 echo date('H:i:s') . ' MySQL Error: ' . mysqli_error($config['link']);
                 exit();
             }
         }
 
         // Mit Ziel Datenbank verbinden
-        if (include_once 'userDbConnect.inc.php') {
+        if (db::init(2)->error()) {
             // Fällige Daueraufträge prüfen
             include 'standingOrderCheck.inc.php';
         }

@@ -5,11 +5,8 @@ if (!defined('ROOT_PATH')) {
 
 require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
 
-// Konfiguration einbinden
-require_once 'config.php';
-
 // Versionsinformation einbinden
-include_once 'core/version.php';
+include_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'version.php';
 
 // Array GET-Variablen
 $dataInputGet = $_GET;

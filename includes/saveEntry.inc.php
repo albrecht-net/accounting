@@ -1,5 +1,11 @@
 <?php
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
+    if (!defined('ROOT_PATH')) {
+        define('ROOT_PATH', dirname(__FILE__, 2) . DIRECTORY_SEPARATOR);
+    }
+    
+    require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
+
     // Leere Felder aus Eingabe Array entfernen
     $dataInput = array_diff($dataInput, array(NULL, '', 0));
 

@@ -1,5 +1,11 @@
 <?php
 if (__FILE__ != $_SERVER['SCRIPT_FILENAME']) {
+    if (!defined('ROOT_PATH')) {
+        define('ROOT_PATH', dirname(__FILE__, 2) . DIRECTORY_SEPARATOR);
+    }
+    
+    require_once ROOT_PATH . 'core' . DIRECTORY_SEPARATOR . 'init.php';
+
     // For display
     $fmtD = numfmt_create($config['lang'], NumberFormatter::DECIMAL );
     numfmt_set_attribute($fmtD, NumberFormatter::FRACTION_DIGITS, 2);
